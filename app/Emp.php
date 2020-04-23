@@ -22,7 +22,7 @@ class Emp extends Authenticatable
         'password', 'remember_token',
     ];
 
-     protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+     //   'email_verified_at' => 'datetime',
+    //];
 }
