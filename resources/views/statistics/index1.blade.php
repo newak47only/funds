@@ -35,7 +35,7 @@
 										@foreach($info as $v)
 										<tr class="text-c">
 											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
 											<td>{{$v['investment']}}@if($v['currency'] =='0')万人民币
 										@elseif($v['currency'] =='1')万美元
 										@elseif($v['currency'] =='2')万欧元

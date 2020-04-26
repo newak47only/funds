@@ -4,7 +4,7 @@
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="{{route('permission.update',['id'=>$permission->id])}}" method="post" class="form form-horizontal" id="form-permission-edit">
+				<form action="{{route('permission.update',$permission->id)}}" method="post" class="form form-horizontal" id="form-permission-edit">
 					{{csrf_field()}}
 					{{method_field('PUT')}}
 					<div class="row clearfix">

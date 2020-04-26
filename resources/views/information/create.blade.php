@@ -8,13 +8,16 @@
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<input type="text" class="input-text" value="" placeholder="" id="name" name="name" >
+							<input type="text" class="input-text" value="{{ old('name') }}" placeholder="" id="name" name="name" >
+							@error('name')
+    						<div class="alert alert-danger">{{ $message }}</div>
+							@enderror
 						</div>
 					</div>
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>行业类别：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<input type="text" class="input-text" autocomplete="off" value="" placeholder="行业类别" id="industry" name="industry">
+							<input type="text" class="input-text" autocomplete="off" value="{{ old('industry') }}" placeholder="行业类别" id="industry" name="industry">
 						</div>
 					</div>
 					<div class="row clearfix">
@@ -32,32 +35,53 @@
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>投资金额：：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<input type="text" class="input-text" value="" placeholder="注意：投资金额货币单位为（万元）" id="investment" name="investment">
+							<input type="text" class="input-text" value="{{ old('investment') }}" placeholder="注意：投资金额货币单位为（万元）" id="investment" name="investment">
+						</div>
+					</div>
+					<div class="row clearfix">
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方负责人：</label>
+						<div class="form-controls col-xs-8 col-sm-9">
+							<input type="text" class="input-text" value="{{ old('cont_main') }}" placeholder="" id="cont_main" name="cont_main">
+							@error('cont_main')
+    						<div class="alert alert-danger">{{ $message }}</div>
+							@enderror
+						</div>
+					</div>
+					<div class="row clearfix">
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>主要投资方：</label>
+						<div class="form-controls col-xs-8 col-sm-9">
+							<input type="text" class="input-text" value="{{ old('cont_unit') }}" placeholder="" id="cont_unit" name="cont_unit">
 						</div>
 					</div>
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方联系人：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<input type="text" class="input-text" value="" placeholder="" id="cont_name" name="cont_name">
+							<input type="text" class="input-text" value="{{ old('cont_name') }}" placeholder="" id="cont_name" name="cont_name">
+							@error('cont_name')
+    						<div class="alert alert-danger">{{ $message }}</div>
+							@enderror
 						</div>
 					</div>
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方联系方式：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<input type="text" class="input-text" placeholder="" name="cont_phone" id="cont_phone">
+							<input type="text" class="input-text" placeholder="" value="{{ old('cont_phone') }}" name="cont_phone" id="cont_phone">
+							@error('cont_phone')
+    						<div class="alert alert-danger">{{ $message }}</div>
+							@enderror
 						</div>
 					</div>
 					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3">项目简介：</label>
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目简介：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<textarea name="content" cols="" rows=""  class="textarea textarea-article"  placeholder="项目简介" dragonfly="true" onKeyUp="textarealength(this,100)"></textarea>
+							<textarea name="content" cols="" rows=""  class="textarea textarea-article" value="{{ old('content') }}"  placeholder="项目简介" dragonfly="true" onKeyUp="textarealength(this,800)"></textarea>
 							<p class="textarea-numberbar">
 						</div>
 					</div>
 					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3">项目诉求：</label>
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目诉求：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<textarea name="appeal" cols="" rows=""  class="textarea textarea-article"  placeholder="项目诉求" dragonfly="true" onKeyUp="textarealength(this,100)"></textarea>
+							<textarea name="appeal" cols="" rows=""  class="textarea textarea-article" value="{{ old('appeal') }}"  placeholder="项目诉求" dragonfly="true" onKeyUp="textarealength(this,800)"></textarea>
 							<p class="textarea-numberbar">
 						</div>
 					</div>
@@ -102,7 +126,7 @@
 			/*长文本设置*/
 			$(".textarea-article").Huitextarealength({
 				minlength: 10,
-				maxlength: 500
+				maxlength: 800
 			});
 
 			/* 表单验证，提交 */
@@ -110,7 +134,7 @@
 				rules:{
 					name:{
 						required:true,
-						maxlength:30
+						maxlength:50
 					},
 					cont_name:{
 						required:true,
@@ -129,13 +153,21 @@
 						required:true,
 						maxlength:16
 					},
+					cont_main:{
+						required:true,
+						maxlength:50
+					},
+					cont_unit:{
+						required:true,
+						maxlength:50
+					},
 					content:{
 						required:true,
-						maxlength:300
+						maxlength:800
 					},
 					appeal:{
 						required:true,
-						maxlength:300
+						maxlength:800
 					},
 					
 				},
@@ -159,7 +191,7 @@
 							}
 						},
 						error:function(XmlHttpRequest,textStatus,errorThrown){
-							layer.msg('洽谈项目添加错误！',{ icon: 1,time:1000});
+							layer.msg("洽谈项目添加错误",{ icon: 2,time:1000});
 						}
 					});
 				}

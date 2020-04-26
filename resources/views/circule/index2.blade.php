@@ -16,7 +16,8 @@
 			<div class="panel ">
 				<div class="panel-body">
 					<div id="tab-system" class="HuiTab">
-						<div class="tabBar cl"><span>我可以流转的项目</span><span>我发布的流转的项目</span><span>我在流转的项目</span></div>
+						<div class="tabBar cl"><span>可流转项目</span><span>流转转出项目</span><span>流转转入项目</span></div>
+
 						<div class="tabCon">
 							<div class="mt-20 clearfix">
 								<table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -25,33 +26,42 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="">项目名称</th>
-											<th width="100">行业类别</th>
-											<th width="120">投资金额</th>
-											<th width="100">首谈地</th>
-											<th width="100">首谈地联系人</th>
-											<th width="100">首谈地联系方式</th>
-											<th width="80">流转方向</th>
-											<th width="120">流转时间</th>
+											<th width="120">行业类别</th>
+											<th width="130">投资金额</th>
+											<th width="120">首谈联系人</th>
+											<th width="100">流转方向</th>
+											<th width="140">流转时间</th>
+											<th width="140">流转状态</th>
 											<th width="250">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($info1 as $val)
+										@foreach($nego1 as $v)
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{$val['id']}}" name="ID"></td>
-											<td>{{$val['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$val['id']])}}','{{$val['id']}}')" title="查看">{{$val['name']}}</u></td>
-											<td>{{$val['industry']}}</td>
-											<td>{{$val['investment']}}@if($val['currency'] =="1")万人民币@elseif($val['currency'] =="2")万美元@elseif($val['currency'] =="3")万欧元@endif</td>
-											<td>{{$val['circule_f_dept']}}</td>
-											<td>{{$val['staff_name']}}</td>
-											<td>{{$val['staff_phone']}}</td>
-											<td>{{$val['circule_to']}}</td>
-											<td>{{$val['updated_at']}}</td>
-
+											<td><input type="checkbox" value="{{$v->nego_info->id}}" name="ID"></td>
+											<td>{{$v->nego_info->id}}</td>
+											<td class="text-l">{{$v->nego_info->name}}</td>
+											<td>{{$v->nego_info->industry}}</td>
+											<td>{{$v->nego_info->investment}}@if($v->nego_info->currency =="1")万人民币@elseif($v->nego_info->currency =="2")万美元@elseif($v->nego_info->currency =="3")万欧元@endif</td>
+											<td>
+												@foreach($emps as $n)
+												@if($n->id == $v->emp_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$n->username}}</u>
+												@endif
+												@endforeach
+											</td>
+											<td>
+												@foreach($depts as $m)
+												@if($m->id == $v->status)
+												{{$m->dept_name}}
+												@endif
+												@endforeach
+											</td>
+											<td>{{$v->neg_at}}</td>
+											<td>@if($v->nego_info->status == 0)暂无流转@else{{$v->nego_info->status}}个区域流转中@endif</td>
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$val['id']}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('申请流转','/circule/start_circule/{{$val['nego_id']}}')"  class="btn btn-primary radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;申请流转&nbsp;&nbsp;</button>										
+												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>		
+												<button type="submit"  href="javascript:;" onclick="negotiation_create('申请流转','/circule/start_circule/{{$v->id}}')"  class="btn btn-primary radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;申请流转&nbsp;&nbsp;</button>		
 											</td>
 										</tr>
 										@endforeach
@@ -67,31 +77,46 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="">项目名称</th>
-											<th width="100">行业类别</th>
-											<th width="120">投资金额</th>
-											<th width="100">项目负责人</th>
-											<th width="100">联系方式</th>
-											<th width="80">流转方向</th>
-											<th width="120">流转状态</th>
-											<th width="120">流转时间</th>
+											<th width="120">资方联系人</th>
+											<th width="130">资方联系方式</th>
+											<th width="120">首谈联系人</th>
+											<th width="100">流转方向</th>
+											<th width="140">流转时间</th>
+											<th width="140">流转状态</th>
 											<th width="250">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($info as $v)
+										@foreach($information1 as $v)
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
+											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
-											<td>{{$v['industry']}}</td>
-											<td>{{$v['investment']}}@if($v['currency'] =="1")万人民币@elseif($v['currency'] =="2")万美元@elseif($v['currency'] =="3")万欧元@endif</td>
-											<td>{{$v['staff_name']}}</td>
-											<td>{{$v['staff_phone']}}</td>
-											<td>{{$v['circule_to']}}</td>
-											<td>@if($v['result'] == 0)暂无流转@elseif($v['result'] == 1){{$v['circule_n_dept']}}流转中@endif</td>
-											<td>{{$v['updated_at']}}</td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
+											<td > {{$v->cont_name}}</td>
+											<td > {{$v->cont_phone}}</td>
+											<td >
+												@foreach($emps as $n)
+												@if($n->id == $v->emp_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$v->staff_name}}</u>
+												@endif
+												@endforeach
+											</td>
+											@foreach($v->info_nego as $k)
+											@if($k->actiontype == 5 && $k->info_id == $v->id && $k->result == 1)
+											<td >
+												@foreach($depts as $n)
+												@if($n->id == $k->status)
+												{{$n->dept_name}}
+												@endif
+												@endforeach
+											</td>
+											<td >{{$k->neg_at}}</td>
+											@endif
+											@endforeach
+											<td >@if($v->status == 0)暂无流转@else{{$v->status}}个区域流转中@endif</td>
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v['id']}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
+												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
+								
 											</td>
 										</tr>
 										@endforeach
@@ -107,48 +132,64 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="250">项目名称</th>
-											<th width="100">首谈地</th>
-											<th width="100">首谈地联系人</th>
-											<th width="100">首谈地联系方式</th>
-											<th width="100">流转方向</th>
-											<th width="80">流转地</th>
-
-											<th width="130">流转时间</th>
+											<th width="100">首谈联系人</th>
+											<th width="100">跟踪负责人</th>
+											<th width="80">流转方向</th>
+											<th width="120">流转时间</th>
 											<th width="80">工作记录</th>
 											<th width="100">剩余天数</th>
 											<th width="250 ">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($info2 as $k)
-										@if($k['day'] > 4)
+										@foreach($nego2 as $k)
+										@if($k->check_day > 4)
 										<tr class="text-c">
-										@elseif($k['day'] > 2 && $k['day'] <= 4 )
+										@elseif($k->check_day > 2 && $k->check_day <= 4 )
 										<tr  class="warning text-c">
-										@elseif($k['day'] <= 2)
+										@elseif($k->check_day <= 2)
 										<tr class="danger text-c">
 										@endif
-											<td><input type="checkbox" value="{{$k['id']}}" name="ID"></td>
-											<td>{{$k['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$k['id']])}}','{{$k['id']}}')" title="查看">{{$k['name']}}</u></td>
-											<td>{{$k['circule_f_dept']}}</td>
-											<td>{{$k['circule_f_name']}}</td>
-											<td>{{$k['circule_f_phone']}}</td>
-											<td>{{$k['circule_to']}}</td>
-											<td>{{$k['circule_n_dept']}}</td>
-											<td>{{$k['created_at']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="cricule_view('查看工作记录','{{route('recode.show',['id'=>$k['id']])}}','{{$k['id']}}')" title="查看工作记录">{{$k['recodenum']}}条</u></td>
-											@if($k['day'] > 4)
-											<td ><span class="badge badge-success radius">洽谈剩余{{$k['day']}}天</span></td>
-											@elseif($k['day'] > 2 && $k['day'] <= 4 )
-											<td  class="warning"><span class="label label-warning radius">洽谈剩余{{$k['day']}}天</span></td>
-											@elseif($k['day'] <= 2)
-											<td  class="danger"><span class="label badge-danger radius">洽谈剩余{{$k['day']}}天</span></td>
+											<td><input type="checkbox" value="{{$k->nego_info->id}}" name="ID"></td>
+											<td>{{$k->nego_info->id}}</td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$k->nego_info->id)}}','{{$k->nego_info->id}}')" title="查看">{{$k->nego_info->name}}</u></td>
+											<td>
+
+											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$k->emp_id)}}','$v->check_id}}')" title="查看项目跟踪负责人信息">{{$k->nego_info->staff_name}}</u>
+
+											</td>
+											<td>
+											@foreach($emps as $n)
+											@if($n->id == $k->nego_info->check_id)
+											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$n->id)}}')" title="查看项目跟踪负责人信息">{{$n->username}}</u>
+											@endif
+											@endforeach
+											<td>
+											@foreach($depts as $n)
+											@if($n->id == $k->status)
+											{{$n->dept_name}}
+											@endif
+											@endforeach
+											</td>
+											<td >{{$k->neg_at}}</td>
+											<td>
+												@foreach($num as $kk)
+												@if($kk['nego_id']==$k->id)
+												<u style="cursor:pointer" class="text-primary" onClick="cricule_view('查看工作记录','{{route('recode.show',$k->nego_info->id)}}','{{$k->nego_info->id}}')" title="查看工作记录">{{$kk['count']}}条</u>
+												@endif
+												@endforeach
+											</td>
+											@if($k->check_day > 4)
+											<td ><span class="badge badge-success radius">洽谈剩余{{$k->check_day}}天</span></td>
+											@elseif($k->check_day > 2 && $k->check_day <= 4 )
+											<td  class="warning"><span class="label label-warning radius">洽谈剩余{{$k->check_day}}天</span></td>
+											@elseif($k->check_day <= 2)
+											<td  class="danger"><span class="label badge-danger radius">洽谈剩余{{$k->check_day}}天</span></td>
 											@endif
 
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="information_show('进度记录','/recode/ciradd/{{$k['nego_id']}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进度记录&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick="information_show('流转结果','/circule/redit/{{$k['nego_id']}}')"  class="btn btn-primary radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;流转结果&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="information_show('进度记录','/recode/ciradd/{{$k->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进度记录&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="information_show('流转结果','/circule/redit/{{$k->id}}')"  class="btn btn-primary radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;流转结果&nbsp;&nbsp;</button>
 												
 											</td>
 										</tr>

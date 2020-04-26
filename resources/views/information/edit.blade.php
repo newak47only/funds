@@ -4,7 +4,7 @@
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="{{route('information.update',['id'=>$information->id])}}" method="post" class="form form-horizontal" id="form-informatian-update">
+				<form action="{{route('information.update',$information->id)}}" method="post" class="form form-horizontal" id="form-informatian-update">
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
@@ -37,6 +37,21 @@
 						</div>
 					</div>
 					<div class="row clearfix">
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方负责人：</label>
+						<div class="form-controls col-xs-8 col-sm-9">
+							<input type="text" class="input-text" value="{{$information->cont_main}}" placeholder="" id="cont_main" name="cont_main">
+							@error('cont_main')
+    						<div class="alert alert-danger">{{ $message }}</div>
+							@enderror
+						</div>
+					</div>
+					<div class="row clearfix">
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>主要投资方：</label>
+						<div class="form-controls col-xs-8 col-sm-9">
+							<input type="text" class="input-text" value="{{$information->cont_unit}}" placeholder="" id="cont_unit" name="cont_unit">
+						</div>
+					</div>
+					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方联系人：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
 							<input type="text" class="input-text"  placeholder="" id="cont_name" name="cont_name" value="{{$information->cont_name}}">
@@ -51,14 +66,14 @@
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3">项目简介：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<textarea name="content"  cols="" rows=""  class="textarea textarea-article"   dragonfly="true" onKeyUp="textarealength(this,100)">{{$information->content}}"</textarea>
+							<textarea name="content"  cols="" rows=""  class="textarea textarea-article"   dragonfly="true" onKeyUp="textarealength(this,800)">{{$information->content}}"</textarea>
 							<p class="textarea-numberbar">
 						</div>
 					</div>
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3">项目诉求：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<textarea name="appeal"  cols="" rows=""  class="textarea textarea-article"  placeholder="项目诉求300个字符以内" dragonfly="true" onKeyUp="textarealength(this,100)">{{$information->appeal}}</textarea>
+							<textarea name="appeal"  cols="" rows=""  class="textarea textarea-article"  placeholder="项目诉求300个字符以内" dragonfly="true" onKeyUp="textarealength(this,800)">{{$information->appeal}}</textarea>
 							<p class="textarea-numberbar">
 						</div>
 					</div>
@@ -102,7 +117,7 @@
 			/*长文本设置*/
 			$(".textarea-article").Huitextarealength({
 				minlength: 10,
-				maxlength: 500
+				maxlength: 800
 			});
 
 			/* 表单验证，提交 */
@@ -110,7 +125,7 @@
 				rules:{
 					name:{
 						required:true,
-						maxlength:30
+						maxlength:50
 					},
 					cont_name:{
 						required:true,
@@ -131,11 +146,11 @@
 					},
 					content:{
 						required:true,
-						maxlength:300
+						maxlength:800
 					},
 					appeal:{
 						required:true,
-						maxlength:300
+						maxlength:800
 					},
 					
 				},
@@ -144,23 +159,21 @@
 				success:"valid",
 				submitHandler:function(form){
 					$(form).ajaxSubmit({
-						type:'post',
-						url: ,
-						success:function($data){
-							layer.msg('添加成功！',{ icon: 1,time:1000},function(){
+
+						success:function(data){
+							if( data == '1'){
+								layer.msg('洽谈项目编辑成功！',{ icon: 1,time:2000},function(){
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.location.replace(parent.location.href);
-								//parent.$('.btn-refresh').click();
 								parent.layer.close(index);
-							});
+								});
+
+							}else{
+								layer.msg('洽谈项目编辑失败！',{ icon: 2,time:2000});
+							}
 						},
 						error:function(XmlHttpRequest,textStatus,errorThrown){
-							layer.msg('添加错误！',{ icon: 1,time:1000},function(){
-								var index = parent.layer.getFrameIndex(window.name);
-								parent.location.replace(parent.location.href);
-								//parent.$('.btn-refresh').click();
-								parent.layer.close(index);
-							});
+							layer.msg("洽谈项目编辑错误",{ icon: 2,time:1000});
 						}
 					});
 				}

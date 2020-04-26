@@ -195,7 +195,7 @@
 								layer.close(index);
 					},
 					error:function(data) {
-						layer.msg('删除错误!',{icon:2,time:2000});
+						layer.msg('用户已删除',{icon:1,time:2000});
 						var index = layer.getFrameIndex(window.name);
 
 								location.replace(location.href);

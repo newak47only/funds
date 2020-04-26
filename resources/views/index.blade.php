@@ -28,7 +28,13 @@
             <li><a data-href="circule/index1" data-title="本区流转项目表" href="javascript:void(0)">本区流转项目列表&nbsp;</a></li>
             @elseif($status ==2)
             <li><a data-href="circule/index2" data-title="流转项目表" href="javascript:void(0)">流转项目列表&nbsp;</a></li>
+            @elseif($status ==3)
+            <li><a data-href="circule/index3" data-title="流转项目表" href="javascript:void(0)">流转项目列表&nbsp;</a></li>
+            <li><a data-href="circule/index4" data-title="部门流转项目表" href="javascript:void(0)">部门流转项目列表&nbsp;</a></li>
+            @elseif($status ==4)
+            <li><a data-href="circule/index3" data-title="流转项目表" href="javascript:void(0)">流转项目列表&nbsp;</a></li>
             @endif
+
           </ul>
         </dd>
       </dl>

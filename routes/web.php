@@ -16,12 +16,12 @@
 //});
 
 Auth::routes();
-
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('/welcome', 'HomeController@welcome');
 //用户管理模块
+	//Route::get('/emp/show/{id}','EmpController@show')->name('emp.show');
 	Route::get('/emp/aajax/{str}',"EmpController@aajax");
 	Route::get('/emp/destroy/{id}','EmpController@destroy');
 	Route::resource('emp','EmpController');
@@ -53,6 +53,7 @@ Route::get('/welcome', 'HomeController@welcome');
 
 
 	//洽谈审批管理模块
+	Route::get('/negotiation/list/{id}','NegotiationController@list');
 	Route::get('/negotiation/index1','NegotiationController@index1');
 	Route::get('/negotiation/index2','NegotiationController@index2');
 	Route::get('/negotiation/add/{id}','NegotiationController@add');
@@ -82,6 +83,8 @@ Route::get('/welcome', 'HomeController@welcome');
 
 	Route::get('/circule/index1','CirculeController@index1');
 	Route::get('/circule/index2','CirculeController@index2');
+	Route::get('/circule/index3','CirculeController@index3');
+	Route::get('/circule/index4','CirculeController@index4');
 	Route::get('/circule/start_circule/{id}','CirculeController@start_circule');
 	Route::post('/circule/start_store/','CirculeController@start_store');
 	Route::get('/circule/check/{id}','CirculeController@check');
@@ -99,4 +102,5 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::get('/recode/ciradd/{id}','RecodeController@ciradd');
 	Route::post('/recode/cirstore/','RecodeController@cirstore');
 	Route::get('/recode/add/{id}','RecodeController@add');
+	Route::get('/recode/show/{id}','RecodeController@show')->name('recode.show');
 	Route::resource('recode','RecodeController');

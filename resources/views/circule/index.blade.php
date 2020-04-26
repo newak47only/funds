@@ -38,7 +38,7 @@
 								<tr class="text-c">
 									<td><input type="checkbox" value="{{$k['id']}}" name="ID"></td>
 									<td>{{$k['id']}}</td>
-									<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$k['id']])}}','{{$k['id']}}')" title="查看">{{$k['name']}}</u></td>
+									<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$k['id'])}}','{{$k['id']}}')" title="查看">{{$k['name']}}</u></td>
 									<td>{{$k['circule_f_dept']}}</td>
 									<td>{{$k['circule_f_name']}}</td>
 									<td>{{$k['circule_f_phone']}}</td>

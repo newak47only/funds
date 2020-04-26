@@ -90,7 +90,7 @@
 				increaseArea: '20%'
 			});
 
-				$("#form-admin-add").validate({
+			$("#form-admin-add").validate({
 				rules:{
 					report:{
 						required:true,
@@ -113,7 +113,7 @@
 								});
 
 							}else{
-								layer.msg('项目洽谈转入成功！',{ icon: 2,time:2000});
+								layer.msg('项目洽谈转入失败！',{ icon: 2,time:2000});
 							}
 						},
 						error:function(XmlHttpRequest,textStatus,errorThrown){

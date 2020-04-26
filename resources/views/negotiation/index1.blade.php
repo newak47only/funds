@@ -35,7 +35,7 @@
 										@foreach($info as $v)
 										<tr class="text-c">
 											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['investment']}}@if($v['currency'] =='0')万人民币
 										@elseif($v['currency'] =='1')万美元
@@ -50,7 +50,7 @@
 												@endif
 											</td>
 											<td>{{$v['dept']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
+											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',$v['id'])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
 												@if($v['process']==4)
 												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已落地&nbsp;&nbsp;</button>
@@ -90,7 +90,7 @@
 										@foreach($info1 as $k)
 										<tr class="text-c">
 											<td>{{$k['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$k['id']])}}','{{$k['id']}}')" title="查看">{{$k['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$k['id'])}}','{{$k['id']}}')" title="查看">{{$k['name']}}</u></td>
 											<td>{{$k['investment']}}@if($k['currency'] =='0')万人民币
 										@elseif($k['currency'] =='1')万美元
 										@elseif($k['currency'] =='2')万欧元
@@ -107,7 +107,7 @@
 											<td>{{$k['circule_f_dept']}}</td>
 											<td>{{$k['circule_f_name']}}</td>
 											<td>{{$k['circule_f_phone']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',['id'=>$k['id']])}}','{{$k['id']}}')" title="查看工作记录">{{$k['recodenum']}}条</u></td>
+											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',$k['id'])}}','{{$k['id']}}')" title="查看工作记录">{{$k['recodenum']}}条</u></td>
 											<td class="td-manage">
 												@if($k['process']==4)
 												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已落地&nbsp;&nbsp;</button>
@@ -146,7 +146,7 @@
 										@foreach($info2 as $kk)
 										<tr class="text-c">
 											<td>{{$kk['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$kk['id']])}}','{{$kk['id']}}')" title="查看">{{$kk['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$kk['id'])}}','{{$kk['id']}}')" title="查看">{{$kk['name']}}</u></td>
 											<td>{{$kk['industry']}}</td>
 											<td>{{$kk['investment']}}@if($kk['currency'] =='0')万人民币
 										@elseif($kk['currency'] =='1')万美元
@@ -164,7 +164,7 @@
 											<td>{{$kk['circule_n_dept']}}</td>
 											<td>{{$kk['circule_n_name']}}</td>
 											<td>{{$kk['circule_n_phone']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',['id'=>$kk['id']])}}','{{$kk['id']}}')" title="查看工作记录">{{$kk['recodenum']}}条</u></td>
+											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',$kk['id'])}}','{{$kk['id']}}')" title="查看工作记录">{{$kk['recodenum']}}条</u></td>
 											<td class="td-manage">	
 												@if($kk['process']==4)
 												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已落地&nbsp;&nbsp;</button>

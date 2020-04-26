@@ -37,12 +37,16 @@ class HomeController extends Controller
             $status = 0;
 
 
-        }elseif ($admin->id == $dept->director_id && $dept->id != '6') {
+        }elseif ($admin->id == $dept->director_id && $dept->id != '6' && $dept->id != '13') {
             $status = 1;
  
-        }else{
+        }elseif($admin->id != $dept->director_id && $dept->id != '6' && $dept->id != '13'){
             $status =2;
 
+        }elseif ($admin->id == $dept->director_id && $dept->id == '13') {
+            $status =3;
+        }elseif ($admin->id != $dept->director_id && $dept->id == '13') {
+            $status =4;
         }
         //dd($status);
         return view('index')->with(compact('status','dept_name'));

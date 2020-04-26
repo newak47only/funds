@@ -39,7 +39,7 @@
 								<tr class="text-c">
 									<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
 									<td>{{$v['id']}}</td>
-									<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_edit('查看','{{route('information.edit',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+									<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_edit('查看','{{route('information.edit',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
 									<td>{{$v['cont_name']}}</td>
 									<td>{{$v['cont_phone']}}</td>
 									<td class="td-manage">

@@ -4,7 +4,7 @@
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="{{route('report.update',['id'=>$negotiation->id])}}" method="POST" class="form form-horizontal" id="form-admin-add"  >
+				<form action="{{route('report.update',$negotiation->id)}}" method="POST" class="form form-horizontal" id="form-admin-add"  >
 					{{csrf_field()}}
 					{{method_field('PUT')}}
 				<div class="row clearfix">

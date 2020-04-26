@@ -35,7 +35,7 @@
 										@foreach($info as $v)
 										<tr class="text-c">
 											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['investment']}}@if($v['currency'] =='0')万人民币
 										@elseif($v['currency'] =='1')万美元
@@ -50,7 +50,7 @@
 												@endif
 											</td>
 											<td>{{$v['dept']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
+											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',$v['id'])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
 												@if($v['process']==4)
 												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已落地&nbsp;&nbsp;</button>

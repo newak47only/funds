@@ -94,177 +94,48 @@ class CirculeController extends Controller
         //判断用户是否为所在用户组领导
         $dept_id=$emp->dept_id;
         //获取用户所在组成员
-        $emps=Emp::where('dept_id',$emp->dept->id)->get();
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
             //获取用户所在组成员id数组
-        foreach ($emps as $key => $value) {
+        foreach ($empd as $key => $value) {
             $emp_arry[]= array(
                 $key=>$value->id,
-                );        
-            }
-        $info = [];
-        $info1 =[];
-        $info2 =[];
-        $information=Information::whereIn('emp_id',$emp_arry)->whereIn('process',[2,3])->get();
-            //dd($information);
-            foreach ($information as $key => $value) {
-                if($value->process == 2){
-                    $status = Negotiation::where([
-                        ['info_id','=',$value->id],
-                        ['actiontype','=','5'],
-                        ['result','=','1'],
-                    ])->first();
+            );
+        } 
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();          
+         //本区流转转出项目
+        $information1=Information::where('process','2')->whereIn('emp_id', $emp_arry)->get();
+        //本区可转入项目
+        $nego1=Negotiation::where([['actiontype','=','5'],['result','=','1']])->whereNotIn('emp_id',  $emp_arry)->whereIn('status',['0',$dept_id])->get();
+        //本区流转转入项目
+        $nego2=Negotiation::where([
+            ['director_id','=',$admin_id],
+            ['result','<','3'],
+            ['actiontype','=','13']
+        ])->get();
+        
+        foreach ($nego2 as $key => $v) {
 
-                    $circule = Dept::where('id',  $status['status'])->first();
-                    $info[]=[
-                                'id'=> $value->id,
-                                'name' => $value->name,
-                                'cont_name' => $value->cont_name,
-                                'cont_phone' => $value->cont_phone,
-                                'emp_id' => $value->emp_id,
-                                'staff_name' => $value->staff_name,
-                                'staff_phone' => $value->staff_phone,
-                                'currency' => $value->currency,
-                                'investment' => $value->investment,
-                                'industry' => $value->industry,
-                                'investment' => $value->investment,
-                                'status' => $value->status,
-                                'process' => $value->process,
-                                'is_show' => $value->is_show,
-                                'updated_at'=>$status['updated_at'],
-                                'result' => 0 ,
-                                'nego_id' => '' ,
-                                'director_id' => '',
-                                'circule_n_dept' => '',
-                                'circule_n_name' => '',
-                                'circule_n_phone' => '',
-                                'circule_to'    =>$circule['dept_name'],
-                            ];        
-                            //dd($info);
+            $information3=Information::where([
+                    ['id','=',$v->info_id],
+                    ['process','=','2'],
+                ])->get(); 
+                foreach ($information3 as $key => $vv) {
 
-                }else{
-
-                    $nego = Negotiation::where([
-                        ['info_id','=',$value->id],
-                        ['actiontype','=','13'],
-                        ['result','=','1'],
-                    ])->firstOrFail();
-                    
-
-                    $n_emp=Emp::where('id',$nego->emp_id)->firstOrFail();
-                    $status = Negotiation::where([
-                        ['info_id','=',$value->id],
-                        ['actiontype','=','5'],
-                        ['result','=','1'],
-                    ])->first();
-                    $circule = Dept::where('id',$status['status'])->firstOrFail()->dept_name;
-                    //dd($circule);
-                           $info[]=[
-                                'id'=> $value->id,
-                                'name' => $value->name,
-                                'cont_name' => $value->cont_name,
-                                'cont_phone' => $value->cont_phone,
-                                'emp_id' => $value->emp_id,
-                                'staff_name' => $value->staff_name,
-                                'staff_phone' => $value->staff_phone,
-                                'currency' => $value->currency,
-                                'investment' => $value->investment,
-                                'industry' => $value->industry,
-                                'investment' => $value->investment,
-                                'status' => $value->status,
-                                'process' => $value->process,
-                                'is_show' => $value->is_show,
-                                'updated_at'=>$status['updated_at'],
-                                'nego_id' => $nego->id,
-                                'circule_n_dept' => $n_emp->dept->dept_name,
-                                'circule_n_name' => $n_emp->username,
-                                'circule_n_phone' => $n_emp->phone,
-                                'circule_to'    =>$circule,
-                                'result' => 1 ,
-                            ];      
+                    $datetime2 = carbon::parse($v->neg_at);
+                    $days = (new Carbon)->diffIndays($datetime2, true);
+                    $day = 7-$days;
+                    $v->check_day = $day;                             
                 }
+            }        
 
-            }
-            //dd($info);
-            //本区可以流转的项目
-            $information1=Information::where('process','2')->whereNotIn('emp_id',$emp_arry)->get();
-            //dd($information1);
-            foreach ($information1 as $key => $k) {
-                $nego1 = Negotiation::where([
-                   ['info_id','=',$k->id],
-                   ['actiontype','=','5'],
-                   ['result','=','1'],
-                ])->first();
-                    $circule = Dept::where('id',$nego1['status'])->first();
-                    //dd($circule);
-                    $f_emp=Emp::where('id',$k->emp_id)->firstOrFail();
-                    $info1[]=[
-                        'id'=> $k->id,
-                        'name' => $k->name,
-                        'cont_name' => $k->cont_name,
-                        'cont_phone' => $k->cont_phone,
-                        'emp_id' => $k->emp_id,
-                        'staff_name' => $k->staff_name,
-                        'staff_phone' => $k->staff_phone,
-                        'currency' => $k->currency,
-                        'investment' => $k->investment,
-                        'industry' => $k->industry,
-                        'investment' => $k->investment,
-                        'status' => $k->status,
-                        'process' => $k->process,
-                        'is_show' => $k->is_show,
-                        'updated_at' => $nego1['updated_at'],
-                        'dept' =>$f_emp->dept->dept_name,
-                        'nego_id' => $nego1['id'],
-                        'circule_to'    =>$circule['dept_name'],
-                        ];               
-  
-            }
-            //本区正在流转的项目
-            $nego2 = Negotiation::whereIn('director_id',$emp_arry)->where([
-                   ['actiontype','=','13'],
-                   ['result','=','1'],
-                ])->get();
-            
-            foreach ($nego2 as $key => $v) {
-                $information2=Information::where('id',$v->info_id)->where('process','3')->firstOrFail();
-                
-                    $n_emp=Emp::where('id',$v->emp_id)->firstOrFail();
-                    $f_emp=Emp::where('id',$v->director_id)->firstOrFail();
-                    $circule = Dept::where('id',$v->status)->firstOrFail()->dept_name;
-                    $info2[]=[
-                        'id'=> $information2->id,
-                        'name' => $information2->name,
-                        'cont_name' => $information2->cont_name,
-                        'cont_phone' => $information2->cont_phone,
-                        'emp_id' => $information2->emp_id,
-                        'staff_name' => $information2->staff_name,
-                        'staff_phone' => $information2->staff_phone,
-                        'currency' => $information2->currency,
-                        'investment' => $information2->investment,
-                        'industry' => $information2->industry,
-                        'investment' => $information2->investment,
-                        'status' => $information2->status,
-                        'process' => $information2->process,
-                        'is_show' => $information2->is_show,
-                        'created_at' => $v->created_at,
-                        'nego_id' => $v->id,
-                        'director_id' =>$v->director_id,
-                        'circule_n_dept' => $n_emp->dept->dept_name,
-                        'circule_n_name' => $n_emp->name,
-                        'circule_n_phone' => $n_emp->phone,
-                        'circule_f_dept' => $emp->dept->dept_name,
-                        'circule_f_name' => $f_emp->name,
-                        'circule_f_phone'=>$f_emp->phone,
-                        'circule_to'    =>$circule,
-                    ];               
-               
-            }
-
-            return view('circule.index1')->with(compact('info','info1','info2','admin_id')); 
+        return view('circule.index1')->with(compact('nego2','nego1','information1','emps','depts')); 
 
     }
 
-    public function index2(){
+    public function index2()
+    {
         $admin_id = Auth::user()->id;
         //获取用户信息
         $emp = Emp::findOrFail($admin_id);
@@ -275,20 +146,20 @@ class CirculeController extends Controller
         //判断用户是否为所在用户组领导
         $dept_id=$emp->dept_id;
         //获取用户所在组成员
-        $emps=Emp::where('dept_id',$emp->dept->id)->get();
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
             //获取用户所在组成员id数组
-        foreach ($emps as $key => $value) {
+        foreach ($empd as $key => $value) {
             $emp_arry[]= array(
                 $key=>$value->id,
             );
         } 
-        $info = [];
-        $info1 =[];
-        $info2 =[];       
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();     
             //我发布的流转项目
-        $information1=Information::where('emp_id', '=', $admin_id)->whereIn('process',[2,3])->get();
+        $information1=Information::where('emp_id', '=', $admin_id)->where('process','2')->get();
             //dd($information1);
-            foreach ($information1 as $key => $value) {
+            /*foreach ($information1 as $key => $value) {
                 if($value->process ==2){
                     $nego = Negotiation::where([
                     ['info_id','=',$value->id],
@@ -358,11 +229,11 @@ class CirculeController extends Controller
                         ];                   
                 }
                                                         
-            }
+            }*/
             //我可以流转的项目
-            $information2=Information::where('process','=','2')->whereNotIn('emp_id',  $emp_arry)->get();
+        $nego1=Negotiation::where([['actiontype','=','5'],['result','=','1']])->whereNotIn('emp_id',  $emp_arry)->whereIn('status',['0',$dept_id])->get();
             //dd($information2);
-            foreach ($information2 as $key => $k) {
+            /*foreach ($information2 as $key => $k) {
                 $nego1=Negotiation::where([
                     ['info_id','=',$k->id],
                     ['actiontype','=','5'],
@@ -397,7 +268,7 @@ class CirculeController extends Controller
                         'circule_to'    =>$circule['dept_name'],
                     ];                               
         
-            }
+            }*/
 
             //我正在流转的项目
             $nego2=Negotiation::where([
@@ -411,51 +282,102 @@ class CirculeController extends Controller
 
                 $information3=Information::where([
                     ['id','=',$v->info_id],
-                    ['process','=','3'],
+                    ['process','=','2'],
                 ])->get(); 
                 foreach ($information3 as $key => $vv) {
-                   $n_emp=Emp::where('id',$v->director_id)->firstOrFail();
-                   $f_emp=Emp::where('id',$v->emp_id)->firstOrFail();
-                   $circule = Dept::where('id',$v->status)->firstOrFail()->dept_name;
-                   $recodenum = Recode::where('info_id',$vv->id)->count();
+
                     $datetime2 = carbon::parse($v->neg_at);
                     $days = (new Carbon)->diffIndays($datetime2, true);
                     $day = 7-$days;
-                    $info2[]=[
-                        'id'=> $vv->id,
-                        'name' => $vv->name,
-                        'cont_name' => $vv->cont_name,
-                        'cont_phone' => $vv->cont_phone,
-                        'emp_id' => $vv->emp_id,
-                        'staff_name' => $vv->staff_name,
-                        'staff_phone' => $vv->staff_phone,
-                        'currency' => $vv->currency,
-                        'investment' => $vv->investment,
-                        'industry' => $vv->industry,
-                        'investment' => $vv->investment,
-                        'status' => $vv->status,
-                        'process' => $vv->process,
-                        'is_show' => $vv->is_show,
-                        'nego_id' => $v->id,
-                        'created_at' =>$v->created_at,
-                        'director_id' =>$v->director_id,
-                        'circule_f_name' =>$f_emp->name,
-                        'circule_f_dept' => $f_emp->dept->dept_name,
-                        'circule_f_phone' =>$f_emp->phone,
-                        'circule_n_name' =>$n_emp->name,
-                        'circule_n_dept' =>$n_emp->dept->dept_name,
-                        'circule_n_pone' =>$n_emp->phone,
-                        'circule_to'    =>$circule,
-                        'recodenum'  =>$recodenum,
-                        'day' => $day
-                        ];                               
+                    $v->check_day = $day;                             
                 }
+
+                $count=Recode::where([['emp_id','=',$v->emp_id],['info_id','=',$v->info_id]])->orwhere([['emp_id','=',$v->director_id],['info_id','=',$v->info_id]])->count();
+
+                $num[] =[
+                    'nego_id' =>$v->id,
+                    'count' => $count,
+                ];
             }
 
 
-        return view('circule.index2')->with(compact('info','info1','info2'));        
+        return view('circule.index2')->with(compact('information1','nego1','nego2','emps','depts','num'));        
 
     }
+
+    public function index3(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();
+        $info = [];
+        $info1 =[];
+        $info2 =[];       
+            //本人流转项目
+        $information1=Information::where([
+            ['emp_id', '=', $admin_id],
+            ['process', '=', '2']
+        ])->get();
+        $information2=Information::where([
+            ['check_id', '=', $admin_id],
+            ['emp_id','!=',$admin_id],
+            ['process', '=', '2']
+        ])->get();
+        return view('circule.index3')->with(compact('information2','information1','emps','depts'));        
+
+    }
+
+
+    public function index4(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        } 
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();       
+            //本局流转项目
+        $information1=Information::where('process','2')->whereIn('emp_id',$emp_arry)->get();
+        /*foreach ($information1 as $key => $value) {
+            $nego1 = Negotiation::where([['info_id','=',$value->emp_id],['result','=','2']])->whereIn('actiontype',[5,13])->get();
+            foreach ($nego1 as $key => $val) {
+                if($val->actiontype ==13){
+                    $datetime2 = Carbon::parse($v->neg_at);
+                    $days = (new Carbon)->diffIndays($datetime2, true);
+                    $day = 7-$days;
+                    $val->check_day=$days;
+                }
+            }
+        }*/
+
+        //本局跟踪流转项目
+        $information2=Information::where('process','2')->whereNotIn('emp_id',$emp_arry)->get();
+        return view('circule.index4')->with(compact('information2','information1','emps','depts'));        
+
+    }
+
 
     public function list()
     {
@@ -505,7 +427,7 @@ class CirculeController extends Controller
     	return view('circule.add')->with(compact('informations','users'));
     }
 
-    //流转申请
+    //提交流转申请
     public function add($id)
     {
         //echo $id;
@@ -524,6 +446,7 @@ class CirculeController extends Controller
     {
 
          $data=$request->all();
+         //dd($data);
              $Negotiation=Negotiation::create([
                 'info_id' =>$data['info_id'],
                 'emp_id'  =>Auth::id(),
@@ -541,7 +464,6 @@ class CirculeController extends Controller
              $test=DB::update('update information set process = ? where id = ?',[1,$info_id]);
              //dd($test);
              $result=$Negotiation->save();
-             //dd($result);
              DB::commit();
              return  $result ? '1' : '0';
     }
@@ -580,7 +502,9 @@ class CirculeController extends Controller
 
          }elseif ($negotiation->result==3) {
             DB::update('update information set process = ? where id = ?',[2,$info_id]);
-
+            $status=Information::findOrFail($info_id);
+            $mun = $status['status']-1;
+            DB::update('update information set process = ? where id = ?',[$mun,$info_id]);
          }
          return $result ? 1 : 0;
 
@@ -598,25 +522,26 @@ class CirculeController extends Controller
         $users = Auth::user();           
         return view('circule.redit')->with(compact('negotiation','info_name','users'));
     }
-
+    //流转申报数据库操作
     public function rupdate(Request $request, $id)
     {
         $negotiation=Negotiation::findOrFail($id);
 
          $data=$request->all();
-
-         //dd($data);
         $this->validate($request,[
             'report'=>'required',
         ]);
-         
-         $result=$negotiation->update($data);
-         if($data['result']=='1'){
 
+        if($data['result']=='1'){
+            $randomemp=Emp::where('dept_id','13')->inRandomOrder()->first();
+             //dd($randomemp['id']);
+             
+            DB::update('update information set check_id = ? where id = ?',[$randomemp['id'],$negotiation->info_id]);
             DB::update('update information set process = ? where id = ?',[2,$negotiation->info_id]);
          }elseif ($data['result']=='2') {
              DB::update('update information set process = ? where id = ?',[0,$negotiation->info_id]);
-         }
+         }         
+         $result=$negotiation->update($data);
 
          return  $result ? '1' : '0';
        
@@ -665,6 +590,7 @@ class CirculeController extends Controller
          $data=$request->all();
          $data['neg_at'] = Carbon::now();
          //dd($data['neg_at']);
+         //dd($data);
              $Negotiation=Negotiation::create([
                 'info_id' =>$data['info_id'],
                 'emp_id'  =>$data['emp_id'],
@@ -682,11 +608,15 @@ class CirculeController extends Controller
                 'neg_at' => $data['neg_at']
             ]);
              $info_id=$data['info_id'];
+             //dd($info_id);
+             $status=Information::findOrFail($info_id);
+             $mun = $status['status'];
+             $mun++;
              //DB::update('update student set name = ? where id = ?',[$name,$id]);
-             $test=DB::update('update information set process = ? where id = ?',[3,$info_id]);
+             $test=DB::update('update information set status = ? where id = ?',[$mun,$info_id]);
              //dd($test);
              $result=$Negotiation->save();
-             //dd($result);
+
              DB::commit();
              return  $result ? '1' : '0';
     }

@@ -61,7 +61,7 @@ class InformationController extends Controller
             }
             return view('information.index')->with(compact('info1'));      
 
-        }elseif($admin_id == $admin_director_id && $dept_id != '6' ){
+        }elseif($admin_id == $admin_director_id && $dept_id != '6' && $dept_id != '13' ){
             //本人的洽谈项目
             $information=Information::where('emp_id',$admin_id)->where('process','<','2')->get();
             foreach ($information as $key => $value) {
@@ -164,7 +164,8 @@ class InformationController extends Controller
             $circulenum = Information::whereIn('emp_id',$emp_arry)->where('process', '=', '1')->count();
 
             return view('information.index2')->with(compact('info1','info2','info3','reportnum','circulenum'));   
-        }else{
+
+        }elseif($admin_id != $admin_director_id && $dept_id != '6' && $dept_id != '13' ){
              $information=Information::where([
                     ['emp_id','=',$admin_id],
                     ['process','<','2'],
@@ -197,7 +198,157 @@ class InformationController extends Controller
                 }        
               //dd($info);
               return view('information.index1')->with(compact('info','action'));
+
+
+        }elseif ($admin_id == $admin_director_id && $dept_id == '13') {
+            $information=Information::where('emp_id',$admin_id)->where('process','<','2')->get();
+            foreach ($information as $key => $value) {
+                $recodenum = Recode::where([['info_id','=',$value->id],['emp_id',$value->emp_id]])->count();
+                    $info1[]=[
+                        'id'=> $value->id,
+                        'name' => $value->name,
+                        'cont_name' => $value->cont_name,
+                        'cont_phone' => $value->cont_phone,
+                        'cont_main' => $value->cont_main,
+                        'cont_unit' => $value->cont_unit,
+                        'emp_id' => $value->emp_id,
+                        'staff_name' => $value->staff_name,
+                        'staff_phone' => $value->staff_phone,
+                        'currency' => $value->currency,
+                        'industry' => $value->industry,
+                        'investment' => $value->investment,
+                        'status' => $value->status,
+                        'process' => $value->process,
+                        'is_show' => $value->is_show,
+                        'created_at' => $value->created_at,
+                        'recodenum' =>$recodenum 
+                    ];
+
+                    
+            }
+            //上报的洽谈项目
+
+            $information1=Information::whereIn('emp_id',$emp_arry)->where([
+                ['process','<','3'],
+                ['is_show', '>', '0'],
+            ])->get();
+            //dd($information); 
+            foreach ($information1 as $key => $k) {
+                $nego = Negotiation::where([
+                    ['info_id','=',$k->id],
+                    ['actiontype','=','11'],
+
+
+                ])->get();
+                foreach ($nego as $key => $kk) {
+                    $recodenum1 = Recode::where([['info_id','=',$kk->info_id],['emp_id',$kk->emp_id]])->count();                  
+                    $info2[]=[
+                        'id'=> $k->id,
+                        'name' => $k->name,
+                        'cont_name' => $k->cont_name,
+                        'cont_phone' => $k->cont_phone,
+                        'cont_main' => $k->cont_main,
+                        'cont_unit' => $k->cont_unit,
+                        'emp_id' => $k->emp_id,
+                        'staff_name' => $k->staff_name,
+                        'staff_phone' => $k->staff_phone,
+                        'currency' => $k->currency,
+                        'investment' => $k->investment,
+                        'industry' => $k->industry,
+
+                        'status' => $k->status,
+                        'process' => $k->process,
+                        'is_show' =>$k->is_show,
+                        'created_at' => $k->created_at, 
+                        'nego_id' => $kk->id,
+                        'recodenum'=>$recodenum1,
+                    ];
+                }
+
+                
+            }
+            $reportnum = Negotiation::where([
+                    ['director_id','=','0'],
+                    ['actiontype','=','11'],
+                ])->count();
+
+            //流转项目
+            $nego1 = Negotiation::whereIn('emp_id',$emp_arry)->where([
+                    ['actiontype','=','5'],
+                    ['result','=','0'],
+            ])->get();
+            foreach ($nego1 as $key => $v) {
+                $information1=Information::where('id',$v->info_id)->where([
+                    ['process', '=', '1'],
+                ])->get();
+                foreach ($information1 as $key => $vv) {
+                    $recodenum2 = Recode::where([['info_id','=',$vv->id],['emp_id',$vv->emp_id]])->count();
+                    $info3[]=[
+                        'id'=> $vv->id,
+                        'name' => $vv->name,
+                        'cont_name' => $vv->cont_name,
+                        'cont_phone' => $vv->cont_phone,
+                        'cont_main' => $vv->cont_main,
+                        'cont_unit' => $vv->cont_unit,
+                        'currency' => $vv->currency,
+                        'investment' => $vv->investment,
+                        'industry' => $vv->industry,
+                        'staff_name' => $vv->staff_name,
+                        'staff_phone' => $vv->staff_phone,
+                        'emp_id' => $vv->emp_id,
+                        'status' => $vv->status,
+                        'process' => $vv->process,
+                        'is_show' => $vv->is_show,
+                        'created_at' => $vv->created_at, 
+                        'nego_id' => $v->id,
+                        'recodenum'=>$recodenum2,
+                    ];
+                }
+            }
+            $circulenum = Information::whereIn('emp_id',$emp_arry)->where('process', '=', '1')->count();
+
+            return view('information.index3')->with(compact('info1','info2','info3','reportnum','circulenum'));  
+
+
+        }elseif($admin_id != $admin_director_id && $dept_id == '13'){
+
+            $information=Information::where([
+                    ['emp_id','=',$admin_id],
+                    ['process','<','2'],
+             ])->orwhere([
+                    ['emp_id','=',$admin_id],
+                    ['process','=','9'],
+             ])->get();
+             //dd($information);
+              $info = [];
+                foreach ($information as $key => $value) {
+                    $recodenum = Recode::where('info_id',$value->id)->count();   
+                    $info[]=[
+                        'id'=> $value->id,
+                        'name' => $value->name,
+                        'cont_name' => $value->cont_name,
+                        'cont_phone' => $value->cont_phone,
+                        'cont_main' => $value->cont_main,
+                        'cont_unit' => $value->cont_unit,
+                        'emp_id' => $value->emp_id,
+                        'staff_name' => $value->staff_name,
+                        'staff_phone' => $value->staff_phone,
+                        'currency' => $value->currency,
+                        'investment' => $value->investment,
+                        'industry' => $value->industry,
+                        'investment' => $value->investment,
+                        'status' => $value->status,
+                        'process' => $value->process,
+                        'is_show' => $value->is_show, 
+                        'created_at' => $value->created_at,
+                        'recodenum'=>$recodenum,
+                    ];
+                }        
+              //dd($info);
+              return view('information.index4')->with(compact('info','action'));
+
         }
+
     }
 
     public function show($id){
@@ -214,6 +365,8 @@ class InformationController extends Controller
                     'name' => $information->name,
                     'cont_name' => $information->cont_name,
                     'cont_phone' => $information->cont_phone,
+                    'cont_main' => $information->cont_main,
+                    'cont_unit' => $information->cont_unit,
                     'emp_id' => $information->emp_id,
                     'staff_name' => $information->staff_name,
                     'staff_phone' => $information->staff_phone,
@@ -275,6 +428,16 @@ class InformationController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
+        $validatedData = $request->validate([
+        'name' => 'unique:App\Information,name',
+        'cont_main' => 'unique:App\Information,cont_main',
+        'cont_name' => 'unique:App\Information,cont_name',
+        'cont_phone' => 'unique:App\Information,cont_phone',
+        ]);
+        //$errors = $validatedData->errors();
+        //return response() -> json($errors);
+        //dd($data);
+
         $result=Information::create($data);
         return  $result ? '1' : '0';
     }
@@ -293,9 +456,9 @@ class InformationController extends Controller
 
         $data=$request->all();
 
-        $information->update($data);
+        $result=$information->update($data);
 
-        return redirect()->route('information.index');
+        return  $result ? '1' : '0';
     }
 
 

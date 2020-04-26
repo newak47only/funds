@@ -6,7 +6,7 @@
 			<div class="panel-body">
 
 				
-				<form action="{{route('circule.update',['id'=>$negotiation->id])}}" method="post"  class="form form-horizontal" id="form-admin-add" >
+				<form action="{{route('circule.update',$negotiation->id)}}" method="post"  class="form form-horizontal" id="form-admin-add" >
 				<div class="row clearfix">
 					<table class="table table-border table-bordered" style="width: 600px; margin-left: 100px">
       				<tbody>

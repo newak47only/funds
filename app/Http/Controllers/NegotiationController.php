@@ -397,9 +397,6 @@ class NegotiationController extends Controller
          }elseif ($data['status'] == 2) {
              DB::update('update information set status = ? where id = ?',[0,$info_id]);
          }
-
-         
-
        
         /*$negotiation=Negotiation::findOrFail($id);
 
@@ -415,5 +412,27 @@ class NegotiationController extends Controller
         $negotiation->update($request->all());*/
         return redirect()->route('negotiation.index')->with(['success'=>1,'message'=>'更新成功']);
     }
+
+    public function list($id)
+    {
+        $nego=Negotiation::where([
+            ['info_id','=',$id],
+            ['actiontype','=','13'],
+            ['result','=','1']
+        ])->get();
+
+        foreach ($nego as $key => $value) {
+            $datetime2 = carbon::parse($value->neg_at);
+            $days = (new Carbon)->diffIndays($datetime2, true);
+            $day = 7-$days;
+            $value->check_day = $day;
+            $value->rate = round($day/7*100).'%';                
+        }
+        dd($nego);
+        return view('negotiation.edit')->with(compact('nego'));
+
+    }
+
+
 
 }

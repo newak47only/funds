@@ -65,7 +65,9 @@ class EmpController extends Controller
      */
     public function show($id)
     {
-        //
+        $emp=Emp::where('id',$id)->first();
+        //dd($emp);
+        return view('emp.show')->with(compact('emp'));
     }
 
     /**

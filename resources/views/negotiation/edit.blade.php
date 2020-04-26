@@ -6,7 +6,7 @@
 			<div class="panel-body">
 
 				
-				<form action="{{route('negotiation.update',['id'=>$negotiation->id])}}" method="POST" class="form form-horizontal" id="form-admin-add" >
+				<form action="{{route('negotiation.update',$negotiation->id)}}" method="POST" class="form form-horizontal" id="form-admin-add" >
 				<div class="row clearfix">
 					<table class="table">
       				<tbody>

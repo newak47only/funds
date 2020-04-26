@@ -15,14 +15,19 @@ class Emp extends Authenticatable
     protected $table="emp";
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','workno','dept_id','leave','username','phone','remark'
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
 
-    // protected $casts = [
-     //   'email_verified_at' => 'datetime',
-    //];
+    public function dept(){
+        return $this->hasOne('App\Dept','id','dept_id');
+    }
 }

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <h3>编辑部门</h3>
-        <form action="{{route('dept.update',['id'=>$dept->id])}}" method="POST">
+        <form action="{{route('dept.update',$dept->id)}}" method="POST">
           <div class="form-group">
             <label for="dept_name">部门名称</label>
             <input type="text" class="form-control" id="dept_name" name="dept_name" placeholder="部门名称" required value="{{$dept->dept_name}}">

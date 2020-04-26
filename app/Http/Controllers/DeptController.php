@@ -41,14 +41,15 @@ class DeptController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
+        dd($data);
 
         $this->validate($request,[
             'dept_name'=>'required'
         ]);
 
-        Dept::create($data);
+        $result=Dept::create($data);
 
-        return redirect()->route('dept.index');
+        return $result? '1' : '0';
     }
 
     /**

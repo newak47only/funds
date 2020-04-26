@@ -8,13 +8,13 @@ class Information extends Model
 {
     //
      protected $table="information";
-     protected $fillable=['name','cont_name','cont_phone','staff_name','staff_phone','emp_id','currency','investment','industry','content','status','process','appeal'];
+     protected $fillable=['name','cont_name','cont_phone','staff_name','staff_phone','emp_id','currency','investment','industry','content','status','process','appeal','cont_main','cont_unit','check_id'];
      
      //public function info_nego(){
      //	return  $this->hasOne('App\Emp','id','emp_id');
      //}
      public function info_nego(){
-     	return  $this->hasOne('App\Negotiation','info_id','id');
+     	return  $this->hasMany('App\Negotiation','info_id','id');
      }
      public function info_sta(){
      	return  $this->hasMany('App\Statistics','info_id','id');

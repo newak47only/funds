@@ -21,6 +21,12 @@
                     @endif </td>
         </tr>
         <tr>
+          <th class="text-r" width="100">资方负责人：</th>
+          <td colspan='2'>{{$v['cont_main']}} </td>
+          <th class="text-r" width="100">主要投资方：</th>
+          <td colspan='2'>{{$v['cont_unit']}} </td>
+        </tr>
+        <tr>
           <th class="text-r" width="100">资方联系人：</th>
           <td colspan='2'>{{$v['cont_name']}} </td>
           <th class="text-r" width="100">资方联系方式：</th>
