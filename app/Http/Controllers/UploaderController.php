@@ -52,6 +52,74 @@ class UploaderController extends Controller
 
     }
 
+    public function tclist(){
+
+        $admin_id=Auth::user()->id;
+        $gray='本人发布项目资料列表';
+        $information = Information::where('emp_id',$admin_id)->get();
+        return view('uploader.index2')->with(compact('information','gray'));
+    }
+
+    public function tctracklist(){
+        $admin_id=Auth::user()->id;
+        $gray='本人跟踪项目资料列表';
+        $information = Information::where('check_id',$admin_id)->get();
+        return view('uploader.index2')->with(compact('information','gray'));
+    }
+
+
+    public function tclist_all(){
+
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();  
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        }
+        $gray = '本部门发布项目资料列表';
+        $information = Information::whereIn('emp_id',$emp_arry)->get();
+        return view('uploader.index2')->with(compact('information','gray'));
+    }
+
+    public function tctracklist_all(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();  
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        }
+        $gray='本部门跟踪项目资料列表';
+        $information = Information::whereI('check_id',$emp_arry)->get();
+        return view('uploader.index2')->with(compact('information','gray'));
+    }
 
     public function webuploader(Request $request){
 

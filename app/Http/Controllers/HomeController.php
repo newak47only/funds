@@ -49,7 +49,7 @@ class HomeController extends Controller
             $status =4;
         }
         //dd($status);
-        return view('index')->with(compact('status','dept_name'));
+        return view('index1')->with(compact('status','dept_name'));
 
     }
 

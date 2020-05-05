@@ -34,7 +34,9 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::resource('permission','PermissionController');
 	//Route::get('/permission/index', 'PermissionController@index');
 	//Route::any('/permission/add', 'PermissionController@add');
-
+	//角色管理模块
+	Route::get('/role/assign/{id}','RoleController@assign');
+	Route::resource('role','RoleController');
 	//部门管理模块
 	Route::get('/dept/aajax/{str}',"DeptController@aajax");
 	Route::get('/dept/destroy/{id}','DeptController@destroy');
@@ -44,6 +46,9 @@ Route::get('/welcome', 'HomeController@welcome');
 	//Route::any('/dept/edit', 'DeptController@edit');
 
 	//洽谈项目管理模块
+	Route::get('information/termination/{str}','InformationController@termination');
+	Route::get('information/list_all','InformationController@list_all');
+	Route::get('information/ownlist','InformationController@ownlist');
 	Route::resource('information','InformationController');
 	
 	//洽谈项目上报模块管理模块
@@ -53,9 +58,17 @@ Route::get('/welcome', 'HomeController@welcome');
 
 
 	//洽谈审批管理模块
+	Route::get('/negotiation/ownlist_all','NegotiationController@ownlist_all');
+	Route::get('/negotiation/inlist_all','NegotiationController@inlist_all');
+	Route::get('/negotiation/outlist_all','NegotiationController@outlist_all');
+	Route::get('/negotiation/ownlist','NegotiationController@ownlist');
+	Route::get('/negotiation/inlist','NegotiationController@inlist');
+	Route::get('/negotiation/outlist','NegotiationController@outlist');
+	Route::get('/negotiation/tctracklist_all','NegotiationController@tctracklist_all');
 	Route::get('/negotiation/list/{id}','NegotiationController@list');
 	Route::get('/negotiation/index1','NegotiationController@index1');
-	Route::get('/negotiation/index2','NegotiationController@index2');
+	Route::get('/negotiation/tclist','NegotiationController@tclist');
+	Route::get('/negotiation/tctracklist','NegotiationController@tctracklist');
 	Route::get('/negotiation/add/{id}','NegotiationController@add');
 	Route::resource('negotiation','NegotiationController');
 	
@@ -75,16 +88,28 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::resource('statistics','StatisticsController');
 
 
+	Route::any('/uploader/tclist_all','UploaderController@tclist_all');
+	Route::any('/uploader/tctracklist_all','UploaderController@tctracklist_all');
+	Route::any('/uploader/tclist','UploaderController@tclist');
+	Route::any('/uploader/tctracklist','UploaderController@tctracklist');
 	Route::any('/uploader/index1','UploaderController@index1');
 	Route::any('/uploader/index2','UploaderController@index2');
 	Route::any('/uploader/webuploader','UploaderController@webuploader');
 	Route::resource('uploader','UploaderController');
 
 
+	Route::get('/circule/list_all','CirculeController@list_all');
+	Route::get('/circule/inlist_all','CirculeController@inlist_all');
+	Route::get('/circule/outlist_all','CirculeController@outlist_all');
+	Route::get('/circule/inlist','CirculeController@inlist');
+	Route::get('/circule/outlist','CirculeController@outlist');
 	Route::get('/circule/index1','CirculeController@index1');
 	Route::get('/circule/index2','CirculeController@index2');
-	Route::get('/circule/index3','CirculeController@index3');
 	Route::get('/circule/index4','CirculeController@index4');
+	Route::get('/circule/tclist_all','CirculeController@tclist_all');
+	Route::get('/circule/tctracklist_all','CirculeController@tctracklist_all');
+	Route::get('/circule/tclist','CirculeController@tclist');
+	Route::get('/circule/tctracklist','CirculeController@tctracklist');
 	Route::get('/circule/start_circule/{id}','CirculeController@start_circule');
 	Route::post('/circule/start_store/','CirculeController@start_store');
 	Route::get('/circule/check/{id}','CirculeController@check');

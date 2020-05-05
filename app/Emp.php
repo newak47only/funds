@@ -30,4 +30,8 @@ class Emp extends Authenticatable
     public function dept(){
         return $this->hasOne('App\Dept','id','dept_id');
     }
+
+    public function role(){
+        return $this->hasOne('App\Role','id','role_id');
+    }
 }

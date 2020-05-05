@@ -5,9 +5,9 @@
 		<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
 			首页
 			<span class="c-gray en">/</span>
-			项目绩效管理
+			全市流转项目管理
 			<span class="c-gray en">/</span>
-			项目绩效列表
+			本人发布项目表
 			<a class="btn btn-success radius f-r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 		</nav>
 
@@ -15,22 +15,18 @@
 
 			<div class="panel ">
 				<div class="panel-body">
-					<div id="tab-system" class="HuiTab">
-						<div class="tabBar cl"><span>本人流转转出项目</span><span>跟踪流转项目</span></div>
-						<div class="tabCon">
-							<div class="mt-20 clearfix">
-								<span class="f-l">
-									<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
-								</span>
-						
-							</div>
-							<div class="mt-20 clearfix">
-								<table class="table table-border table-bordered table-bg table-hover table-sort">
+					<div class="mt-20 clearfix">
+						<span class="f-l">
+							<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
+						</span>	
+					</div>
+					<div class="mt-20 clearfix">
+						<table class="table table-border table-bordered table-bg table-hover table-sort">
 									<thead>
 										<tr class="text-c">
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
-											<th width="">项目名称</th>
+											<th width="200">项目名称</th>
 											<th width="120">资方联系人</th>
 											<th width="130">资方联系方式</th>
 											<th width="120">首谈联系人</th>
@@ -76,81 +72,7 @@
 										</tr>
 										@endforeach
 									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="tabCon">
-							<div class="mt-20 clearfix">
-								<span class="f-l">
-									<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
-								</span>
-						
-							</div>
-							<div class="mt-20 clearfix">
-								<table class="table table-border table-bordered table-bg table-hover table-sort">
-									<thead>
-										<tr class="text-c">
-											<th width="25"><input type="checkbox" name="" value=""></th>
-											<th width="40">ID</th>
-											<th width="">项目名称</th>
-											<th width="100">资方联系人</th>
-											<th width="100">资方联系方式</th>
-											<th width="100">首谈联系人</th>
-											<th width="100">跟踪负责人</th>
-											<th width="80">流转方向</th>
-											<th width="120">流转时间</th>
-											<th width="120">流转状态</th>
-											<th width="330 ">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($information2 as $v)
-
-										<tr class="text-c">
-											<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
-											<td >{{$v->id}}</td>
-											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
-											<td > {{$v->cont_name}}</td>
-											<td > {{$v->cont_phone}}</td>
-											<td >
-												@foreach($emps as $n)
-												@if($n->id == $v->emp_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$v->staff_name}}</u>
-												@endif
-												@endforeach
-											</td>
-											<td >
-												@foreach($emps as $n)
-												@if($n->id == $v->check_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$v->check_id)}}','$v->check_id}}')" title="查看项目跟踪负责人信息">{{$n->username}}</u>
-												@endif
-												@endforeach
-											</td>
-											@foreach($v->info_nego as $k)
-											@if($k->actiontype == 5 && $k->info_id == $v->id && $k->result == 1)
-											<td >
-												@foreach($depts as $n)
-												@if($n->id == $k->status)
-												{{$n->dept_name}}
-												@endif
-												@endforeach
-											</td>
-											<td >{{$k->neg_at}}</td>
-											@endif
-											@endforeach
-											<td >@if($v->status == 0)暂无流转@else<u style="cursor:pointer" class="text-primary" onClick="information_show('查看流转信息','/negotiation/list/{{$v->id}}')" title="查看流转信息">{{$v->status}}个区域流转中</u>@endif</td>
-											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick="recode_add('查看流转详情','/recode/add/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;推进记录&nbsp;&nbsp;&nbsp;</button>	
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;重置流转&nbsp;&nbsp;&nbsp;</button>	
-											</td>
-										</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-						</div>
+						</table>
 					</div>
 				</div>
 			</div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Recode,App\Emp,App\Information,App\Negotiation;
+use App\Recode,App\Emp,App\Information,App\Negotiation,App\Dept;
 use Auth,DB;
 
 
@@ -310,6 +310,524 @@ class NegotiationController extends Controller
             //dd($info);            
             return view('negotiation.index2')->with(compact('info','info1','info2'));
 
+    }
+
+    public function ownlist_all(){
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($emps as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        } 
+
+        //全区独立完成项目
+        $information=Information::whereIn('emp_id',$emp_arry)->where([
+                    ['process','>','3'],
+                    ['circule_id','=','0'],
+             ])->get();
+
+        $info = [];
+        foreach ($information as $key => $value) {
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $info[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'dept' =>$admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+        //流转项目
+
+            //dd($info);            
+    return view('negotiation.ownlist_all')->with(compact('info'));       
+
+
+    }
+
+    public function inlist_all(){
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($emps as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        } 
+
+        //流转项目
+        $info1 = [];
+        $information1=Information::whereIn('circule_id',$emp_arry)->where('process','>','3')->get();
+        foreach ($information1 as $key => $value) {
+            $c_emp=Emp::where('id',$value->emp_id)->firstOrFail();
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $info1[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'circule_f_dept' => $c_emp->dept->dept_name,
+                'circule_f_name' => $c_emp->name,
+                'circule_f_phone' => $c_emp->phone,
+                'circule_n_dept' =>$admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+      
+            return view('negotiation.inlist_all')->with(compact('info1'));       
+    }
+
+    public function outlist_all(){
+
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($emps as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        } 
+        //首谈地项目
+        $info2 = [];
+        $information2=Information::whereIn('emp_id',$emp_arry)->where([
+                    ['process','>','3'],
+                    ['circule_id','!=','0'],
+             ])->get();
+        foreach ($information2 as $key => $value) {
+            $n_emp=Emp::where('id',$value->circule_id)->firstOrFail();  
+            $recodenum = Recode::where('info_id',$value->id)->count();          
+            $info2[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show, 
+                'circule_n_dept' => $n_emp->dept->dept_name,
+                'circule_n_name' => $n_emp->name,
+                'circule_n_phone' => $n_emp->phone,
+                'circule_f_dept' => $admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+            //dd($info);            
+            return view('negotiation.outlist_all')->with(compact('info2'));       
+    }
+
+    public function ownlist(){
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+
+        //独立完成项目
+        $information=Information::where([
+                    ['emp_id','=',$admin_id],
+                    ['process','>','3'],
+                    ['circule_id','=','0']
+             ])->get();
+
+        $info = [];
+        foreach ($information as $key => $value) {
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $info[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'dept' =>$admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+
+        return view('negotiation.ownlist')->with(compact('info'));
+
+    }
+
+    public function inlist(){
+
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+        $info1 = [];
+        $information1=Information::where([
+                    ['circule_id','=',$admin_id],
+                    ['process','>','3'],
+             ])->get();
+        foreach ($information1 as $key => $value) {
+            $c_emp=Emp::where('id',$value->emp_id)->firstOrFail();
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $info1[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'circule_f_dept' => $c_emp->dept->dept_name,
+                'circule_f_name' => $c_emp->name,
+                'circule_f_phone' => $c_emp->phone,
+                'circule_n_dept' =>$admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+        return view('negotiation.inlist')->with(compact('info1'));
+    }
+
+    public function outlist(){
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+        $info2 = [];
+        $information2=Information::where([
+                    ['emp_id','=',$admin_id],
+                    ['process','>','3'],
+                    ['circule_id','!=','0'],
+             ])->get();
+        foreach ($information2 as $key => $value) {
+            $n_emp=Emp::where('id',$value->circule_id)->firstOrFail();  
+            $recodenum = Recode::where('info_id',$value->id)->count();          
+            $info2[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show, 
+                'circule_n_dept' => $n_emp->dept->dept_name,
+                'circule_n_name' => $n_emp->name,
+                'circule_n_phone' => $n_emp->phone,
+                'circule_f_dept' => $admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+            return view('negotiation.outlist')->with(compact('info2'));
+    }
+
+
+
+    public function tclist(){
+
+        $admin_id=Auth::user()->id;
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+         $gray = '本人发布项目列表';
+        //独立完成项目
+
+
+        $information = Information::where([
+                    ['emp_id','=',$admin_id],
+                    ['process','>','3'],
+                    ['circule_id','!=','0']
+             ])->get();
+
+        $info = [];
+        foreach ($information as $key => $value) {
+            $nego=Negotiation::where([
+                ['info_id','=',$value->id],
+                ['result','=', '4'],
+            ])->first(); 
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $n_emp=Emp::where('id',$value->circule_id)->firstOrFail(); 
+            $f_emp=Emp::where('id',$nego['emp_id'])->firstOrFail(); 
+            $info[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'dept' =>$admin->dept->dept_name,
+                'circule_n_dept' => $n_emp->dept->dept_name,
+                'circule_n_name' => $n_emp->name,
+                'circule_n_phone' => $n_emp->phone,
+                'circule_f_dept' =>  $f_emp->name,
+                'circule_f_name' =>  $f_emp->name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+        return view('negotiation.tclist')->with(compact('info','gray'));
+
+
+    }
+
+    public function tctracklist(){
+
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $admin=Emp::where('id',$admin_id)->firstOrFail();
+        //dd($admin->dept->dept_name);
+         $gray = '本人跟踪项目列表';
+        //独立完成项目
+        $information=Information::where([
+                    ['check_id','=',$admin_id],
+                    ['process','>','3'],
+                    ['circule_id','=!','0']
+             ])->get();
+        $info = [];
+        foreach ($information as $key => $value) {
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $n_emp=Emp::where('id',$value->circule_id)->firstOrFail(); 
+
+            $info[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'dept' =>$admin->dept->dept_name,
+                'circule_n_dept' => $n_emp->dept->dept_name,
+                'circule_n_name' => $n_emp->name,
+                'circule_n_phone' => $n_emp->phone,
+                'circule_f_dept' => $admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+        return view('negotiation.tctracklist')->with(compact('info','gray'));
+    }
+
+    public function tclist_all(){
+
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();  
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        }
+        $gray = '本部门发布落地项目列表';
+
+        //独立完成项目
+        $information=Information::whereIn('emp_id',$emp_arry)->where([
+                    ['process','>','3'],
+                    ['circule_id','=!','0']
+             ])->get();
+        //dd($information);
+        $info = [];
+        foreach ($information as $key => $value) {
+            $nego=Negotiation::where([
+                ['info_id','=',$value->id],
+                ['result','=', '4'],
+            ])->first(); 
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $n_emp=Emp::where('id',$value->circule_id)->firstOrFail(); 
+            $f_emp=Emp::where('id',$nego['emp_id'])->firstOrFail(); 
+            $info[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'dept' =>$admin->dept->dept_name,
+                'circule_n_dept' => $n_emp->dept->dept_name,
+                'circule_n_name' => $n_emp->name,
+                'circule_n_phone' => $n_emp->phone,
+                'circule_f_dept' =>  $f_emp->name,
+                'circule_f_name' =>  $f_emp->name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+        return view('negotiation.tclist')->with(compact('info','gray'));
+
+
+    }
+
+    public function tctracklist_all(){
+
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();  
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        }
+        $gray = '本部门跟踪落地项目列表';
+
+        //独立完成项目
+        $information=Information::whereIn('check_id',$emp_arry)->where([
+                    ['process','>','3'],
+                    ['circule_id','=!','0']
+             ])->get();
+        //dd($information);
+        $info = [];
+        foreach ($information as $key => $value) {
+            $recodenum = Recode::where('info_id',$value->id)->count();
+            $n_emp=Emp::where('id',$value->circule_id)->firstOrFail(); 
+
+            $info[]=[
+                'id'=> $value->id,
+                'name' => $value->name,
+                'cont_name' => $value->cont_name,
+                'cont_phone' => $value->cont_phone,
+                'emp_id' => $value->emp_id,
+                'staff_name' => $value->staff_name,
+                'staff_phone' => $value->staff_phone,
+                'currency' => $value->currency,
+                'investment' => $value->investment,
+                'industry' => $value->industry,
+                'investment' => $value->investment,
+                'status' => $value->status,
+                'process' => $value->process,
+                'is_show' => $value->is_show,
+                'dept' =>$admin->dept->dept_name,
+                'circule_n_dept' => $n_emp->dept->dept_name,
+                'circule_n_name' => $n_emp->name,
+                'circule_n_phone' => $n_emp->phone,
+                'circule_f_dept' => $admin->dept->dept_name,
+                'recodenum'=>$recodenum,
+             ]; 
+        }
+        return view('negotiation.tctracklist')->with(compact('info','gray'));
     }
 
     public function show($id)

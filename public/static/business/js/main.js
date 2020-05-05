@@ -455,6 +455,15 @@ function admin_permission_del(obj,id){
 
 /*-------------------角色管理-------------------------*/
 /*管理员-角色-添加*/
+function admin_role_assign(title,url){
+  var index = layer.open({
+    type: 2,
+    title: title,
+    content: url,
+    area: ['800px', '600px'],
+  });
+}
+
 function admin_role_add(title,url){
   var index = layer.open({
 		type: 2,

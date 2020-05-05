@@ -41,26 +41,7 @@
 							<textarea type="text" class="textarea" value="" placeholder="" id="remark" name="remark" datatype="*4-16" ></textarea>
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>流转方向：</label>
-						<div class="form-controls col-xs-8 col-sm-9 skin-minimal">
-							@foreach($depts as $val)
-							@if($val->id == 0)
-							<div class="radio-box">
-								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}" checked>
-								<label for="radio-2">{{$val->dept_name}}</label>
-							</div>
-							@else
-							<div class="radio-box">
-								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}">
-								<label for="radio-2">{{$val->dept_name}}</label>
-							</div>
-							@endif
-							
-							@endforeach
-							
-						</div>
-					</div>
+
 					<input type="hidden"  value="{{$informations->currency}}" placeholder="" id="Landing_currency" name="currency" >
 					<input type="hidden"  value="{{$informations->id}}" placeholder="" id="report_info_id" name="info_id" >
 					<input type="hidden"  value="{{$eaction}}" placeholder="" id="report_eaction" name="eaction" >

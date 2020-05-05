@@ -305,7 +305,166 @@ class CirculeController extends Controller
 
     }
 
-    public function index3(){
+    public function list_all(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        } 
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get(); 
+
+        $nego1=Negotiation::where([['actiontype','=','5'],['result','=','1']])->whereNotIn('emp_id',  $emp_arry)->whereIn('status',['0',$dept_id])->get();  
+        return view('circule.list_all')->with(compact('nego1','emps','depts'));  
+    }
+
+    public function inlist_all(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        } 
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();          
+
+        //本区流转转入项目
+        $nego2=Negotiation::where([
+            ['director_id','=',$admin_id],
+            ['result','<','3'],
+            ['actiontype','=','13']
+        ])->get();
+        
+        foreach ($nego2 as $key => $v) {
+
+            $information3=Information::where([
+                    ['id','=',$v->info_id],
+                    ['process','=','2'],
+                ])->get(); 
+                foreach ($information3 as $key => $vv) {
+
+                    $datetime2 = carbon::parse($v->neg_at);
+                    $days = (new Carbon)->diffIndays($datetime2, true);
+                    $day = 7-$days;
+                    $v->check_day = $day;                             
+                }
+            }        
+
+        return view('circule.inlist_all')->with(compact('nego2','emps','depts')); 
+
+    }
+
+    public function outlist_all(){
+
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        } 
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();   
+        $information1=Information::where('process','2')->whereIn('emp_id', $emp_arry)->get();
+
+        return view('circule.outlist_all')->with(compact('information1','emps','depts')); 
+    }
+
+
+
+
+    public function outlist(){
+
+        $admin_id = Auth::user()->id;
+        $emps=Emp::get();
+        $depts = Dept::get();      
+            //我发布的流转项目
+        $information1=Information::where('emp_id', '=', $admin_id)->whereIn('process',[1,2,3])->get();
+        foreach ($information1 as $key => $value) 
+        {
+            $value->num = Rcode::where('info_id',$value->id)->count();
+            
+        }
+        
+         return view('circule.outlist')->with(compact('information1','emps','depts')); 
+    }
+
+    public function inlist(){
+        
+        $admin_id = Auth::user()->id;
+        $emps=Emp::get();
+        $depts = Dept::get();  
+        $nego2=Negotiation::where([
+                ['director_id','=',$admin_id],
+                ['result','<','3'],
+                ['actiontype','=','13']
+        ])->get();
+        //$information3=Information::where('process','=','10')->where('emp_id', '!=', $admin_id)->get();
+        //dd($info);
+        foreach ($nego2 as $key => $v) {
+
+            $information3=Information::where([
+                ['id','=',$v->info_id],
+                ['process','=','2'],
+            ])->get(); 
+
+            foreach ($information3 as $key => $vv) {
+                $datetime2 = carbon::parse($v->neg_at);
+                $days = (new Carbon)->diffIndays($datetime2, true);
+                $day = 7-$days;
+                $v->check_day = $day;                             
+            }
+
+            $count=Recode::where([['emp_id','=',$v->emp_id],['info_id','=',$v->info_id]])->orwhere([['emp_id','=',$v->director_id],['info_id','=',$v->info_id]])->count();
+
+            $num[] =[
+                'nego_id' =>$v->id,
+                'count' => $count,
+            ];
+        }
+
+
+        return view('circule.inlist')->with(compact('nego2','emps','depts','num'));   
+
+    }
+
+    public function tclist(){
         $admin_id = Auth::user()->id;
         //获取用户信息
         $emp = Emp::findOrFail($admin_id);
@@ -318,24 +477,98 @@ class CirculeController extends Controller
         //获取用户所在组成员
         $emps=Emp::get();
             //获取用户所在组成员id数组
-        $depts = Dept::get();
-        $info = [];
-        $info1 =[];
-        $info2 =[];       
+        $depts = Dept::get();      
             //本人流转项目
         $information1=Information::where([
             ['emp_id', '=', $admin_id],
             ['process', '=', '2']
         ])->get();
+
+        return view('circule.tclist')->with(compact('information1','emps','depts'));        
+    }
+
+    public function tctracklist(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();      
+            //本人流转项目
+
         $information2=Information::where([
             ['check_id', '=', $admin_id],
             ['emp_id','!=',$admin_id],
             ['process', '=', '2']
         ])->get();
-        return view('circule.index3')->with(compact('information2','information1','emps','depts'));        
-
+        return view('circule.tctracklist')->with(compact('information2','emps','depts'));        
     }
 
+    public function tclist_all(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();  
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        }     
+            //本人流转项目
+        $information1=Information::whereIn('emp_id',$emp_arry )->where([
+            ['process', '=', '2']
+        ])->get();
+
+        return view('circule.tclist_all')->with(compact('information1','emps','depts'));        
+    }
+
+    public function tctracklist_all(){
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get(); 
+
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
+        }     
+            
+
+        $information2=Information::whereIn('check_id', $emp_arry)->where([
+            ['process', '=', '2']
+        ])->get();
+        return view('circule.tctracklist_all')->with(compact('information2','emps','depts'));        
+    }
 
     public function index4(){
         $admin_id = Auth::user()->id;
@@ -436,8 +669,8 @@ class CirculeController extends Controller
         $users = Auth::user();
         $depts = Dept::all();
         //dd($informations);
-        $eaction = '项目流转申请';
-        $actiontype = '5';
+        $eaction = '流转申请';
+        $actiontype = '1';
         return view('circule.add')->with(compact('informations','users','eaction','actiontype','depts'));
     }
 
@@ -452,7 +685,6 @@ class CirculeController extends Controller
                 'emp_id'  =>Auth::id(),
                 'currency' =>$data['currency'],
                 'investment' =>$data['investment'],
-                'status' =>$data['status'],
                 'eaction' =>$data['eaction'],
                 'actiontype' =>$data['actiontype'],
                 'remark' =>$data['remark'],

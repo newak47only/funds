@@ -15,116 +15,7 @@
 
 			<div class="panel ">
 				<div class="panel-body">
-					<div id="tab-system" class="HuiTab">
-						<div class="tabBar cl"><span>可流转项目</span><span>流转转出项目</span><span>流转转入项目</span></div>
 
-						<div class="tabCon">
-							<div class="mt-20 clearfix">
-								<table class="table table-border table-bordered table-bg table-hover table-sort">
-									<thead>
-										<tr class="text-c">
-											<th width="25"><input type="checkbox" name="" value=""></th>
-											<th width="40">ID</th>
-											<th width="">项目名称</th>
-											<th width="120">行业类别</th>
-											<th width="130">投资金额</th>
-											<th width="120">首谈联系人</th>
-											<th width="100">流转方向</th>
-											<th width="140">流转时间</th>
-											<th width="140">流转状态</th>
-											<th width="250">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($nego1 as $v)
-										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v->nego_info->id}}" name="ID"></td>
-											<td>{{$v->nego_info->id}}</td>
-											<td class="text-l">{{$v->nego_info->name}}</td>
-											<td>{{$v->nego_info->industry}}</td>
-											<td>{{$v->nego_info->investment}}@if($v->nego_info->currency =="1")万人民币@elseif($v->nego_info->currency =="2")万美元@elseif($v->nego_info->currency =="3")万欧元@endif</td>
-											<td>
-												@foreach($emps as $n)
-												@if($n->id == $v->emp_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$n->username}}</u>
-												@endif
-												@endforeach
-											</td>
-											<td>
-												@foreach($depts as $m)
-												@if($m->id == $v->status)
-												{{$m->dept_name}}
-												@endif
-												@endforeach
-											</td>
-											<td>{{$v->neg_at}}</td>
-											<td>@if($v->nego_info->status == 0)暂无流转@else{{$v->nego_info->status}}个区域流转中@endif</td>
-											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>		
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('申请流转','/circule/start_circule/{{$v->id}}')"  class="btn btn-primary radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;申请流转&nbsp;&nbsp;</button>		
-											</td>
-										</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="tabCon">
-							<div class="mt-20 clearfix">
-								<table class="table table-border table-bordered table-bg table-hover table-sort">
-									<thead>
-										<tr class="text-c">
-											<th width="25"><input type="checkbox" name="" value=""></th>
-											<th width="40">ID</th>
-											<th width="">项目名称</th>
-											<th width="120">资方联系人</th>
-											<th width="130">资方联系方式</th>
-											<th width="120">首谈联系人</th>
-											<th width="100">流转方向</th>
-											<th width="140">流转时间</th>
-											<th width="140">流转状态</th>
-											<th width="250">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($information1 as $v)
-										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
-											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
-											<td > {{$v->cont_name}}</td>
-											<td > {{$v->cont_phone}}</td>
-											<td >
-												@foreach($emps as $n)
-												@if($n->id == $v->emp_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$v->staff_name}}</u>
-												@endif
-												@endforeach
-											</td>
-											@foreach($v->info_nego as $k)
-											@if($k->actiontype == 5 && $k->info_id == $v->id && $k->result == 1)
-											<td >
-												@foreach($depts as $n)
-												@if($n->id == $k->status)
-												{{$n->dept_name}}
-												@endif
-												@endforeach
-											</td>
-											<td >{{$k->neg_at}}</td>
-											@endif
-											@endforeach
-											<td >@if($v->status == 0)暂无流转@else{{$v->status}}个区域流转中@endif</td>
-											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
-								
-											</td>
-										</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="tabCon">
 							<div class="mt-20 clearfix">
 								<table class="table table-border table-bordered table-bg table-hover table-sort">
 									<thead>
@@ -198,8 +89,8 @@
 								</table>
 							</div>
 							
-						</div>
-					</div>
+
+
 				</div>
 			</div>
 		</article>

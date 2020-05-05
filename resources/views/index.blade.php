@@ -50,6 +50,11 @@
             <li><a data-href="negotiation/index1" data-title="本区落地项目列表" href="javascript:void(0)">本区落地项目列表</a></li>
             @elseif($status ==2)
             <li><a data-href="negotiation/index2" data-title="落地项目列表" href="javascript:void(0)">落地项目列表</a></li>
+            @elseif($status == 3)
+            <li><a data-href="negotiation/index2" data-title="落地项目列表" href="javascript:void(0)">落地项目列表</a></li>
+            <li><a data-href="negotiation/index1" data-title="本区落地项目列表" href="javascript:void(0)">本区落地项目列表</a></li>
+            @elseif($status == 4)
+            <li><a data-href="negotiation/index2" data-title="落地项目列表" href="javascript:void(0)">落地项目列表</a></li>
             @endif
           </ul>
         </dd>
@@ -65,22 +70,38 @@
             <li><a data-href="uploader/index2" data-title="本区项目资料列表" href="javascript:void(0)">本区项目资料列表</a></li>
             @elseif($status ==2)
             <li><a data-href="uploader/index2" data-title="项目资料列表" href="javascript:void(0)">项目资料列表</a></li>
+            @elseif($status == 3)
+            <li><a data-href="uploader/index1" data-title="项目资料列表" href="javascript:void(0)">项目资料列表</a></li>
+            <li><a data-href="uploader/index2" data-title="本区项目资料列表" href="javascript:void(0)">本区项目资料列表</a></li>
+            @elseif($status == 4)
+            <li><a data-href="uploader/index1" data-title="项目资料列表" href="javascript:void(0)">项目资料列表</a></li>
             @endif
           </ul>
         </dd>
       </dl>
-      @if($status < 2 )
+      @if($status ==0 )
       <dl id="menu-admin" class="Hui-menu">
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe62d;</i>&nbsp;管理员管理<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
             <li><a data-href="/dept" data-title="部门管理" href="javascript:void(0)">部门管理</a></li>
+            <li><a data-href="/role" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
             <li><a data-href="/permission" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
             <li><a data-href="/emp" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
           </ul>
         </dd>
       </dl>
+      @elseif($status == 1 || $status == 3 )
+      <dl id="menu-admin" class="Hui-menu">
+        <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe62d;</i>&nbsp;管理员管理<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
+        <dd class="Hui-menu-item">
+          <ul>
+            <li><a data-href="/emp" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+          </ul>
+        </dd>
+      </dl>
       @endif
+
     </div>
   </aside>
   <div class="Hui-admin-aside-mask"></div>
