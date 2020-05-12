@@ -705,6 +705,78 @@ class NegotiationController extends Controller
         return view('negotiation.tctracklist_all')->with(compact('information','gray'));
     }
 
+
+    public function ownlist_city(){
+
+
+        $emps = Emp::get();
+
+        $information=Information::where([
+                    ['circule_id','=','0'],
+             ])->whereIn('process',[7,8,9])->get();
+
+
+        foreach ($information as $key => $value) {
+
+            $recodenum = Recode::where('info_id',$value->id)->count();
+
+            $f_emp = Emp::where('id',$value->emp_id)->first();
+
+            $i_emp = Emp::where('id',$value->issuer_id)->first(); 
+   
+                $value->dept = $f_emp->dept->dept_name;
+
+                $value->issuer = $i_emp->username;
+
+                $value->recodenum = $recodenum;
+  
+        }
+
+        return view('negotiation.ownlist_city')->with(compact('information','emps'));
+
+    }
+
+    public function outlist_city(){
+
+
+        $emps = Emp::get();
+
+        $information=Information::where([
+                    ['circule_id','!=','0'],
+
+
+             ])->whereIn('process',[7,8,9])->get();
+
+
+
+        foreach ($information as $key => $value) {
+
+            $recodenum = Recode::where('info_id',$value->id)->count();
+
+            $f_emp = Emp::where('id',$value->emp_id)->first();
+
+            $n_emp = Emp::where('id',$value->circule_id)->first();
+
+            $c_emp = Emp::where('id',$value->check_id)->first(); 
+   
+                $value->circule_f_dept = $f_emp->dept->dept_name;
+
+                $value->circule_f_name = $f_emp->username;
+
+                $value->circule_n_dept = $n_emp->dept->dept_name;
+
+                $value->circule_n_name = $n_emp->username;
+
+                $value->track = $c_emp->username;
+
+                $value->recodenum = $recodenum;
+  
+        }
+
+        return view('negotiation.outlist_city')->with(compact('information','emps'));
+
+    }
+
     public function show($id)
     {
     	//echo $id;

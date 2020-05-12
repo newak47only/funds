@@ -39,13 +39,8 @@
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分派对象：</label>
 						<div class="form-controls col-xs-8 col-sm-9 skin-minimal">
 							@foreach($depts as $val)
-							@if($val->id == 0)
-							<div class="radio-box">
-								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}" checked>
-								<label for="radio-2">{{$val->dept_name}}</label>
-							</div>
 
-							@elseif($val->id != 6 && $val->id != 13  )
+							@if($val->id != 6 && $val->id != 13 && $val->id != 0   )
 							<div class="radio-box">
 								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}">
 								<label for="radio-2">{{$val->dept_name}}</label>

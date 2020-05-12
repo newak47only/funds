@@ -22,8 +22,8 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe613;</i>&nbsp;全市落地项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
          <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="negotiation/ownlist" data-title="流转项目落地列表" href="javascript:void(0)">流转项目落地列表</a></li>
-            <li><a data-href="negotiation/inlist" data-title="首谈项目落地列表" href="javascript:void(0)">首谈项目落地列表</a></li>
+            <li><a data-href="negotiation/outlist_city" data-title="流转项目落地列表" href="javascript:void(0)">流转项目落地列表</a></li>
+            <li><a data-href="negotiation/ownlist_city" data-title="首谈项目落地列表" href="javascript:void(0)">首谈项目落地列表</a></li>
           </ul>
         </dd>
       </dl>

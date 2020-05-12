@@ -64,7 +64,7 @@
 												@if($v['recodenum'] >= 3)
 												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流转','/circule/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6bd;</i>&nbsp;&nbsp;项目流转&nbsp;&nbsp;&nbsp;</button>
 												@elseif($v['recodenum'] < 3)
-												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流"  class="f-l ml-10 btn disabled  radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6bd;</i>&nbsp;&nbsp;项目流转&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流"  class="f-l ml-10 btn disabled  radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 14px">&#xe6bd;</i>&nbsp;&nbsp;项目流转&nbsp;&nbsp;&nbsp;</button>
 												@endif
 											</td>
 

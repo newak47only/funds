@@ -126,7 +126,7 @@ class UploaderController extends Controller
     	if($request->hasFile('file') && $request->file('file')->isValid()){
     		$filename	=	sha1(time().$request->file('file')->getClientOriginalName()).'.'.$request -> file('file') -> getClientOriginalExtension();
     		
-    		Storage::disk('public')->put($filename, file_get_contents($request->file('file')->path()));
+    		Storage::disk('qiniu')->put($filename, file_get_contents($request->file('file')->path()));
     	
     		$uploader=Uploader::create([
                 'emp_id'  =>$_POST['emp_id'],
@@ -144,7 +144,7 @@ class UploaderController extends Controller
     			'errCode' => '0',
     			'errMsg'  => '',
     			'succMsg' => "文件上传成功！",
-    			'path'	  => '/storage/'.$filename,
+    			'path'	  => Storage::disk('qiniu')->getDriver()->downloadUrl($filename),
 
 			];
     			

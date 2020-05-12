@@ -67,8 +67,10 @@
 											<td >
 												@foreach($k->info_nego as $v)
 													@if($v->actiontype == 6 && $v->status == $k->circule_id)
-														{{$v->created_at}}
+														{{$v->created_at}} 
+														@break
 													@endif
+
 												@endforeach
 											</td>
 											<td>

@@ -8,7 +8,7 @@
 				
 				<form action="/circule/tccheckupdate/{{$information->id}}" method="POST"  class="form form-horizontal" id="form-admin-add" >
 				<div class="row clearfix">
-					<table class="table">
+					<table class="table table-border table-bordered" style="width: 600px; margin-left: 100px">
       				<tbody>
        					 <tr>
           					<th class="text-r" width="80">项目名称：</th>
@@ -16,12 +16,23 @@
         				</tr>
         				<tr>
           					<th class="text-r">投资金额：</th>
-          					<td>@if($information->currency == '1')万人民币@elseif($information->currency == '2')万美元@elseif($information->currency == '3')万欧元@endif
+          					<td>{{$information->investment}}@if($information->currency == '1')万人民币@elseif($information->currency == '2')万美元@elseif($information->currency == '3')万欧元@endif
           					</td>
         				</tr>
         				<tr>
           					<th class="text-r">入库日期：</th>
           					<td>{{$information->created_at}}</td>
+        				</tr>
+
+        				<tr>
+          					<th class="text-r">分派方向：</th>
+          					<td>
+          						@foreach($depts as $n)
+									@if($n->id == $information->status)
+										{{$n->dept_name}}
+									@endif
+								@endforeach
+          					</td>
         				</tr>
 
         				<tr>
@@ -31,9 +42,8 @@
         				<tr>
           					<th class="text-r">审核意见：</th>
           					<td>
-          						<div class="form-controls col-xs-8 col-sm-9">
 									<textarea type="text" class="textarea" value="" placeholder="" id="remark" name="remark" datatype="*4-16" ></textarea>
-								</div>
+
 							</td>
         				</tr>
       				</tbody>

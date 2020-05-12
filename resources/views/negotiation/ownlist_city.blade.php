@@ -27,15 +27,16 @@
 											<th width="100">项目进度</th>
 											<th width="100">项目落户地</th>
 											<th width="100">首谈人</th>
+											<th width="100">项目发布人</th>
 											<th width="100">工作记录</th>
-											<th width="460">操作</th>
+											<th width="230">操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										@foreach($information as $v)
 										<tr class="text-c">
 											<td>{{$v['id']}}</td>
-											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
 											<td>{{$v['company']}}</td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['reg_cap']}}@if($v['currency'] =='0')万人民币
@@ -58,18 +59,17 @@
 													@endif
 												@endforeach
 											</td>
+											<td>
+												@foreach($emps as $m)
+													@if($m->id == $v['issuer_id'])
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目发布人信息','{{route('emp.show',$v['issuer_id'])}}','{{$v['issuer_id']}}')" title="查看项目发布人信息">{{$m->username}}</u>
+													@endif
+												@endforeach
+											</td>
 
 											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','/recode/show/{{$v['id']}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('进度记录','/recode/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进程记录&nbsp;&nbsp;&nbsp;</button>
-												@if($v['process']==7)
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('项目开工','/landing/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 14px;">&#xe640;</i>&nbsp;&nbsp;项目开工&nbsp;&nbsp;</button>
-												@elseif($v['process']==8)
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('项目投产','/completion/add/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 14px;">&#xe640;</i>&nbsp;&nbsp;项目投产&nbsp;&nbsp;</button>
-												@elseif($v['process']==9)
-												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont" style="font-size: 14px;">&#xe640;</i>&nbsp;&nbsp;&nbsp;&nbsp;已投产&nbsp;&nbsp;</button>
-												@endif
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('添加数据','/statistics/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe61e;</i>&nbsp;&nbsp;添加数据&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="information_add('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>	
 												
 												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 14px">&#xe61c;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>											
 											</td>

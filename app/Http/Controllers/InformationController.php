@@ -439,7 +439,7 @@ class InformationController extends Controller
 
             ['is_show','=','1'],
 
-            ['process','=','0']
+            ['process','<','4']
 
         ])->get();
 

@@ -58,7 +58,7 @@
 									<td >
 									@foreach($emps as $n)
 									@if($n->id == $v->emp_id)
-									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$v->staff_name}}</u>
+									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$n->username}}</u>
 									@endif
 									@endforeach
 									</td>
@@ -84,11 +84,21 @@
 									@endforeach
 									</td>
 									<td>
+									@if($v->process == 2)
+									等待市商务局审核
+									@elseif($v->process == 3)
+									等待分派跟踪人
+									@elseif($v->process == 4)
+									等待认领
+									@elseif($v->process == 5)
+									等待区内分发
+									@else
 									@foreach($emps as $m)
 										@if($m->id == $v->circule_id)
 											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
 										@endif
 									@endforeach
+									@endif
 									</td>
 									<td class="td-manage">
 										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>

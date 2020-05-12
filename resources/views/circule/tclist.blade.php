@@ -27,14 +27,13 @@
 										<tr class="text-c">
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
-											<th width="200">项目名称</th>
-											<th width="100">资方联系人</th>
-											<th width="130">资方联系方式</th>
+											<th width="220">项目名称</th>
+											<th width="100">首谈地</th>
 											<th width="100">首谈联系人</th>
 											<th width="100">跟踪负责人</th>
 											<th width="100">流转方向</th>
 											<th width="140">流转时间</th>
-											<th width="140">流转状态</th>
+											<th width="120">流转状态</th>
 											<th width="480">操作</th>
 										</tr>
 									</thead>
@@ -44,8 +43,20 @@
 											<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td >{{$v->id}}</td>
 											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
-											<td > {{$v->cont_name}}</td>
-											<td > {{$v->cont_phone}}</td>
+											<td > 
+											@if(empty($v->emp_id) && $v->process == 21)
+													等待分派
+											@elseif(empty($v->emp_id) && $v->process == 22)
+													等待分派审核
+											@else(empty($v->emp_id) && $v->process == 23)
+												@foreach($depts as $n)
+													@if($n->id == $v->status)
+													{{$n->dept_name}}
+													@endif
+												@endforeach
+											@endif
+											</td>
+		
 											<td>
 											@if(empty($v->emp_id) && $v->process == 21)
 											等待分派
@@ -61,7 +72,7 @@
 											@else
 												@foreach($emps as $n)
 													@if($n->id == $v->emp_id)
-														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$v->staff_name}}</u>
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$n->username}}</u>
 													@endif
 												@endforeach
 											@endif
@@ -109,7 +120,7 @@
 												等待项目认领
 												@elseif($v->process == 5)
 													@foreach($depts as $m)
-														@if($m->id == $v->status)
+														@if($m->id == $v->circule_to)
 															等待{{$m->dept_name}}分发
 														@endif
 													@endforeach

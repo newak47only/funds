@@ -65,6 +65,21 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'qiniu' => [
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default'   => 'qa8l7i7uc.bkt.clouddn.com', //你的七牛域名
+                'https'     => '',         //你的HTTPS域名
+                'custom'    => '',     //你的自定义域名
+             ],
+            'access_key'=> 'c_y4AEGGHI1oQclTwkHgIvpRgc_LenZLljXCXgKE',  //AccessKey
+            'secret_key'=> 'x36rIas49HwXLRiGyHhC9OtFnlfyNHpHR36069Wo',  //SecretKey
+            'bucket'    => 'nbworkflow',  //Bucket名字
+            'notify_url'=> '',  //持久化处理回调地址
+        ],
+
     ],
+
+
 
 ];

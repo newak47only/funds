@@ -22,13 +22,14 @@
 										<tr class="text-c">
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
-											<th width="250">项目名称</th>
+											<th width="220">项目名称</th>
+											<th width="100">首谈地</th>
 											<th width="100">首谈联系人</th>
 											<th width="100">跟踪负责人</th>
 											<th width="100">流转方向</th>
 											<th width="140">流转时间</th>
-											<th width="140">流转状态</th>
-											<th width="320">操作</th>
+											<th width="100">流转状态</th>
+											<th width="350">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -37,10 +38,17 @@
 											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v->id}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
+											<td>
+												@foreach($depts as $n)
+													@if($n->id == $v->info_emp->dept_id)
+														{{$n->dept_name}}
+													@endif
+												@endforeach
+											</td>
 											<td >
 												@foreach($emps as $n)
 												@if($n->id == $v->emp_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$v->staff_name}}</u>
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$n->username}}</u>
 												@endif
 												@endforeach
 											</td>

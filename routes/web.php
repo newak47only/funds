@@ -64,6 +64,8 @@ Route::get('/welcome', 'HomeController@welcome');
 
 
 	//洽谈审批管理模块
+	Route::get('/negotiation/outlist_city','NegotiationController@outlist_city');
+	Route::get('/negotiation/ownlist_city','NegotiationController@ownlist_city');
 	Route::get('/negotiation/ownlist_all','NegotiationController@ownlist_all');
 	Route::get('/negotiation/inlist_all','NegotiationController@inlist_all');
 	Route::get('/negotiation/outlist_all','NegotiationController@outlist_all');

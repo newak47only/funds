@@ -58,7 +58,7 @@
 											<td><u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v['circule_id'])}}','{{$v['circule_id']}}')" title="查看首谈联系人信息">{{$v['circule_f_name']}}</u></td>
 
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>	
+												<button type="submit"  href="javascript:;" onclick="information_add('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>	
 												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 14px">&#xe61c;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>												
 											</td>
 										</tr>

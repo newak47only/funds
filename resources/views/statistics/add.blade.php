@@ -121,7 +121,7 @@
 				submitHandler:function(form){
 					$(form).ajaxSubmit({
 						type:'post',
-						url:'{{route('completion.store')}}',
+						url:'{{route('statistics.store')}}',
 						success:function(data){
 							if( data == '1'){
 								layer.msg('绩效添加成功！',{ icon: 1,time:2000},function(){

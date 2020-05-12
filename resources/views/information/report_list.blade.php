@@ -52,7 +52,11 @@
 												@endforeach
 											</td>
 											<td>
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$v->staff_name}}</u>
+											@foreach($emps as $m)
+												@if($m->id == $v->emp_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$m->username}}</u>
+												@endif
+											@endforeach
 
 											</td>
 											<td>{{$v['created_at']}}</td>

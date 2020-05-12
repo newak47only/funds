@@ -62,8 +62,8 @@
 
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-							<button class="btn btn-primary radius" type="submit" name="result" value="3">同意流转</button>
-							<button class="btn btn-primary radius" type="submit" name="result" value="2">不同意流转</button>
+							<button class="btn btn-primary radius" type="submit" name="result" value="0">同意流转</button>
+							<button class="btn btn-primary radius" type="submit" name="result" value="1">不同意流转</button>
 						</div>
 					</div>
 

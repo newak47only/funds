@@ -55,7 +55,7 @@
 											<td>{{$v['circule_f_dept']}}</td>
 											<td><u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈人信息','{{route('emp.show',$v['emp_id'])}}','{{$v['emp_id']}}')" title="查看首谈人信息">{{$v['circule_f_name']}}</u></td>
 
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',['id'=>$v['id']])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
+											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',$v['id'])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
 												<button type="submit"  href="javascript:;" onclick="negotiation_create('进度记录','/recode/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进程记录&nbsp;&nbsp;&nbsp;</button>
 												@if($v['process']==7)

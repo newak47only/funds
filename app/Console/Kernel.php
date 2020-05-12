@@ -12,9 +12,9 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-        Checkprocess::class
-    ];
+    //protected $commands = [
+        //Checkprocess::class
+    //];
 
     /**
      * Define the application's command schedule.
@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('check:process')->hourly();
+        $schedule->command('Checkprocess')->hourly();
     }
 
     /**

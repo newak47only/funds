@@ -95,7 +95,7 @@
 									<td class="td-manage">
 										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
 										@if($v->process == 3)
-										<button type="submit"  href="javascript:;" onclick="circule_assign('查看流转详情','/circule/assign/{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe62b;</i>&nbsp;&nbsp;分派跟踪人&nbsp;&nbsp;&nbsp;</button>
+										<button type="submit"  href="javascript:;" onclick="circule_assign('分派项目跟踪人','/circule/assign/{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe62b;</i>&nbsp;&nbsp;分派跟踪人&nbsp;&nbsp;&nbsp;</button>
 										@else
 										<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10 btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe62b;</i>&nbsp;&nbsp;分派跟踪人&nbsp;&nbsp;&nbsp;</button>
 										@endif	

@@ -22,15 +22,15 @@
 											<th width="40">ID</th>
 											<th width="220">项目名称</th>
 											<th width="130">注册企业名称</th>
-											<th width="100">行业类别</th>
+											<th width="120">行业类别</th>
 											<th width="100">注册资金</th>
 											<th width="100">项目进度</th>
-											<th width="150">项目首谈地</th>
+											<th width="100">项目首谈地</th>
 											<th width="100">首谈地联系人</th>
 											<th width="100">项目落户地</th>
 											<th width="100">落户地联系人</th>
 											<th width="100">项目跟踪人</th>
-											<th width="220">操作</th>
+											<th width="230">操作</th>
 										</tr>
 									</thead>
 									<tbody>
