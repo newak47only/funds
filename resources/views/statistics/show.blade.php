@@ -9,7 +9,14 @@
 			<div class="panel ">
 				<div class="panel-body">
 					
-					<div class=" clearfix text-c"><h3>{{$information->name}}</h3><br/><h4>实际到位资金</h4>
+					<div class=" clearfix text-c"><h3>{{$information->name}}</h3><br/>
+					<h4>
+					@if($information->circule_id == 0)
+					实际到位资金
+					@else
+					实际到位资金（首谈地 {{$information->circule_f_dept}} 10%；落户地 {{$information->circule_n_dept}} 90%）
+					@endif
+					</h4>
 						<table class="table table-border table-bordered table-bg table-hover table-sort">
 							<thead>
 								<tr class="text-c">
@@ -32,7 +39,14 @@
 							</tbody>
 						</table>
 					</div>
-					<div class=" clearfix text-c"><h4>GDP</h4>
+					<div class=" clearfix text-c">
+						<h4>
+							@if($information->circule_id == 0)
+							GDP
+							@else
+							GDP（首谈地 {{$information->circule_f_dept}} 50%；落户地 {{$information->circule_n_dept}} 50%）
+							@endif
+						</h4>
 						<table class="table table-border table-bordered table-bg table-hover table-sort">
 							<thead>
 								<tr class="text-c">
@@ -78,7 +92,14 @@
 							</tbody>
 						</table>
 					</div>
-					<div class=" clearfix text-c"><h4>留存部分税收</h4>
+					<div class=" clearfix text-c">
+						<h4>
+							@if($information->circule_id == 0)
+							留存部分税收
+							@else
+							留存部分税收（首谈地{{$information->circule_f_dept}} 10%；落户地 {{$information->circule_n_dept}} 90%）
+							@endif
+						</h4>
 						<table class="table table-border table-bordered table-bg table-hover table-sort">
 							<thead>
 								<tr class="text-c">

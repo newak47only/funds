@@ -20,46 +20,50 @@
 									<thead>
 										<tr class="text-c">
 											<th width="40">ID</th>
-											<th width="">项目名称</th>
+											<th width="220">项目名称</th>
+											<th width="130">注册企业名称</th>
 											<th width="100">行业类别</th>
-											<th width="100">投资金额</th>
+											<th width="100">注册资金</th>
 											<th width="100">项目进度</th>
-											<th width="150">项目落户地</th>
+											<th width="100">项目落户地</th>
+											<th width="100">首谈人</th>
 											<th width="100">工作记录</th>
-											<th width="450">操作</th>
+											<th width="230">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($info as $v)
+										@foreach($information as $v)
 										<tr class="text-c">
 											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+											<td>{{$v['company']}}</td>
 											<td>{{$v['industry']}}</td>
-											<td>{{$v['investment']}}@if($v['currency'] =='0')万人民币
+											<td>{{$v['reg_cap']}}@if($v['currency'] =='0')万人民币
 										@elseif($v['currency'] =='1')万美元
 										@elseif($v['currency'] =='2')万欧元
 										@endif</td>
-											<td>@if($v['process'] == '4')
-												已签约
-												@elseif($v['process'] == '5')
-												已开工
-												@elseif($v['process'] == '6')
-												已投产
+											<td>@if($v['process'] == '7')
+												<span class="badge badge-success radius" >已落地</span>
+												@elseif($v['process'] == '8')
+												<span class="badge badge-success radius">已开工</span>
+												@elseif($v['process'] == '9')
+												<span class="badge badge-success radius">已投产</span>
 												@endif
 											</td>
 											<td>{{$v['dept']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',$v['id'])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
-											<td class="td-manage">
-												@if($v['process']==4)
-												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已落地&nbsp;&nbsp;</button>
-												@elseif($v['process']==5)
-												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已开工&nbsp;&nbsp;</button>
-												@elseif($v['process']==6)
-												<button type="submit"  href="javascript:;" onclick="')"  class=" f-l ml-10 btn btn-success radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已投产&nbsp;&nbsp;</button>
-												@endif
+											<td>
+												@foreach($emps as $m)
+													@if($m->id == $v['emp_id'])
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈人信息','{{route('emp.show',$v['emp_id'])}}','{{$v['emp_id']}}')" title="查看首谈人信息">{{$m->username}}</u>
+													@endif
+												@endforeach
+											</td>
 
-												
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>											
+											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','/recode/show/{{$v['id']}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
+											<td class="td-manage">
+												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 16px">&#xe61c;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>	
+									
 											</td>
 										</tr>
 										@endforeach

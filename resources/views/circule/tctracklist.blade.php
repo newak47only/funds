@@ -54,30 +54,53 @@
 									@endif
 									@endforeach
 									</td>
+									<td>
+										@foreach($emps as $m)
+											@if($m->id == $v->check_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看跟踪人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看跟踪人信息">{{$m->username}}</u>
+											@endif
+										@endforeach	
+									</td>
 									<td >
-									@foreach($emps as $n)
-									@if($n->id == $v->check_id)
-									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$v->check_id)}}','$v->check_id}}')" title="查看项目跟踪负责人信息">{{$n->username}}</u>
-									@endif
-									@endforeach
-								    </td>
-									@foreach($v->info_nego as $k)
-									@if($k->actiontype == 5 && $k->info_id == $v->id && $k->result == 1)
-									<td >
-									@foreach($depts as $n)
-									@if($n->id == $k->status)
-									{{$n->dept_name}}
-									@endif
-									@endforeach
-								    </td>
-									<td >{{$k->neg_at}}</td>
-									@endif
-									@endforeach
-									<td >@if($v->status == 0)暂无流转@else<u style="cursor:pointer" class="text-primary" onClick="information_show('查看流转信息','/negotiation/list/{{$v->id}}')" title="查看流转信息">{{$v->status}}个区域流转中</u>@endif</td>
+										@foreach($depts as $n)
+											@if($n->id == $v->circule_to)
+												{{$n->dept_name}}
+											@endif
+										@endforeach
+									</td>
+									<td>
+										@foreach($v->info_nego as $k)
+											@if($k->actiontype == 1 )
+												{{$k->created_at}}
+											@endif
+										@endforeach
+									</td>
+									<td>
+										@if($v->process == 4)
+										等待认领...
+										@elseif($v->process == 5)
+											@foreach($depts as $m)
+												@if($m->id == $v->status)
+													等待{{$m->dept_name}}分发
+												@endif
+											@endforeach
+										@elseif($v->process == 6)
+											@foreach($emps as $m)
+												@if($m->id == $v->circule_id)
+													<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
+												@endif
+											@endforeach
+										@endif
+									</td>
+									
 									<td class="td-manage">
 										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
-										<button type="submit"  href="javascript:;" onclick="recode_add('查看流转详情','/recode/add/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;推进记录&nbsp;&nbsp;&nbsp;</button>	
-										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;重置流转&nbsp;&nbsp;&nbsp;</button>	
+										<button type="submit"  href="javascript:;" onclick="recode_add('添加推进记录','/recode/add/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e6;</i>&nbsp;&nbsp;推进记录&nbsp;&nbsp;&nbsp;</button>
+										@if($v->process == '4')	
+										<button type="submit"  href="javascript:;" onclick="information_show('重置流转','/circule/cirreset/{{$v->id}}')"  class="btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;重置流转&nbsp;&nbsp;&nbsp;</button>
+										@else
+										<button type="submit"  href="javascript:;" onclick=""  class="btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;重置流转&nbsp;&nbsp;&nbsp;</button>
+										@endif	
 									</td>
 								</tr>
 								@endforeach
@@ -125,8 +148,7 @@
 			"aoColumnDefs":[{"bSortable":false,"aTargets":[0]}],
 			//默认在初始化的时候按照指定列排序
 			"aaSorting":[[1,"asc"]],
-			//禁用搜索
-			"searching":false,
+
 		});
 
 

@@ -118,7 +118,21 @@ class StatisticsController extends Controller
 
     public function show($id)
     {
-        $information = Information::where('id',$id)->firstOrFail(); 
+        $information = Information::where('id',$id)->firstOrFail();
+
+        $c_emp=Emp::where('id',$information->emp_id)->firstOrFail();
+
+        $f_emp=Emp::where('id',$information->circule_id)->firstOrFail();
+
+        $information->circule_f_dept = $c_emp->dept->dept_name;
+
+        $information->circule_f_name = $c_emp->name;
+
+        $information->circule_n_dept = $f_emp->dept->dept_name;
+
+        $information->circule_n_name = $f_emp->username;
+
+        $depts = Dept::get();
         $gdp = [];
         $fund =[];
         $land = [];
@@ -159,7 +173,7 @@ class StatisticsController extends Controller
            }    
 
 
-        return view('statistics.show')->with(compact('information','gdp','fund','land','tax'));
+        return view('statistics.show')->with(compact('information','gdp','fund','land','tax','depts'));
     }
     
 

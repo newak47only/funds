@@ -5,9 +5,9 @@
 		<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
 			首页
 			<span class="c-gray en">/</span>
-			项目绩效管理
+			洽谈项目库
 			<span class="c-gray en">/</span>
-			项目绩效列表
+			本区转入项目列表
 			<a class="btn btn-success radius f-r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 		</nav>
 
@@ -25,54 +25,70 @@
 											<th width="250">项目名称</th>
 											<th width="100">首谈联系人</th>
 											<th width="100">跟踪负责人</th>
-											<th width="80">流转方向</th>
-											<th width="120">流转时间</th>
-											<th width="80">工作记录</th>
-											<th width="100">剩余天数</th>
-											<th width="250">操作</th>
+											<th width="100">流转方向</th>
+											<th width="140">流转时间</th>
+											<th width="140">流转状态</th>
+											<th width="320">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($nego2 as $k)
-										@if($k->check_day > 4)
+										@foreach($information as $v)
 										<tr class="text-c">
-										@elseif($k->check_day > 2 && $k->check_day <= 4 )
-										<tr  class="warning text-c">
-										@elseif($k->check_day <= 2)
-										<tr class="danger text-c">
-										@endif
-											<td><input type="checkbox" value="{{$k->nego_info->id}}" name="ID"></td>
-											<td>{{$k->nego_info->id}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$k->nego_info->id)}}','{{$k->nego_info->id}}')" title="查看">{{$k->nego_info->name}}</u></td>
-											<td>
-											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目首谈人信息','{{route('emp.show',$k->emp_id)}}','$v->check_id}}')" title="查看项目首谈人信息">{{$k->nego_info->staff_name}}</u>
+											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
+											<td>{{$v->id}}</td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
+											<td >
+												@foreach($emps as $n)
+												@if($n->id == $v->emp_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$v->staff_name}}</u>
+												@endif
+												@endforeach
 											</td>
 											<td>
-											@foreach($emps as $n)
-											@if($n->id == $k->nego_info->check_id)
-											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$n->id)}}'}}')" title="查看项目跟踪负责人信息">{{$n->username}}</u>
-											@endif
-											@endforeach
-											<td>
-											@foreach($depts as $n)
-											@if($n->id == $k->status)
-											{{$n->dept_name}}
-											@endif
-											@endforeach
+												@foreach($emps as $n)
+												@if($n->id == $v->check_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪人信息','{{route('emp.show',$v->check_id)}}','$v->check_id}}')" title="查看项目跟踪人信息">{{$n->username}}</u>
+												@endif
+												@endforeach
+
 											</td>
-											<td >{{$k->neg_at}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="cricule_view('查看工作记录','{{route('recode.show',$k->nego_info->id)}}','{{$k->nego_info->id}}')" title="查看工作记录">{{$k->nego_info->recodenum}}条</u></td>
-											@if($k->check_day > 4)
-											<td ><span class="badge badge-success radius">洽谈剩余{{$k->check_day}}天</span></td>
-											@elseif($k->check_day > 2 && $k->check_day <= 4 )
-											<td  class="warning"><span class="label label-warning radius">洽谈剩余{{$k->check_day}}天</span></td>
-											@elseif($k->check_day <= 2)
-											<td  class="danger"><span class="label badge-danger radius">洽谈剩余{{$k->check_day}}天</span></td>
-											@endif
+											<td >
+												@foreach($depts as $n)
+													@if($n->id == $v->circule_to)
+														{{$n->dept_name}}
+													@endif
+												@endforeach
+											</td>
+											<td>
+												@foreach($v->info_nego as $k)
+													@if($k->actiontype == 1 )
+														{{$k->created_at}}
+													@endif
+												@endforeach
+											</td>
+											<td>
+												@if($v->circule_id == 0)
+												等待分发
+												@else
+													@foreach($emps as $m)
+														@if($m->id == $v->circule_id)
+															<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
+														@endif
+													@endforeach
+												@endif
+											</td>	
 
 											<td class="td-manage">
-											<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$k->info_id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>
-												
+												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S ml-10 f-l">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
+												@if($v->process == 5)
+												<button type="submit"  href="javascript:;" onclick="circule_owncheck('项目分发','/circule/owncheck/{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;项目分发&nbsp;&nbsp;&nbsp;</button>
+
+												<button type="submit"  href="javascript:;" onclick="circule_stop(this,'{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e4;</i>&nbsp;&nbsp;终止流转&nbsp;&nbsp;&nbsp;</button>
+												@elseif($v->process == 6)
+												<button type="submit"  href="javascript:;" onclick=""  class="f-l btn disabled radius size-S ml-10">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;项目分发&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick=""  class="f-l btn disabled radius size-S ml-10">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e4;</i>&nbsp;&nbsp;终止流转&nbsp;&nbsp;&nbsp;</button>
+
+												@endif				
 											</td>
 										</tr>
 										@endforeach
@@ -157,6 +173,32 @@
 		title: title,
 		content: url,
     	area: ['800px', '600px'],
+  		});
+	}
+
+	function circule_owncheck(title,url,id){
+  		var index = layer.open({
+		type: 2,
+		title: title,
+		content: url,
+    	area: ['800px', '600px'],
+  		});
+	}
+
+	function circule_stop(obj,id){
+  		layer.confirm('确认要终止该流转项目吗？',{title:'项目终止流转确认'},function(index){
+            $.ajax({
+				type: 'GET',
+				url: '/circule/cirstop/'+id,
+				dataType: 'json',
+				success: function(data){
+					$(obj).parents("tr").remove();
+					layer.msg('项目终止流转成功!',{icon:1,time:2000});
+				},
+				error:function(data) {
+					console.log(data.msg);
+				},
+			});
   		});
 	}
   		

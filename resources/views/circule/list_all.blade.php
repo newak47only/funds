@@ -5,9 +5,9 @@
 		<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
 			首页
 			<span class="c-gray en">/</span>
-			项目绩效管理
+			全市流转项目库
 			<span class="c-gray en">/</span>
-			项目绩效列表
+			全市流转项目库列表
 			<a class="btn btn-success radius f-r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 		</nav>
 
@@ -26,20 +26,20 @@
 											<th width="120">行业类别</th>
 											<th width="130">投资金额</th>
 											<th width="120">首谈联系人</th>
+											<th width="120">项目跟踪人</th>
 											<th width="100">流转方向</th>
 											<th width="140">流转时间</th>
-											<th width="140">流转状态</th>
-											<th width="250">操作</th>
+											<th width="260">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($nego1 as $v)
+										@foreach($information as $v)
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v->nego_info->id}}" name="ID"></td>
-											<td>{{$v->nego_info->id}}</td>
-											<td class="text-l">{{$v->nego_info->name}}</td>
-											<td>{{$v->nego_info->industry}}</td>
-											<td>{{$v->nego_info->investment}}@if($v->nego_info->currency =="1")万人民币@elseif($v->nego_info->currency =="2")万美元@elseif($v->nego_info->currency =="3")万欧元@endif</td>
+											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
+											<td>{{$v->id}}</td>
+											<td class="text-l">{{$v->name}}</td>
+											<td>{{$v->industry}}</td>
+											<td>{{$v->investment}}@if($v->currency =="1")万人民币@elseif($v->currency =="2")万美元@elseif($v->currency =="3")万欧元@endif</td>
 											<td>
 												@foreach($emps as $n)
 												@if($n->id == $v->emp_id)
@@ -48,17 +48,34 @@
 												@endforeach
 											</td>
 											<td>
-												@foreach($depts as $m)
-												@if($m->id == $v->status)
-												{{$m->dept_name}}
+												@foreach($emps as $n)
+												@if($n->id == $v->check_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪人信息','{{route('emp.show',$v->check_id)}}','$v->check_id}}')" title="查看项目跟踪人信息">{{$n->username}}</u>
 												@endif
 												@endforeach
 											</td>
-											<td>{{$v->neg_at}}</td>
-											<td>@if($v->nego_info->status == 0)暂无流转@else{{$v->nego_info->status}}个区域流转中@endif</td>
+											<td>
+												@foreach($depts as $m)
+												@if($m->id == $v->circule_to)
+												<span class="badge badge-success radius">{{$m->dept_name}}</span>
+												@endif
+												@endforeach
+											</td>
+											<td>
+												@foreach($v->info_nego as $k)
+													@if($k->actiontype == 3 )
+														{{$k->created_at}}
+													@endif
+												@endforeach
+											</td>
+
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->info_id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>
-												
+												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>
+												@if($v->is_claim == '0' )
+												<button type="submit"  href="javascript:;" onclick="circule_claim(this,'{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size:16px">&#xe640;</i>&nbsp;&nbsp;项目认领&nbsp;&nbsp;&nbsp;</button>
+												@elseif($v->is_claim == '1' )
+												<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10 btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size:16px">&#xe640;</i>&nbsp;&nbsp;项目认领&nbsp;&nbsp;&nbsp;</button>
+												@endif
 											</td>
 										</tr>
 										@endforeach
@@ -143,6 +160,23 @@
 		title: title,
 		content: url,
     	area: ['800px', '600px'],
+  		});
+	}
+
+	function circule_claim(obj,id){
+  		layer.confirm('确认要认领项目吗？',{title:'项目认领'},function(index){
+            $.ajax({
+				type: 'GET',
+				url: '/circule/claim/'+id,
+				dataType: 'json',
+				success: function(data){
+					$(obj).parents("tr").remove();
+					layer.msg('项目认领成功!',{icon:1,time:2000});
+				},
+				error:function(data) {
+					console.log(data.msg);
+				},
+			});
   		});
 	}
   		

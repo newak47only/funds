@@ -6,21 +6,21 @@
 			<div class="panel-body">
 
 				
-				<form action="{{route('circule.update',$negotiation->id)}}" method="post"  class="form form-horizontal" id="form-admin-add" >
+				<form action="{{route('circule.update',$information->id)}}" method="post"  class="form form-horizontal" id="form-admin-add" >
 				<div class="row clearfix">
 					<table class="table table-border table-bordered" style="width: 600px; margin-left: 100px">
       				<tbody>
        					 <tr>
           					<th class="text-r" width="80">项目名称：</th>
-          					<td>{{$info_name}}</td>
+          					<td>{{$information->name}}</td>
         				</tr>
         				<tr>
           					<th class="text-r">投资金额：</th>
-          					<td>@if($negotiation->currency == '1')万人民币@elseif($negotiation->currency == '2')万美元@elseif($negotiation->currency == '3')万欧元@endif
+          					<td>{{$information->investment}}@if($information->currency == '1')万人民币@elseif($information->currency == '2')万美元@elseif($information->currency == '3')万欧元@endif
           					</td>
         				</tr>
         				<tr>
-          					<th class="text-r">入库日期：</th>
+          					<th class="text-r">流转日期：</th>
           					<td>{{$negotiation->created_at}}</td>
         				</tr>
         				<tr>
@@ -33,10 +33,12 @@
         				</tr>
         				<tr>
           					<th class="text-r">流转结果：</th>
-          					<td><textarea type="text" class="textarea" value=" " placeholder="" id="check" name="report" datatype="*4-16" ></textarea></td>
+          					<td><textarea type="text" class="textarea" value=" " placeholder="" id="check" name="remark" datatype="*4-16" ></textarea></td>
         				</tr>
-
-						<input type="hidden" name="info_id" value="{{$negotiation->info_id}}">
+        				<input type="hidden" name="investment" value="{{$information->investment}}">
+        				<input type="hidden" name="currency" value="{{$information->currency}}">
+						<input type="hidden" name="name" value="{{$information->name}}">
+						<input type="hidden" name="info_id" value="{{$information->id}}">
 
 						{{csrf_field()}}
 						{{method_field('PUT')}}
@@ -45,8 +47,8 @@
           					<td>					
           						<div class="row clearfix">
 									<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-										<button class="btn btn-primary radius" type="submit" value="4" name="result" >流转成功</button>
-										<button class="btn btn-primary radius ml-30" type="submit" value="3" name="result" >流转失败</button>
+										<button class="btn btn-primary radius" type="submit" value="1" name="result" >流转成功</button>
+										<button class="btn btn-primary radius ml-30" type="submit" value="0" name="result" >流转失败</button>
 									</div>
 								</div>
 							</td>

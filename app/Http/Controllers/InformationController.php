@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Information,App\Emp,App\Dept,App\Negotiation,App\Recode;
+use App\Information,App\Emp,App\Dept,App\Negotiation,App\Recode,App\Industry;
 use Auth,DB;
 
 class InformationController extends Controller
@@ -348,7 +348,6 @@ class InformationController extends Controller
               return view('information.index4')->with(compact('info'));
 
         }
-
     }
 
     public function ownlist(){
@@ -383,111 +382,118 @@ class InformationController extends Controller
                 ];
         }        
               //dd($info);
-              return view('information.index1')->with(compact('info'));
-
-
+              return view('information.ownlist')->with(compact('info'));
     }
 
     public function list_all(){
+
         $admin_id=Auth::user()->id;
-        //dd($admin_id);
+
         $emp = Emp::findOrFail($admin_id);
+
         $admin_director_id = $emp->dept->director_id;
+
         $dept_id=$emp->dept_id;
-        //dd($dept_id);
+
         $emp_arry = array ();
        
-            //获取用户所在组成员
-            $emps=Emp::where('dept_id',$dept_id)->get();
-            //获取用户所在组成员id数组
-            foreach ($emps as $key => $value) {
-                $emp_arry[]= array(
+        //获取用户所在组成员
+        $emps=Emp::where('dept_id',$dept_id)->get();
+        //获取用户所在组成员id数组
+        foreach ($emps as $key => $value) {
+
+            if($value->is_leader == 0){
+
+            $emp_arry[]= array(
+
                      $key=>$value->id,
-                  );        
+
+                  ); 
             }
-        $info1 =[];
-        $info2 =[];
-        $info3 =[];
 
-            //上报的洽谈项目
+        }
 
-            $information1=Information::whereIn('emp_id',$emp_arry)->where([
-                ['process','<','3'],
-                ['is_show', '>', '0'],
-                ['is_show', '!=', '9'],
-            ])->get();
-            //dd($information); 
-            foreach ($information1 as $key => $k) {
-                $nego = Negotiation::where([
-                    ['info_id','=',$k->id],
-                    ['actiontype','=','11'],
+        $emps=Emp::get();
+
+        $information1=Information::whereIn('emp_id',$emp_arry)->where([
+
+            ['process','=','0'],
+
+        ])->get();
+
+        foreach ($information1 as $key => $value) {
+
+            $value->recodenum = Recode::where('info_id',$value->id)->count();
+
+        }
 
 
-                ])->get();
-                foreach ($nego as $key => $kk) {
-                    $recodenum1 = Recode::where([['info_id','=',$kk->info_id],['emp_id',$kk->emp_id]])->count();                  
-                    $info2[]=[
-                        'id'=> $k->id,
-                        'name' => $k->name,
-                        'cont_name' => $k->cont_name,
-                        'cont_phone' => $k->cont_phone,
-                        'emp_id' => $k->emp_id,
-                        'staff_name' => $k->staff_name,
-                        'staff_phone' => $k->staff_phone,
-                        'currency' => $k->currency,
-                        'investment' => $k->investment,
-                        'industry' => $k->industry,
+        return view('information.list_all')->with(compact('information1','emps'));   
+    }
 
-                        'status' => $k->status,
-                        'process' => $k->process,
-                        'is_show' =>$k->is_show,
-                        'created_at' => $k->created_at, 
-                        'nego_id' => $kk->id,
-                        'recodenum'=>$recodenum1,
-                    ];
-                }
+    public function report_list(){
 
-                
+        $emps = Emp::get();
+
+        $information = Information::where([
+
+            ['is_show','=','1'],
+
+            ['process','=','0']
+
+        ])->get();
+
+        foreach ($information as $key => $value) {
+
+            $value->recodenum = Recode::where('info_id',$value->id)->count();
+
+        }
+
+        return view('information.report_list')->with(compact('information','emps'));
+
+    }
+
+    public function tctolist(){
+
+        $admin_id = Auth::user()->id;
+        //获取用户信息
+        $emp = Emp::findOrFail($admin_id);
+        //获取用户部门领导id
+        $admin_director_id = $emp->dept->director_id;
+        //dd($admin_director_id);
+        $emp_arry = array ();
+        //判断用户是否为所在用户组领导
+        $dept_id=$emp->dept_id;
+        //获取用户所在组成员
+        $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            //获取用户所在组成员id数组
+        foreach ($empd as $key => $value) {
+            if($value->is_leader == 0){
+            $emp_arry[]= array(
+                $key=>$value->id,
+            );
             }
-            $reportnum = Negotiation::where([
-                    ['director_id','=','0'],
-                    ['actiontype','=','11'],
-                ])->count();
+        }
 
-            //流转项目
-            $nego1 = Negotiation::whereIn('emp_id',$emp_arry)->where([
-                    ['actiontype','=','5'],
-                    ['result','=','0'],
-            ])->get();
-            foreach ($nego1 as $key => $v) {
-                $information1=Information::where('id',$v->info_id)->where([
-                    ['process', '=', '1'],
-                ])->get();
-                foreach ($information1 as $key => $vv) {
-                    $recodenum2 = Recode::where([['info_id','=',$vv->id],['emp_id',$vv->emp_id]])->count();
-                    $info3[]=[
-                        'id'=> $vv->id,
-                        'name' => $vv->name,
-                        'cont_name' => $vv->cont_name,
-                        'cont_phone' => $vv->cont_phone,
-                        'currency' => $vv->currency,
-                        'investment' => $vv->investment,
-                        'industry' => $vv->industry,
-                        'staff_name' => $vv->staff_name,
-                        'staff_phone' => $vv->staff_phone,
-                        'emp_id' => $vv->emp_id,
-                        'status' => $vv->status,
-                        'process' => $vv->process,
-                        'is_show' => $vv->is_show,
-                        'created_at' => $vv->created_at, 
-                        'nego_id' => $v->id,
-                        'recodenum'=>$recodenum2,
-                    ];
-                }
-            }
-            $circulenum = Information::whereIn('emp_id',$emp_arry)->where('process', '=', '1')->count();
+        $emps=Emp::get();
+            //获取用户所在组成员id数组
+        $depts = Dept::get();   
 
-            return view('information.index2')->with(compact('info1','info2','info3','reportnum','circulenum'));   
+        $information = Information::where([
+            ['status','=',$dept_id],
+
+            ['process','=','23'],
+
+        ])->get();
+
+        foreach ($information as $key => $value) {
+
+            $value->recodenum = Recode::where('info_id',$value->id)->count();
+
+        }
+
+
+        return view('information.tctolist')->with(compact('information','emps','depts'));
 
     }
 
@@ -499,7 +505,7 @@ class InformationController extends Controller
             $c_emp=Emp::where('id',$information->emp_id)->firstOrFail();
             //dd($c_emp);
             
-            if ($information->circule_id =='0') {
+            if ($information->process <= '4' ) {
                 $info[]=[
                     'id'=> $information->id,
                     'name' => $information->name,
@@ -532,6 +538,8 @@ class InformationController extends Controller
                  $info[]=[
                     'id'=> $information->id,
                     'name' => $information->name,
+                    'cont_main' => $information->cont_main,
+                    'cont_unit' => $information->cont_unit,
                     'cont_name' => $information->cont_name,
                     'cont_phone' => $information->cont_phone,
                     'emp_id' => $information->emp_id,
@@ -557,22 +565,21 @@ class InformationController extends Controller
         return view('information.show')->with(compact('info'));
     }
 
-    public function create()
-    {
+    public function create(){
         $emp_id=Auth::user()->id;
         $emp=Emp::where('id',$emp_id)->firstOrFail();
+        $industry = Industry::get();
         //dd($emp);
-        return view('information.create')->with(compact('emp_id','emp'));
+        return view('information.create')->with(compact('emp_id','emp','industry'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $data=$request->all();
         $validatedData = $request->validate([
-        'name' => 'unique:App\Information,name',
-        'cont_main' => 'unique:App\Information,cont_main',
-        'cont_name' => 'unique:App\Information,cont_name',
-        'cont_phone' => 'unique:App\Information,cont_phone',
+        //'name' => 'unique:App\Information,name',
+        //'cont_main' => 'unique:App\Information,cont_main',
+        //'cont_name' => 'unique:App\Information,cont_name',
+        //'cont_phone' => 'unique:App\Information,cont_phone',
         ]);
         //$errors = $validatedData->errors();
         //return response() -> json($errors);
@@ -583,15 +590,37 @@ class InformationController extends Controller
     }
 
 
-    public function edit($id)
-    {
+    public function tccreate(){
+        $emp_id=Auth::user()->id;
+        $emp=Emp::where('id',$emp_id)->firstOrFail();
+        //dd($emp);
+        $industry = Industry::get();
+        //dd($industry);
+        return view('information.tccreate')->with(compact('emp_id','industry'));
+    }
+
+    public function tcstore(Request $request){
+        $data=$request->all();
+        //$validatedData = $request->validate([
+        //'name' => 'unique:App\Information,name',
+        //'cont_main' => 'unique:App\Information,cont_main',
+        //'cont_name' => 'unique:App\Information,cont_name',
+        //'cont_phone' => 'unique:App\Information,cont_phone',
+       // ]);
+        //$errors = $validatedData->errors();
+        //return response() -> json($errors);
+
+        $result=Information::create($data);
+        return  $result ? '1' : '0';
+    }
+
+    public function edit($id){
         $emp_id=$id;
         $information=Information::findOrFail($id);
         return view('information.edit')->with(compact('information','emp_id'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $information=Information::findOrFail($id);
 
         $data=$request->all();
@@ -600,6 +629,51 @@ class InformationController extends Controller
 
         return  $result ? '1' : '0';
     }
+
+    //区管理员分派投促中心任务
+    public function apportion($id){
+
+        $admin_id = Auth::user()->id;
+        $admin_dept = Emp::findOrFail($admin_id);
+        $information = Information::findOrFail($id);
+        //echo $negotiation->currency;
+        $emps= Emp::where('dept_id',$admin_dept->dept_id)->where('is_leader','0')->where('username','!=','')->get(); 
+
+        $actiontype = '24';
+
+        $eaction = '区内分派';     
+
+        return view('information.apportion')->with(compact('information','eaction','actiontype','emps'));
+
+
+    }
+
+    public function appstore(Request $request, $id){
+
+            $data=$request->all(); 
+
+            $Negotiation=Negotiation::create([
+                'info_id' =>$data['info_id'],
+                'emp_id'  =>Auth::id(),
+                'currency' =>$data['currency'],
+                'investment' =>$data['investment'],
+                'eaction' =>$data['eaction'],
+                'actiontype' =>$data['actiontype'],
+                'status' => $data['status'],
+            ]);
+
+            $result=$Negotiation->save($data);
+
+            DB::update('update information set process = ? where id = ?',[0,$id]);
+
+            DB::update('update information set emp_id = ? where id = ?',[$data['status'],$id]);
+
+
+            return $result ? '1' : '0';
+
+    }
+
+
 
     public function  termination($str){
 
@@ -613,10 +687,7 @@ class InformationController extends Controller
         }
     }
 
-
-
-     public function destroy($id)
-    {
+    public function destroy($id){
         return response()->json([
             'error'=>1,
             'msg'=>'员工不能删除'

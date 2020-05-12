@@ -85,7 +85,7 @@ class LandingController extends Controller
         $informations = Information::findOrFail($id);
         $users = Auth::user();
         $eaction = '项目开工';
-        $actiontype = '3';
+        $actiontype = '8';
         //dd($informations);
         return view('landing.add')->with(compact('informations','users','eaction','actiontype'));
     }
@@ -113,7 +113,7 @@ class LandingController extends Controller
             ]);
              $info_id=$data['info_id'];
              //DB::update('update student set name = ? where id = ?',[$name,$id]);
-             $test=DB::update('update information set process = ? where id = ?',['5',$info_id]);
+             $test=DB::update('update information set process = ? where id = ?',['8',$info_id]);
              //dd($test);
              $result=$Negotiation->save();
              //dd($result);

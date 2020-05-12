@@ -20,19 +20,8 @@ class RecodeController extends Controller
            // dd($recode);
             
 
-            $nego = Negotiation::where([
-                ['info_id','=',$id],
-                ['actiontype','=','5'],
-
-            ])->orwhere([
-                ['info_id','=',$id],
-                ['actiontype','=','11'],
-
-            ])->orwhere([
-                ['info_id','=',$id],
-                ['actiontype','=','13'],
-
-            ])->get();
+            $nego = Negotiation::where('info_id','=',$id)
+            ->get();
             //foreach ($nego as $key => $value) {
             //   echo $value->emp->username;
             //}

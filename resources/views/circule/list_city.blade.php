@@ -14,7 +14,13 @@
 		<article class="Hui-admin-content clearfix">
 
 			<div class="panel ">
-				<div class="panel-body">	
+				<div class="panel-body">
+					<div class="mt-20 clearfix">
+						<span class="f-l">
+							<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
+						</span>
+						
+					</div>		
 					<div class="mt-20 clearfix">
 						<table class="table table-border table-bordered table-bg table-hover table-sort">
 							<thead>
@@ -24,6 +30,7 @@
 									<th width="200">项目名称</th>
 									<th width="100">资方联系人</th>
 									<th width="100">资方联系方式</th>
+									<th width="120">项目发布人</th>
 									<th width="100">首谈联系人</th>
 									<th width="100">跟踪负责人</th>
 									<th width="80">流转方向</th>
@@ -33,7 +40,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($information2 as $v)
+								@foreach($information as $v)
 
 								<tr class="text-c">
 									<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
@@ -43,62 +50,53 @@
 									<td > {{$v->cont_phone}}</td>
 									<td >
 									@foreach($emps as $n)
+									@if($n->id == $v->issuer_id)
+									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目发布人信息','{{route('emp.show',$n->id)}}','$n->id}}')" title="查看项目发布人信息">{{$n->username}}</u>
+									@endif
+									@endforeach
+									</td>
+									<td >
+									@foreach($emps as $n)
 									@if($n->id == $v->emp_id)
 									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$v->staff_name}}</u>
 									@endif
 									@endforeach
 									</td>
 									<td >
-									@if($v->check_id == 0)
-									等待分派..
-									@else
 									@foreach($emps as $n)
 									@if($n->id == $v->check_id)
 									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$v->check_id)}}','$v->check_id}}')" title="查看项目跟踪负责人信息">{{$n->username}}</u>
 									@endif
 									@endforeach
-									@endif
 								    </td>
 								    <td>
-								    @foreach($depts as $m)
-										@if($m->id == $v->circule_to)
-										<span class="badge badge-success radius">{{$m->dept_name}}</span>
+								    	@foreach($depts as $n)
+								    	@if($n->id == $v->status)
+								    	<span class="badge badge-success radius">{{$n->dept_name}}</span>
+								    	@endif
+								    	@endforeach
+								    </td>
+								    <td >
+									@foreach($v->info_nego as $k)
+									@if($k->actiontype == 2 && $k->info_id == $v->id )
+									{{$k->created_at}}
+									@endif
+									@endforeach
+									</td>
+									<td>
+									@foreach($emps as $m)
+										@if($m->id == $v->circule_id)
+											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
 										@endif
 									@endforeach
-								    </td>
-								    <td>
-								    	@foreach($v->info_nego as $k)
-											@if($k->actiontype == 2 )
-												{{$k->created_at}}
-											@endif
-										@endforeach
-								    </td>
-									<td>
-										@if($v->process == 3)
-										暂无流转
-										@elseif($v->process == 4)
-										等待认领...
-										@elseif($v->process == 5)
-											@foreach($depts as $m)
-												@if($m->id == $v->status)
-													等待{{$m->dept_name}}分发
-												@endif
-											@endforeach
-										@elseif($v->process == 6)
-											@foreach($emps as $m)
-												@if($m->id == $v->circule_id)
-													<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
-												@endif
-											@endforeach
-										@endif
 									</td>
 									<td class="td-manage">
-										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
-										@if($v->process == 3)
-										<button type="submit"  href="javascript:;" onclick="circule_assign('查看流转详情','/circule/assign/{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe62b;</i>&nbsp;&nbsp;分派跟踪人&nbsp;&nbsp;&nbsp;</button>
+										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
+										@if($v->process == 2)
+										<button type="submit"  href="javascript:;" onclick="recode_add('流转申请审核','/circule/examine/{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6a7;</i>&nbsp;&nbsp;流转审核&nbsp;&nbsp;&nbsp;</button>	
 										@else
-										<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10 btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe62b;</i>&nbsp;&nbsp;分派跟踪人&nbsp;&nbsp;&nbsp;</button>
-										@endif	
+										<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10 btn disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6a7;</i>&nbsp;&nbsp;流转审核&nbsp;&nbsp;&nbsp;</button>	
+										@endif
 									</td>
 								</tr>
 								@endforeach
@@ -148,7 +146,26 @@
 			"aaSorting":[[1,"asc"]],
 			//禁用搜索
 		});
+
+
+		function negotiation_create(title,url,id){
+
+			var index = layer.open({
+			type: 2,
+			title: title,
+			content: url,
+    		area: ['800px', '600px']
+			});
+	}
 										
+		function cricule_view(title,url){
+  			var index = layer.open({
+    		type: 2,
+    		title: title,
+    		content: url,
+  		});
+  			layer.full(index);
+		};
 
 
 	function information_show(title,url,id){
@@ -160,22 +177,13 @@
   		});
 	}
 
-	function circule_assign(title,url,id){
+	function recode_add(title,url,id){
   		var index = layer.open({
 		type: 2,
 		title: title,
 		content: url,
     	area: ['800px', '600px'],
   		});
-	}
-
-	function cricule_view(title,url){
-			var index = layer.open({
-			type: 2,
-			title: title,
-			content: url
-		});
-			layer.full(index);
 	}
   		
 	</script>

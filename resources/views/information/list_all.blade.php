@@ -5,9 +5,9 @@
 		<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
 			首页
 			<span class="c-gray en">/</span>
-			洽谈项目管理
+			洽谈项目库
 			<span class="c-gray en">/</span>
-			洽谈项目列表
+			本区首谈项目列表
 			<a class="btn btn-success radius f-r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 		</nav>
 
@@ -15,13 +15,7 @@
 
 			<div class="panel ">
 				<div class="panel-body">
-					<div class="clearfix">
-						<span class="f-l">
-							<a href="javascript:;" onclick="termination()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
-							<a href="javascript:;" onclick="information_add('添加洽谈项目','/information/create')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加洽谈项目</a>
-						</span>
-						
-					</div>
+
 							<div class="mt-20 clearfix">
 								<table class="table table-border table-bordered table-bg table-hover table-sort">
 									<thead>
@@ -30,40 +24,45 @@
 											<th width="40">ID</th>
 											<th width="250">项目名称</th>
 											<th width="100">行业类别</th>
-											<th width="100">投资金额</th>
-											<th width="100">资方姓名</th>
+											<th width="120">投资金额</th>
+											<th width="120">资方姓名</th>
 											<th width="120">资方联系方式</th>
-											<th width="140">入库时间</th>
-											<th width="100">上报状态</th>
-											<th width="80">工作记录</th>
-											<th width=" ">操作</th>
+											<th width="120">首谈联系人</th>
+											<th width="120">入库时间</th>
+											<th width="100">工作记录</th>
+											<th width="220 ">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($info as $v)
+										@foreach($information1 as $v)
 										<tr class="text-c">
 											<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
 											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_edit('编辑项目','{{route('information.edit',$v['id'])}}','{{$v['id']}}')" title="编辑项目">{{$v['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','{{route('information.show',$v->id)}}','{{$v['id']}}')" title="查看项目">{{$v['name']}}</u></td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['investment']}}@if($v['currency'] =="1")万人民币@elseif($v['currency'] =="2")万美元@elseif($v['currency'] =="3")万欧元@endif</td>
 											<td>{{$v['cont_name']}}</td>
 											<td>{{$v['cont_phone']}}</td>
+											<td>@foreach($emps as $n)
+												@if($n->id == $v->emp_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$n->username}}</u>
+												@endif
+												@endforeach
+											</td>
 											<td>{{$v['created_at']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','{{route('recode.show',$v['id'])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
-											@if($v['is_show']==0)
-											<td>未上报</td>
-											@elseif($v['is_show']==1)
-											<td>已上报</td>
-											@endif
-											
+											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','/recode/show/{{$v['id']}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
-												
-												<button type="submit"  href="javascript:;" onclick="info_recode_add('进度记录','/recode/add/{{$v['id']}}')"  class=" f-l btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进度记录&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick="info_nego_add('项目落地','/negotiation/add/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe640;</i>&nbsp;&nbsp;项目落地&nbsp;&nbsp;&nbsp;</button>
-
-												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流转','/circule/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6bd;</i>&nbsp;&nbsp;项目流转&nbsp;&nbsp;&nbsp;</button></td>
-
+												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
+												@if($v['is_show']==0)
+													@if($v['recodenum'] >= 3)
+												<button type="submit"  href="javascript:;" onclick="report_add('项目上报','/report/add/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6aa;</i>&nbsp;&nbsp;信息上报&nbsp;&nbsp;&nbsp;</button>
+													@else
+												<button type="submit"  href="javascript:;" onclick=""  class=" f-l ml-10 btn disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6aa;</i>&nbsp;&nbsp;信息上报&nbsp;&nbsp;&nbsp;</button>
+													@endif
+												@elseif($v['is_show']==1)
+												<button type="submit"  href="javascript:;" onclick=""  class=" f-l btn btn-success radius size-S ml-10">&nbsp;<i class="Hui-iconfont">&#xe6aa;</i>&nbsp;已上报市级&nbsp;</button>
+												@endif
+											</td>
 										</tr>
 										@endforeach
 									</tbody>
@@ -101,8 +100,9 @@
         function(checkedInfo) {
           console.log(checkedInfo);
         }
-        )
+      )
 		});
+		$("#tab-system").Huitab();
 
 		$('table').dataTable({
 			//禁掉第一列排序
@@ -110,10 +110,8 @@
 			//默认在初始化的时候按照指定列排序
 			"aaSorting":[[1,"asc"]],
 			//禁用搜索
-
 		});
-		
-		function information_add(title,url){
+			function information_add(title,url){
   			var index = layer.open({
     		type: 2,
     		title: title,
@@ -132,7 +130,7 @@
 		};
 
 										
-		function negotiation_create(title,url,id){
+		function info_recode_add(title,url,id){
 			var index = layer.open({
 			type: 2,
 			title: title,
@@ -141,34 +139,7 @@
 			});
 		};
 
-		function recode_add(title,url){
-  				var index = layer.open({
-				type: 2,
-				title: title,
-				content: url,
-    			area: ['800px', '600px']
-				});
-		};
-
 		function report_add(title,url){
-  				var index = layer.open({
-				type: 2,
-				title: title,
-				content: url,
-    			area: ['800px', '600px'],
-				});
-		};
-		
-		function recode_show(title,url){
-			var index = layer.open({
-			type: 2,
-			title: title,
-			content: url,
-			});
-			layer.full(index);
-		};
-
-		function info_recode_add(title,url,id){
 			var index = layer.open({
 			type: 2,
 			title: title,
@@ -191,49 +162,50 @@
 			type: 2,
 			title: title,
 			content: url,
+    		area: ['800px', '700px']
+			});
+		};
+		function info_report_edit(title,url,id){
+			var index = layer.open({
+			type: 2,
+			title: title,
+			content: url,
     		area: ['800px', '600px']
 			});
 		};
 
-		function  termination(){
-
-			 //获取到所有的input
-           	var  box = $("input[name='box']");
-           	//去所有的input长度
-           	length =box.length;
-           		//alert(length);
-           	var str ="";
-           	for(var i=0;i<length;i++){
-               	//如果数组中的checked 为true  就将他的id进行拼接
-               	if(box[i].checked==true){
-                   	str =str+","+box[i].value;
-               	}
-           	}
-           		//将拼接的字符串第一个，号删除
-           	str= str.substr(1);
-  			layer.confirm('确认要终止项目吗？',{title:'终止项目'},function(index){
-                $.ajax({
-					type: 'GET',
-					url: '/information/termination/'+str,
-					dataType: 'json',
-					success:function(data){
-							if( data == '1'){
-								layer.msg('项目终止成功！',{ icon: 1,time:2000},function(){
-								var index = parent.layer.getFrameIndex(window.name);
-								parent.location.replace(parent.location.href);
-								parent.layer.close(index);
-								});
-
-							}else{
-								layer.msg('项目终止失败！',{ icon: 2,time:2000});
-							}
-						},
-					error:function(XmlHttpRequest,textStatus,errorThrown){
-						layer.msg('项目终止错误！',{ icon: 1,time:1000});
-					},
-				});
-  			});
-		}
+		function recode_show(title,url){
+			var index = layer.open({
+			type: 2,
+			title: title,
+			content: url,
+			});
+			layer.full(index);
+		};
+		function info_recode_show(title,url){
+			var index = layer.open({
+			type: 2,
+			title: title,
+			content: url,
+    		area: ['800px', '600px']
+			});
+		};
+		function circule_cheack(title,url){
+			var index = layer.open({
+			type: 2,
+			title: title,
+			content: url,
+    		area: ['800px', '600px']
+			});
+		};
+		function information_show(title,url,id){
+  		var index = layer.open({
+		type: 2,
+		title: title,
+		content: url,
+    	area: ['800px', '600px'],
+  		});
+	}
   		
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->

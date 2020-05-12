@@ -14,7 +14,7 @@ class CompletionController extends Controller
         $informations = Information::findOrFail($id);
         $users = Auth::user();
         $eaction = '项目投产';
-        $actiontype = '4';
+        $actiontype = '9';
         //dd($informations);
         return view('completion.add')->with(compact('informations','users','eaction','actiontype'));
     }
@@ -43,7 +43,7 @@ class CompletionController extends Controller
             ]);
              $info_id=$data['info_id'];
              //DB::update('update student set name = ? where id = ?',[$name,$id]);
-             $test=DB::update('update information set process = ? where id = ?',['6',$info_id]);
+             $test=DB::update('update information set process = ? where id = ?',['9',$info_id]);
              //dd($test);
              $result=$Negotiation->save();
              //dd($result);

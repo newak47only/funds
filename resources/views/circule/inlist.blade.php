@@ -27,13 +27,13 @@
 											<th width="100">跟踪负责人</th>
 											<th width="80">流转方向</th>
 											<th width="120">流转时间</th>
-											<th width="80">工作记录</th>
+											<th width="100">进度记录</th>
 											<th width="100">剩余天数</th>
-											<th width="250 ">操作</th>
+											<th width="200 ">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($nego2 as $k)
+										@foreach($information as $k)
 										@if($k->check_day > 4)
 										<tr class="text-c">
 										@elseif($k->check_day > 2 && $k->check_day <= 4 )
@@ -41,17 +41,19 @@
 										@elseif($k->check_day <= 2)
 										<tr class="danger text-c">
 										@endif
-											<td><input type="checkbox" value="{{$k->nego_info->id}}" name="ID"></td>
-											<td>{{$k->nego_info->id}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$k->nego_info->id)}}','{{$k->nego_info->id}}')" title="查看">{{$k->nego_info->name}}</u></td>
+											<td><input type="checkbox" value="{{$k->id}}" name="ID"></td>
+											<td>{{$k->id}}</td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$k->id)}}','{{$k->id}}')" title="查看">{{$k->name}}</u></td>
 											<td>
-
-											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$k->emp_id)}}','$v->check_id}}')" title="查看项目跟踪负责人信息">{{$k->nego_info->staff_name}}</u>
-
+												@foreach($emps as $n)
+												@if($n->id == $k->emp_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$k->emp_id)}}','$k->emp_id}}')" title="查看联系人信息">{{$n->username}}</u>
+												@endif
+												@endforeach
 											</td>
 											<td>
 											@foreach($emps as $n)
-											@if($n->id == $k->nego_info->check_id)
+											@if($n->id == $k->check_id)
 											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','{{route('emp.show',$n->id)}}')" title="查看项目跟踪负责人信息">{{$n->username}}</u>
 											@endif
 											@endforeach
@@ -62,13 +64,15 @@
 											@endif
 											@endforeach
 											</td>
-											<td >{{$k->neg_at}}</td>
-											<td>
-												@foreach($num as $kk)
-												@if($kk['nego_id']==$k->id)
-												<u style="cursor:pointer" class="text-primary" onClick="cricule_view('查看工作记录','{{route('recode.show',$k->nego_info->id)}}','{{$k->nego_info->id}}')" title="查看工作记录">{{$kk['count']}}条</u>
-												@endif
+											<td >
+												@foreach($k->info_nego as $v)
+													@if($v->actiontype == 6 && $v->status == $k->circule_id)
+														{{$v->created_at}}
+													@endif
 												@endforeach
+											</td>
+											<td>
+												<u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','{{route('recode.show',$k->id)}}','{{$k->id}}')" title="查看工作记录">{{$k->num}}条</u>
 											</td>
 											@if($k->check_day > 4)
 											<td ><span class="badge badge-success radius">洽谈剩余{{$k->check_day}}天</span></td>
@@ -79,8 +83,8 @@
 											@endif
 
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="information_show('进度记录','/recode/ciradd/{{$k->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进度记录&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick="information_show('流转结果','/circule/redit/{{$k->id}}')"  class="btn btn-primary radius size-S"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;流转结果&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="information_show('进度记录','/recode/add/{{$k->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进度记录&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="information_show('流转结果','/circule/redit/{{$k->id}}')"  class="btn btn-danger radius size-S ml-10"><i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;流转结果&nbsp;&nbsp;</button>
 												
 											</td>
 										</tr>
@@ -133,21 +137,9 @@
 			//默认在初始化的时候按照指定列排序
 			"aaSorting":[[1,"asc"]],
 			//禁用搜索
-			"searching":false,
 		});
-
-
-		function negotiation_create(title,url,id){
-
-			var index = layer.open({
-			type: 2,
-			title: title,
-			content: url,
-    		area: ['800px', '600px']
-			});
-	}
 										
-		function cricule_view(title,url){
+		function recode_show(title,url){
   			var index = layer.open({
     		type: 2,
     		title: title,

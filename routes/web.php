@@ -46,6 +46,12 @@ Route::get('/welcome', 'HomeController@welcome');
 	//Route::any('/dept/edit', 'DeptController@edit');
 
 	//洽谈项目管理模块
+	Route::get('/information/apportion/{id}','InformationController@apportion');
+	Route::post('/information/appstore/{id}','InformationController@appstore');
+	Route::get('/information/tctolist','InformationController@tctolist');
+	Route::get('information/report_list','InformationController@report_list');
+	Route::get('information/tccreate','InformationController@tccreate');
+	Route::post('information/tcstore','InformationController@tcstore');
 	Route::get('information/termination/{str}','InformationController@termination');
 	Route::get('information/list_all','InformationController@list_all');
 	Route::get('information/ownlist','InformationController@ownlist');
@@ -68,6 +74,7 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::get('/negotiation/list/{id}','NegotiationController@list');
 	Route::get('/negotiation/index1','NegotiationController@index1');
 	Route::get('/negotiation/tclist','NegotiationController@tclist');
+	Route::get('/negotiation/tclist_all','NegotiationController@tclist_all');
 	Route::get('/negotiation/tctracklist','NegotiationController@tctracklist');
 	Route::get('/negotiation/add/{id}','NegotiationController@add');
 	Route::resource('negotiation','NegotiationController');
@@ -98,6 +105,22 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::resource('uploader','UploaderController');
 
 
+
+	Route::get('/circule/tccheck/{id}','CirculeController@tccheck');
+	Route::post('/circule/tccheckupdate/{id}','CirculeController@tccheckupdate');
+	Route::get('/circule/tcadd/{id}','CirculeController@tcadd');
+	Route::post('/circule/tcstore/{id}','CirculeController@tcstore');
+	Route::get('/circule/cirreset/{id}','CirculeController@cirreset');
+	Route::post('/circule/resetupdate/{id}','CirculeController@resetupdate');
+	Route::get('/circule/assign/{id}','CirculeController@assign');
+	Route::post('/circule/assignupdate/{id}','CirculeController@assignupdate');
+	Route::get('/circule/examine/{id}','CirculeController@examine');
+	Route::post('/circule/examupdate/{id}','CirculeController@examupdate');
+	Route::get('/circule/list_city','CirculeController@list_city');
+	Route::get('/circule/cirstop/{id}','CirculeController@cirstop');
+	Route::post('/circule/ownupdate/{id}','CirculeController@ownupdate');
+	Route::get('/circule/owncheck/{id}','CirculeController@owncheck');
+	Route::get('/circule/claim/{id}','CirculeController@claim');
 	Route::get('/circule/list_all','CirculeController@list_all');
 	Route::get('/circule/inlist_all','CirculeController@inlist_all');
 	Route::get('/circule/outlist_all','CirculeController@outlist_all');

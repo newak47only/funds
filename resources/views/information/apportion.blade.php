@@ -6,43 +6,35 @@
 			<div class="panel-body">
 
 				
-				<form action="/circule/rupdate/{{$information->id}}" method="POST"  class="form form-horizontal" id="form-admin-add" >
+				<form action="/information/appstore/{{$information->id}}" method="POST"  class="form form-horizontal" id="form-admin-add" >
 						<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>流转方向：</label>
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>部门分发：</label>
 						<div class="form-controls col-xs-8 col-sm-9 skin-minimal">
-							@foreach($depts as $val)
-							@if($val->id == 0)
+							@foreach($emps as $val)
+							@if($val->isleader == 0)
 							<div class="radio-box">
 								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}" checked>
-								<label for="radio-2">{{$val->dept_name}}</label>
-							</div>
-
-							@elseif($val->id != 6 && $val->id != 13  )
-							<div class="radio-box">
-								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}">
-								<label for="radio-2">{{$val->dept_name}}</label>
-							</div>
-							@endif
-							
+								<label for="radio-2">
+									{{$val->username}}
+								</label>
+							</div>	
+							@endif				
 							@endforeach
 							
 						</div>
 					</div>
-
-    				<input type="hidden" name="info_id" value="{{$information->id}}">
+					<input type="hidden" name="info_id" value="{{$information->id}}">
     				<input type="hidden" name="investment" value="{{$information->investment}}">
 					<input type="hidden" name="currency" value="{{$information->currency}}">
     				<input type="hidden" name="eaction" value="{{$eaction}}">
     				<input type="hidden" name="actiontype" value="{{$actiontype}}">
-    				<input type="hidden" name="remark" value="{{$remark}}">
-
 					{{csrf_field()}}
 					{{method_field('POST')}}
 
 
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-							<button class="btn btn-primary radius" type="submit" name="result" value="1">项目分发</button>
+							<button class="btn btn-primary radius" type="submit" name="result" value="0">项目分派</button>
 						</div>
 					</div>
 

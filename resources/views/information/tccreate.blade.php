@@ -4,7 +4,7 @@
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="{{route('information.store')}}" method="post" class="form form-horizontal" id="form-informatian-add">
+				<form action="information/tcstore" method="post" class="form form-horizontal" id="form-informatian-add">
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
@@ -91,11 +91,11 @@
 							<p class="textarea-numberbar">
 						</div>
 					</div>
-					<input type="hidden" name="emp_id" value="{{$emp_id}}">
+					<input type="hidden" name="process" value="21">
 					<input type="hidden" name="issuer_id" value="{{$emp_id}}">
-					<input type="hidden" name="staff_name" value="{{$emp->username}}">
-					<input type="hidden" name="staff_phone" value="{{$emp->phone}}">
+					<input type="hidden" name="check_id" value="{{$emp_id}}">
 					{{csrf_field()}}
+					{{method_field('POST')}}
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 							<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -184,7 +184,7 @@
 				submitHandler:function(form){
 					$(form).ajaxSubmit({
 						type:'post',
-						url:"{{route('information.store')}}",
+						url:"/information/tcstore",
 						success:function(data){
 							if( data == '1'){
 								layer.msg('洽谈项目添加成功！',{ icon: 1,time:2000},function(){

@@ -3,6 +3,7 @@
 <body>
 	<div class="wap-container">
 		<article class="Hui-admin-content clearfix">
+
 			<div class="row-24 clearfix" style="margin-left: -12px; margin-right: -12px;">
 				<div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;" >
 					<div class="panel" >
@@ -49,11 +50,39 @@
 					</div>
 				</div>
 			</div>
-			<div class="panel panel-secondary">
-				<div class="panel-header">宁波市重大招商项目信息库（流转平台）使用说明</div>
-				<div class="panel-body">面板内容</div>
-			</div>
-			
+
+
+				<div class="row-24 clearfix" style="margin-left: -12px; margin-right: -12px;">
+
+						<div class="col-24-xs-16" style="padding-left: 12px; padding-right: 12px; ">
+							<div class="panel" >
+								<div class="panel-header" >
+									各区域招商项目统计图表
+								</div>
+								<div class="panel-body" style="padding:25px 24px;">
+									<div id="echarts-2" style="height: 300px;"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-24-xs-8" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+							<div class="panel">
+								<div class="panel-header" >
+									各区域招商项目统计
+								</div>
+								<div class="panel-body" style="padding:10px 24px;">
+									@foreach($depts as $v)
+									@if($v->id <= 24)
+										<span style="font-weight: bold;">{{$v->dept_name}}:</span>
+												在库项目<span class="c-primary" style="font-size: 18px;line-height: 18px; font-weight: bold; color: red;"><em>{{$v->num1}}</em></span>&nbsp;个，流转项目<span class="c-primary" style="font-size: 18px;line-height: 18px; font-weight: bold;color: red;"><em>{{$v->num1}}</em></span>&nbsp;个;<br />
+										@endif
+										
+											@endforeach
+									
+								</div>
+							</div>
+						</div>
+				</div>
+
 		</article>
 		
 	</div>
@@ -63,5 +92,55 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	<script type="text/javascript" src="static/business/js/main.js"></script>
+	<script type="text/javascript" src="/lib/echarts/4.1.0.rc2/echarts.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+		// 手机号运营商
+
+
+		// 已经完善生日年龄统计
+    var echarts2 = echarts.init(document.getElementById('echarts-2'));
+    var echarts2_option = {
+      title : {
+        show: false
+      },
+      color: '#1890ff',
+			grid: {
+				top: '3%',
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: ['10岁以下', '10-15岁', '16-20岁', '21-25岁', '26-30岁', '31-35岁', '36-40岁', '41-45岁', '46-50岁', '50岁以上']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      label: {
+        fontSize: 14,
+        color: '#666',
+      },
+      series: [
+        {
+          data: [10, 30, 35, 34, 50, 45, 43, 37, 30, 8],
+          type: 'bar',
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          },
+          barWidth : 24,
+        }
+      ]
+    }
+    echarts2.setOption(echarts2_option);
+	});
+	</script>
+
 </body>
 @endsection

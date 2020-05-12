@@ -14,8 +14,7 @@
 		<article class="Hui-admin-content clearfix">
 			<div class="panel ">
 				<div class="panel-body">
-					
-							<div class="mt-20 clearfix">
+					<div class="mt-20 clearfix">
 								<table class="table table-border table-bordered table-bg table-hover table-sort">
 									<thead>
 										<tr class="text-c">
@@ -29,7 +28,8 @@
 											<th width="100">首谈地联系人</th>
 											<th width="100">项目落户地</th>
 											<th width="100">落户地联系人</th>
-											<th width="150">操作</th>
+											<th width="100">项目跟踪人</th>
+											<th width="220">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -55,18 +55,19 @@
 											<td><u style="cursor:pointer" class="text-primary" onClick="information_show('查看落户地联系人信息','{{route('emp.show',$v['emp_id'])}}','{{$v['emp_id']}}')" title="查看落户地联系人信息">{{$v['circule_n_name']}}</u></td>
 											<td>{{$v['circule_f_dept']}}</td>
 											<td><u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v['circule_id'])}}','{{$v['circule_id']}}')" title="查看首谈联系人信息">{{$v['circule_f_name']}}</u></td>
-											<td class="td-manage">	
-												<button type="submit"  href="javascript:;" onclick="information_add('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>												
+
+											<td><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪人信息','{{route('emp.show',$v['check_id'])}}','{{$v['check_id']}}')" title="查看项目跟踪人信息">{{$v['circule_c_name']}}</u></td>
+
+											<td class="td-manage">
+												<button type="submit"  href="javascript:;" onclick="information_add('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>													
 												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 16px">&#xe61c;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>												
 											</td>
 										</tr>
 										@endforeach
 									</tbody>
 								</table>
-							</div>		
-				
-					
-					
+					</div>					
+							
 				</div>
 			</div>
 		</article>
@@ -126,15 +127,7 @@
 			});
 		};
 
-										
-		function negotiation_create(title,url){
-			var index = layer.open({
-			type: 2,
-			title: title,
-			content: url,
-    		area: ['800px', '600px']
-			});
-	};
+									
   		
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->

@@ -4,34 +4,14 @@
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="{{route('negotiation.store')}}" method="post" class="form form-horizontal" id="form-admin-add">
-				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="{{$informations->name}}" placeholder="{{$informations->name}}" id="negotiation_name" name="  " datatype="*4-16" >
+				<form action="/circule/tcstore/{{$informations->id}}" method="post" class="form form-horizontal" id="form-admin-add">
+					<div class="row clearfix">
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
+						<div class="form-controls col-xs-8 col-sm-9">
+							<input type="text" class="input-text" value="{{$informations->name}}" placeholder="{{$informations->name}}" id="Landing_name" name="  " datatype="*4-16" >
+						</div>
 					</div>
-				</div>
-				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册企业名称：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value=" " placeholder=" " id="negotiation_name" name="company" datatype="*4-16" >
-					</div>
-				</div>
-				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册资金：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="{{$informations->investment}} " placeholder="{{$informations->investment}}" id="negotiation_investment" name="reg_cap" datatype="*4-16" >
-						@if($informations->currency == '1')该项目注册资金单位为：万人民币@elseif($informations->currency == '2')该项目注册资金单位为：万美元@elseif($informations->currency == '3')该项目注册资金单位为：万欧元@endif
-					</div>					
-				</div>
-				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册时间：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text datetimepicker-input" value="" placeholder="" id="negotiation-datetime-start" name="neg_at" datatype="*4-16" >
-					</div>
-				</div>
-
-				<div class="row clearfix">
+					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上传文件：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
 							<div id="uploader" class="wu-example" >
@@ -47,18 +27,41 @@
 
 							</div>
 						</div>
-				</div>
-				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>落地说明：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<textarea type="text" class="textarea" value="" placeholder="" id="remark" name="remark" datatype="*4-16" ></textarea>
 					</div>
-				</div>
-				<input type="hidden"  value="{{$informations->currency}}" placeholder="" id="negotiation_currency" name="currency" >
-				<input type="hidden" class="input-text" value="{{$actiontype}}"   name="actiontype" >
-				<input type="hidden"  value="{{$informations->id}}" placeholder="" id="report_info_id" name="info_id" >
-				<input type="hidden"  value="{{$eaction}}" placeholder="" id="report_eaction" name="eaction" >
-				<input type="hidden"  value="{{$informations->investment}}"  name="investment" >
+					<div class="row clearfix">
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分派理由：</label>
+						<div class="form-controls col-xs-8 col-sm-9">
+							<textarea type="text" class="textarea" value="" placeholder="" id="remark" name="remark" datatype="*4-16" ></textarea>
+						</div>
+					</div>
+
+					<div class="row clearfix">
+						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分派对象：</label>
+						<div class="form-controls col-xs-8 col-sm-9 skin-minimal">
+							@foreach($depts as $val)
+							@if($val->id == 0)
+							<div class="radio-box">
+								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}" checked>
+								<label for="radio-2">{{$val->dept_name}}</label>
+							</div>
+
+							@elseif($val->id != 6 && $val->id != 13  )
+							<div class="radio-box">
+								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}">
+								<label for="radio-2">{{$val->dept_name}}</label>
+							</div>
+							@endif
+							
+							@endforeach
+							
+						</div>
+					</div>
+					
+					<input type="hidden"  value="{{$informations->investment}}" placeholder="" id="Landing_investment" name="investment" >
+					<input type="hidden"  value="{{$informations->currency}}" placeholder="" id="Landing_currency" name="currency" >
+					<input type="hidden"  value="{{$informations->id}}" placeholder="" id="report_info_id" name="info_id" >
+					<input type="hidden"  value="{{$eaction}}" placeholder="" id="report_eaction" name="eaction" >
+					<input type="hidden" class="input-text" value="{{$actiontype}}"   name="actiontype" >
 					{{csrf_field()}}
 					{{method_field('POST')}}
 					<div class="row clearfix">
@@ -81,9 +84,7 @@
   <script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
   <script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
   <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-  <script type="text/javascript" src="/webuploader-0.1.5/webuploader.js"></script>
-  <script type="text/javascript" src="/static/business/js/main.js"></script>
-  <script type="text/javascript" src="/lib/bootstrap-datetimepicker.zh-CN.js"></script>
+   <script type="text/javascript" src="/webuploader-0.1.5/webuploader.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			/* 通过iCheck插件，美化checkbox */
@@ -93,19 +94,12 @@
 				increaseArea: '20%'
 			});
 
-			$("#negotiation-datetime-start").datetimepicker({
-        		language:  'zh-CN',
-		   	 	format: 'yyyy-mm-dd',
-		    	minView: "month",
-		    	todayBtn:  1,
-		    	autoclose: 1,
-		    	endDate : new Date(),
-		  	});
-
-
 			/* 表单验证，提交 */
 			$("#form-admin-add").validate({
 				rules:{
+					remark:{
+						required:true,
+					},
 					
 					
 					
@@ -117,26 +111,25 @@
 					$(form).ajaxSubmit({
 						success:function(data){
 							if( data == '1'){
-								layer.msg('成功转入落地项目库！',{ icon: 1,time:2000},function(){
+								layer.msg('项目分派申请成功！',{ icon: 1,time:2000},function(){
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.location.replace(parent.location.href);
 								parent.layer.close(index);
 								});
 
 							}else{
-								layer.msg('转入落地项目库失败！',{ icon: 2,time:2000});
+								layer.msg('项目分派申请失败！',{ icon: 2,time:2000});
 							}
 						},
 						error:function(XmlHttpRequest,textStatus,errorThrown){
-							layer.msg('转入落地项目库错误！',{ icon: 1,time:1000});
-						},
+							layer.msg('项目分派错误！',{ icon: 1,time:1000});
+						}
 					});
-				},
-
+				}
 			});
-	});
+		});
 
-			jQuery(function() {
+jQuery(function() {
     var $ = jQuery,
         $list = $('#thelist'),
         $btn = $('#ctlBtn'),
@@ -241,8 +234,7 @@
             uploader.upload();
         }
     });
-});	
-
+});
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>

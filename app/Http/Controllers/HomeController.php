@@ -84,9 +84,45 @@ class HomeController extends Controller
         $info_new_count = Information::where('emp_id', $admin_id)->whereBetween('created_at',[$startTime,$endTime])->count();
         $recode_count =Recode::where('emp_id', $admin_id)->count();
 
+        $depts = Dept::whereNotIn('id',[0,6,13])->get();
 
-        
-        return view('welcome')->with(compact('info_count','info_nego_count','info_cir_count','info_land_count','info_new_count','recode_count'));
+        foreach ($depts as $key => $value) {
+            
+            $emp_arry = array ();
+       
+            //获取用户所在组成员
+            $emps=Emp::where('dept_id',$value->id)->get();
+            
+            //获取用户所在组成员id数组
+            foreach ($emps as $key => $val) {
+
+                if($val->is_leader == 0){
+
+                    $emp_arry[]= array(
+
+                    $key=>$val->id,
+
+                  ); 
+                }
+
+            }
+
+            $num1 = Information::whereIn('emp_id',$emp_arry)->count();
+            $num2 = Information::whereIn('emp_id',$emp_arry)->whereIn('process',[3,4,5,6])->count();
+            $value->num1 = $num1;
+            $value->num2 = $num2;
+
+            $dept[]=array(
+
+                    $key=>$value->dept_name,
+
+                  ); 
+
+        }
+
+
+        //return $dept;
+        return view('welcome')->with(compact('depts','info_count','info_nego_count','info_cir_count','info_land_count','info_new_count','recode_count'));
         //return view('welcome');
     }
 }

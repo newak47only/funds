@@ -30,6 +30,7 @@
 											<th width="120">资方联系人</th>
 											<th width="130">资方联系方式</th>
 											<th width="120">首谈联系人</th>
+											<th width="100">跟踪负责人</th>
 											<th width="100">流转方向</th>
 											<th width="140">流转时间</th>
 											<th width="140">流转状态</th>
@@ -38,36 +39,95 @@
 									</thead>
 									<tbody>
 										@foreach($information1 as $v)
-										<tr class="text-c">
+											<tr class="text-c">
 											<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td >{{$v->id}}</td>
 											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
 											<td > {{$v->cont_name}}</td>
 											<td > {{$v->cont_phone}}</td>
 											<td >
+											@if(empty($v->emp_id) && $v->process == 21)
+											等待分派
+											@elseif(empty($v->emp_id) && $v->process == 22)
+											等待分派审核
+											@elseif(empty($v->emp_id) && $v->process == 23)
+												等待	@foreach($depts as $n)
+													@if($n->id == $v->status)
+														{{$n->dept_name}}
+													@endif
+												@endforeach
+												分派
+											@else
 												@foreach($emps as $n)
-												@if($n->id == $v->emp_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看联系人信息">{{$v->staff_name}}</u>
-												@endif
+													@if($n->id == $v->emp_id)
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$v->staff_name}}</u>
+													@endif
 												@endforeach
-											</td>
-											@foreach($v->info_nego as $k)
-											@if($k->actiontype == 5 && $k->info_id == $v->id && $k->result == 1)
-											<td >
-												@foreach($depts as $n)
-												@if($n->id == $k->status)
-												{{$n->dept_name}}
-												@endif
-												@endforeach
-											</td>
-											<td >{{$k->neg_at}}</td>
 											@endif
-											@endforeach
-											<td >@if($v->status == 0)暂无流转@else{{$v->status}}个区域流转中@endif</td>
+											</td>
+											<td> 
+												@foreach($emps as $m)
+													@if($m->id == $v->check_id)
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看跟踪人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看跟踪人信息">{{$m->username}}</u>
+													@endif
+												@endforeach	
+											</td>
+											<td> 
+											@if(empty($v->circule_to))
+
+											暂无流转方向
+											@else
+												@foreach($depts as $n)
+													@if($n->id == $v->circule_to)
+														<span class="badge badge-success radius">{{$n->dept_name}}</span>
+													@endif
+												@endforeach
+											@endif
+											</td>
+											<td>
+											@if($v->process > 0 && $v->process < 21 )
+												@foreach($v->info_nego as $k)
+													@if($k->actiontype == 1 )
+														{{$k->created_at}}
+													@endif
+												@endforeach
+											@else
+													暂无流转
+											@endif
+											</td>
+											<td>
+												@if($v->process ==0 || $v->process > 20 )
+												暂无流转
+												@elseif($v->process == 1)
+												等待区流转审核
+												@elseif($v->process == 2)
+												等待市流转审核
+												@elseif($v->process == 3)
+												等待分派项目跟踪人
+												@elseif($v->process == 4)
+												等待项目认领
+												@elseif($v->process == 5)
+													@foreach($depts as $m)
+														@if($m->id == $v->status)
+															等待{{$m->dept_name}}分发
+														@endif
+													@endforeach
+												@elseif($v->process == 6)
+													@foreach($emps as $m)
+														@if($m->id == $v->circule_id)
+															<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
+														@endif
+													@endforeach
+												@endif	
+											</td>
+												
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick="recode_add('查看流转详情','/recode/add/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;推进记录&nbsp;&nbsp;&nbsp;</button>	
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;重置流转&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
+												@if($v->process == '22')
+												<button type="submit"  href="javascript:;" onclick="information_show('项目分派审核','/circule/tccheck/{{$v->id}}')"  class=" f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;分派审核&nbsp;&nbsp;&nbsp;</button>
+												@else
+												<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10 btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;分派审核&nbsp;&nbsp;&nbsp;</button>
+												@endif
 											</td>
 										</tr>
 										@endforeach

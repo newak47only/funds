@@ -5,9 +5,9 @@
 		<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
 			首页
 			<span class="c-gray en">/</span>
-			项目绩效管理
+			洽谈项目库
 			<span class="c-gray en">/</span>
-			项目绩效列表
+			本人转出项目列表
 			<a class="btn btn-success radius f-r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 		</nav>
 
@@ -27,6 +27,7 @@
 											<th width="120">资方联系人</th>
 											<th width="130">资方联系方式</th>
 											<th width="120">首谈联系人</th>
+											<th width="100">跟踪负责人</th>
 											<th width="100">流转方向</th>
 											<th width="140">流转时间</th>
 											<th width="140">流转状态</th>
@@ -48,19 +49,93 @@
 												@endif
 												@endforeach
 											</td>
-											@foreach($v->info_nego as $k)
-											@if($k->actiontype == 5 && $k->info_id == $v->id && $k->result == 1)
-											<td >
-												@foreach($depts as $n)
-												@if($n->id == $k->status)
-												{{$n->dept_name}}
-												@endif
+											@if($v->process ==1)
+												<td> 暂无跟踪负责人</td>
+												<td> 暂无流转方向</td>
+												@foreach($v->info_nego as $k)
+													@if($k->actiontype == 1 )
+														<td>{{$k->created_at}}</td>
+													@endif
 												@endforeach
-											</td>
-											<td >{{$k->neg_at}}</td>
+												<td>等待区管理员分发</td>
+											@elseif($v->process ==2)
+												<td>
+												@foreach($emps as $m)
+													@if($m->id == $v->check_id)
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看跟踪人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看跟踪人信息">{{$m->username}}</u>
+													@endif
+												@endforeach	
+												</td>
+												<td >
+												@foreach($depts as $n)
+													@if($n->id == $v->circule_to)
+														<span class="badge badge-primary radius">{{$n->dept_name}}</span>
+													@endif
+												@endforeach
+												</td>
+												@foreach($v->info_nego as $k)
+													@if($k->actiontype == 1 )
+														<td>{{$k->created_at}}</td>
+													@endif
+												@endforeach
+												<td>等待流转</td>
+											@elseif($v->process ==3)
+												<td>
+												@foreach($emps as $m)
+													@if($m->id == $v->check_id)
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看跟踪人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看跟踪人信息">{{$m->username}}</u>
+													@endif
+												@endforeach	
+												</td>
+
+												<td >
+													@foreach($depts as $n)
+														@if($n->id == $v->circule_to)
+															{{$n->dept_name}}
+														@endif
+													@endforeach
+												</td>
+												@foreach($v->info_nego as $k)
+													@if($k->actiontype == 1 )
+														<td>{{$k->created_at}}</td>
+													@endif
+												@endforeach
+												<td>
+													@foreach($dept as $m)
+														@if($m->id == $v->status)
+															{{$m->name}}</u>分发中
+														@endif
+													@endforeach
+												</td>
+											@elseif($v->process ==4)
+												<td>
+												@foreach($emps as $m)
+													@if($m->id == $v->check_id)
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看跟踪人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看跟踪人信息">{{$m->username}}</u>
+													@endif
+												@endforeach	
+												</td>
+												<td >
+													@foreach($depts as $n)
+														@if($n->id == $v->circule_to)
+															{{$n->dept_name}}
+														@endif
+													@endforeach
+												</td>
+												@foreach($v->info_nego as $k)
+													@if($k->actiontype == 1 )
+														<td>{{$k->created_at}}</td>
+													@endif
+												@endforeach
+												<td>
+													@foreach($emps as $m)
+														@if($m->id == $v->circule_id)
+															<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
+														@endif
+													@endforeach
+												</td>
 											@endif
-											@endforeach
-											<td >@if($v->status == 0)暂无流转@else{{$v->status}}个区域流转中@endif</td>
+
 											<td class="td-manage">
 												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
 								
@@ -114,7 +189,6 @@
 			//默认在初始化的时候按照指定列排序
 			"aaSorting":[[1,"asc"]],
 			//禁用搜索
-			"searching":false,
 		});
 
 
