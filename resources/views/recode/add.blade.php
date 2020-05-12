@@ -37,7 +37,7 @@
 							<textarea type="text" class="textarea" value="" placeholder="" id="content" name="content" datatype="*4-16" ></textarea>
 						</div>
 					</div>
-					<input type="hidden" name="emp_id" value="{{$information->emp_id}}">
+					<input type="hidden" name="emp_id" value="{{$admin_id}}">
 					<input type="hidden" name="info_id" value="{{$information->id}}">
 					{{csrf_field()}}
 					{{method_field('POST')}}

@@ -39,7 +39,8 @@ class RecodeController extends Controller
     public function add($id)
     {
         $information = Information::findOrFail($id);
-        return view('recode.add')->with(compact('information'));
+        $admin_id = Auth::user()->id;
+        return view('recode.add')->with(compact('information','admin_id'));
     }
 
 

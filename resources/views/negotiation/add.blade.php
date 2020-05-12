@@ -147,7 +147,7 @@
 
     	formData:{
     		_token:"{{csrf_token()}}",
-    		emp_id:"{{$informations->emp_id}}",
+    		emp_id:"{{$users->id}}",
     		actiontype:"{{$actiontype}}",
     		info_id:"{{$informations->id}}",
     	},

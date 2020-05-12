@@ -98,7 +98,7 @@ class CirculeController extends Controller
             //获取用户所在组成员id数组
         $depts = Dept::get();  
 
-        $information = Information::where('circule_to',$dept_id)->whereIn('process',[5,6])->get();
+        $information = Information::where('circule_to',$dept_id)->orwhere('status',$dept_id)->whereIn('process',[5,6])->get();
         //本区流转转入项目       
         return view('circule.inlist_all')->with(compact('information','emps','depts')); 
 
@@ -499,7 +499,7 @@ class CirculeController extends Controller
 
                 }elseif ($information->check_id == 0) {
 
-                DB::update('update information set process = ? where id = ?',[3,$id]);
+                DB::update('update information set process = ? where id = ?',[4,$id]);
 
                 }
 
@@ -575,6 +575,7 @@ class CirculeController extends Controller
         $admin_id = Auth::user()->id;
         $emp = Emp::where('id',$admin_id)->first();
         DB::update('update information set  status= ? where id = ?',[$emp->dept_id,$id]);
+
         DB::update('update information set  process= ? where id = ?',['5',$id]);
         $Negotiation=Negotiation::create([
                 'info_id' =>$id,

@@ -119,7 +119,6 @@ class HomeController extends Controller
                   ); 
 
         }
-        dd($dept);
 
 
         return view('welcome')->with(compact('depts','info_count','info_nego_count','info_cir_count','info_land_count','info_new_count','recode_count','dept'));

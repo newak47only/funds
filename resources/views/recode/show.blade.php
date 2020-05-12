@@ -42,15 +42,12 @@
 										<thead>
 											<tr class="text-c">
 												<th width="120">操作时间</th>
-												<th width="200">项目名称</th>
-												<th width="80">操作人</th>
-												<th width="80">操作名称</th>
-												<th width="80">操作说明</th>
-												<th width="80">操作时间</th>
-												<th width="80">操作人</th>
-												<th width="80">操作名称</th>
-												<th width="80">操作说明</th>
-												<th width="80">操作结果</th>
+												<th width="250">项目名称</th>
+												<th width="">操作人</th>
+												<th width="">操作名称</th>
+												<th width="">操作说明</th>
+
+												<th width="">操作结果</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -61,13 +58,7 @@
 												<td>{{$m->emp->username}}</td>
 												<td>{{$m->eaction}}</td>
 												<td><a><u style="cursor:pointer" class="text-primary" onClick="recode_content('查看操作说明','{{$m->remark}}')" title="查看操作说明">{{Str::limit($m->remark,20,'....')}}</u></a></td>
-												<td>{{$m->neg_at}}</td>
-												@if(empty($m->demp->username))
-												<td></td>
-												@else
-												<td>{{$m->demp->username}}</td>
-												@endif
-												<td>{{$m->daction}}</td>
+
 												<td><a><u style="cursor:pointer" class="text-primary" onClick="recode_content('查看操作说明','{{$m->report}}')" title="查看操作说明">{{Str::limit($m->report,20,'....')}}</u></a></td>
 												@if($m->result == 1 && $m->actiontype == 5)
 												<td> <span class="badge badge-success radius">审核通过</span></td>
