@@ -28,43 +28,45 @@
 										<tr class="text-c">
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
-											<th width="250">项目名称</th>
+											<th width="240">项目名称</th>
+											<th width="80">项目国别</th>
 											<th width="100">行业类别</th>
 											<th width="100">投资金额</th>
 											<th width="100">资方姓名</th>
 											<th width="120">资方联系方式</th>
-											<th width="140">入库时间</th>
+											<th width="100">入库时间</th>
 											<th width="80">工作记录</th>
-											<th width="100">上报状态</th>
+											<th width="80">上报状态</th>
 											<th width=" ">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($info as $v)
+										@foreach($information as $v)
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
-											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_edit('编辑项目','{{route('information.edit',$v['id'])}}','{{$v['id']}}')" title="编辑项目">{{$v['name']}}</u></td>
-											<td>{{$v['industry']}}</td>
-											<td>{{$v['investment']}}@if($v['currency'] =="1")万人民币@elseif($v['currency'] =="2")万美元@elseif($v['currency'] =="3")万欧元@endif</td>
-											<td>{{$v['cont_name']}}</td>
-											<td>{{$v['cont_phone']}}</td>
-											<td>{{$v['created_at']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','{{route('recode.show',$v['id'])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
-											@if($v['is_show']==0)
+											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
+											<td>{{$v->id}}</td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_edit('编辑项目','{{route('information.edit',$v->id)}}','{{$v->id}}')" title="编辑项目">{{$v->name}}</u></td>
+											<td>{{$v->country}}</td>
+											<td>{{$v->industry}}</td>
+											<td>{{$v->investment}}@if($v->currency =="1")万人民币@elseif($v->currency =="2")万美元@elseif($v->currency =="3")万欧元@endif</td>
+											<td>{{$v->cont_name}}</td>
+											<td>{{$v->cont_phone}}</td>
+											<td>{{$v->created_at->format('Y-m-d')}}</td>
+											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','{{route('recode.show',$v->id)}}','{{$v->id}}')" title="查看工作记录">{{$v->recodenum}}条</u></td>
+											@if($v->is_show==0)
 											<td>未上报</td>
-											@elseif($v['is_show']==1)
+											@elseif($v->is_show==1)
 											<td>已上报</td>
 											@endif
 											
 											<td class="td-manage">
 												
-												<button type="submit"  href="javascript:;" onclick="info_recode_add('进度记录','/recode/add/{{$v['id']}}')"  class=" f-l btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进度记录&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick="info_nego_add('项目落地','/negotiation/add/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe640;</i>&nbsp;&nbsp;项目落地&nbsp;&nbsp;&nbsp;</button>
-												@if($v['recodenum'] >= 3)
-												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流转','/circule/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6bd;</i>&nbsp;&nbsp;项目流转&nbsp;&nbsp;&nbsp;</button>
-												@elseif($v['recodenum'] < 3)
-												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流"  class="f-l ml-10 btn disabled  radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 14px">&#xe6bd;</i>&nbsp;&nbsp;项目流转&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="info_recode_add('进度记录','/recode/add/{{$v->id}}')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;进度记录&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="info_nego_add('项目落地','/negotiation/add/{{$v->id}}')"  class=" f-l ml-10 btn btn-primary radius size-S mt-5 mb-5">&nbsp;<i class="Hui-iconfont">&#xe640;</i>&nbsp;项目落地&nbsp;&nbsp;</button>
+												@if($v->recodenum >= 3)
+												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流转','/circule/add/{{$v->id}}')"  class="f-l ml-10 btn btn-primary radius size-S mt-5 mb-5">&nbsp;<i class="Hui-iconfont">&#xe6bd;</i>&nbsp;项目流转&nbsp;&nbsp;</button>
+												@elseif($v->recodenum < 3)
+												<button type="submit"  href="javascript:;" onclick="info_cir_add('项目流"  class="f-l ml-10 btn disabled  radius size-S mt-5 mb-5">&nbsp;<i class="Hui-iconfont" style="font-size: 14px">&#xe6bd;</i>&nbsp;项目流转&nbsp;&nbsp;</button>
 												@endif
 											</td>
 
@@ -186,8 +188,8 @@
 			type: 2,
 			title: title,
 			content: url,
-    		area: ['800px', '600px']
-			});
+		});
+			layer.full(index);
 		};
 
 		function info_cir_add(title,url,id){

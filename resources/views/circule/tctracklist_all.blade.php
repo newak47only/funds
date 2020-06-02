@@ -22,12 +22,12 @@
 									<th width="25"><input type="checkbox" name="" value=""></th>
 									<th width="40">ID</th>
 									<th width="200">项目名称</th>
-									<th width="100">资方联系人</th>
-									<th width="100">资方联系方式</th>
-									<th width="100">首谈联系人</th>
+									<th width="100">项目国别</th>
+									<th width="120">行业类别</th>
+									<th width="100">首谈地</th>
 									<th width="100">跟踪负责人</th>
 									<th width="80">流转方向</th>
-									<th width="120">流转时间</th>
+									<th width="100">流转时间</th>
 									<th width="120">流转状态</th>
 									<th width="220 ">操作</th>
 								</tr>
@@ -39,12 +39,12 @@
 									<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 									<td >{{$v->id}}</td>
 									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
-									<td > {{$v->cont_name}}</td>
-									<td > {{$v->cont_phone}}</td>
+									<td>{{$v->country}}</td>
+									<td>{{$v->industry}}</td>
 									<td >
 									@foreach($emps as $n)
 									@if($n->id == $v->emp_id)
-									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$v->staff_name}}</u>
+										{{$n->dept->dept_name}}
 									@endif
 									@endforeach
 									</td>
@@ -69,18 +69,20 @@
 								    <td>
 								    	@foreach($v->info_nego as $k)
 											@if($k->actiontype == 2 )
-												{{$k->created_at}}
+												{{$k->created_at->format('Y-m-d')}}
 											@endif
 										@endforeach
 								    </td>
 									<td>
-										@if($v->process == 3)
-										暂无流转
+										@if($v->process == 2)
+										等待市商务局审核
+										@elseif($v->process == 3)
+										等待分派跟踪人
 										@elseif($v->process == 4)
 										等待认领...
 										@elseif($v->process == 5)
 											@foreach($depts as $m)
-												@if($m->id == $v->status)
+												@if($m->id == $v->circule_to)
 													等待{{$m->dept_name}}分发
 												@endif
 											@endforeach

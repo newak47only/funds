@@ -359,30 +359,16 @@ class InformationController extends Controller
             ['emp_id','=',$admin_id],
             ['process','=','0'],
         ])->get();
+
         $info = [];
+
         foreach ($information as $key => $value) {
              $recodenum = Recode::where('info_id',$value->id)->count();   
-            $info[]=[
-                        'id'=> $value->id,
-                        'name' => $value->name,
-                        'cont_name' => $value->cont_name,
-                        'cont_phone' => $value->cont_phone,
-                        'emp_id' => $value->emp_id,
-                        'staff_name' => $value->staff_name,
-                        'staff_phone' => $value->staff_phone,
-                        'currency' => $value->currency,
-                        'investment' => $value->investment,
-                        'industry' => $value->industry,
-                        'investment' => $value->investment,
-                        'status' => $value->status,
-                        'process' => $value->process,
-                        'is_show' => $value->is_show, 
-                        'created_at' => $value->created_at,
-                        'recodenum'=>$recodenum,
-                ];
+           
+                        $value->recodenum= $recodenum;
         }        
               //dd($info);
-              return view('information.ownlist')->with(compact('info'));
+              return view('information.ownlist')->with(compact('information'));
     }
 
     public function list_all(){
@@ -481,6 +467,11 @@ class InformationController extends Controller
 
         $information = Information::where([
             ['status','=',$dept_id],
+
+            ['process','=','23'],
+
+        ])->orwhere([
+            ['circule_to','=',$dept_id],
 
             ['process','=','23'],
 
@@ -663,11 +654,21 @@ class InformationController extends Controller
             ]);
 
             $result=$Negotiation->save($data);
+            $information = Information::findOrFail($id);
 
-            DB::update('update information set process = ? where id = ?',[0,$id]);
+            if(empty($information->emp_id)){
 
-            DB::update('update information set emp_id = ? where id = ?',[$data['status'],$id]);
+                 DB::update('update information set process = ? where id = ?',[0,$id]);
+                DB::update('update information set emp_id = ? where id = ?',[$data['status'],$id]);
 
+            }else{
+                
+                DB::update('update information set process = ? where id = ?',[6,$id]);
+                DB::update('update information set circule_id = ? where id = ?',[$data['status'],$id]);
+
+            }
+
+            DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);
 
             return $result ? '1' : '0';
 

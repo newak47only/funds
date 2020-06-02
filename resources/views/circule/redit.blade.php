@@ -33,14 +33,28 @@
 				<div class="row clearfix">
 					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册资金：</label>
 					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="{{$information->investment}} " placeholder="{{$information->investment}}" id="reg_cap" name="reg_cap" datatype="*4-16" >
+						<input type="text" class="input-text" value=" "  id="reg_cap" name="reg_cap" datatype="*4-16" >
+						@if($information->currency == '1')该项目注册资金单位为：万人民币@elseif($information->currency == '2')该项目注册资金单位为：万美元@elseif($information->currency == '3')该项目注册资金单位为：万欧元@endif
+					</div>					
+				</div>
+				<div class="row clearfix">
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>投资金额：</label>
+					<div class="form-controls col-xs-8 col-sm-9">
+						<input type="text" class="input-text" value=" " placeholder="" id="investment" name="investment" datatype="*4-16" >
 						@if($information->currency == '1')该项目注册资金单位为：万人民币@elseif($information->currency == '2')该项目注册资金单位为：万美元@elseif($information->currency == '3')该项目注册资金单位为：万欧元@endif
 					</div>					
 				</div>
 				<div class="row clearfix">
 					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册时间：</label>
 					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text datetimepicker-input" value="" placeholder="" id="neg_at" name="neg_at" datatype="*4-16" >
+						<input type="text" class="input-text datetimepicker-input" value="" placeholder="" id="negotiation-datetime-start" name="neg_at" datatype="*4-16" >
+					</div>
+				</div>
+
+				<div class="row clearfix">
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>经营范围：</label>
+					<div class="form-controls col-xs-8 col-sm-9">
+						<textarea type="text" class="textarea" value="" placeholder="" id="scope" name="scope" datatype="*4-16" ></textarea>
 					</div>
 				</div>
 
@@ -105,7 +119,7 @@
 	<script type="text/javascript">
 		$(function(){
 
-			$('#name,#company,#reg_cap,#neg_at,#uploader').parents('.row').hide();
+			$('#name,#company,#reg_cap,#negotiation-datetime-start,#uploader,#investment,#scope').parents('.row').hide();
 			//给下拉的列表帮定切换事件
 			$('select').change(function(){
 				//获取当前选中的值
@@ -114,10 +128,10 @@
 				//判断值
 				if(_val > 0){
 					//显示
-					$('#name,#company,#reg_cap,#neg_at,#uploader').parents('.row').hide(500);
+					$('#name,#company,#reg_cap,#negotiation-datetime-start,#uploader,#investment,#scope').parents('.row').hide(500);
 				}else{
 
-					$('#name,#company,#reg_cap,#neg_at,#uploader').parents('.row').show(500);
+					$('#name,#company,#reg_cap,#negotiation-datetime-start,#uploader,#investment,#scope').parents('.row').show(500);
 				}
 			});
 			/* 通过iCheck插件，美化checkbox */
@@ -126,6 +140,15 @@
 				radioClass: 'iradio-blue',
 				increaseArea: '20%'
 			});
+
+			$("#negotiation-datetime-start").datetimepicker({
+        		language:  'zh-CN',
+		   	 	format: 'yyyy-mm-dd',
+		    	minView: "month",
+		    	todayBtn:  1,
+		    	autoclose: 1,
+		    	endDate : new Date(),
+		  	});
 
 			/* 表单验证，提交 */
 			$("#form-admin-add").validate({
@@ -162,7 +185,11 @@
 								});
 
 							}else{
-								layer.msg('流转失败，区级管理员重新分发！',{ icon: 2,time:2000});
+								layer.msg('流转失败，区级管理员重新分发！',{ icon: 2,time:2000},function(){
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.location.replace(parent.location.href);
+								parent.layer.close(index);
+								});
 							}
 						},
 						error:function(XmlHttpRequest,textStatus,errorThrown){

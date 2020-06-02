@@ -24,6 +24,8 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="220">项目名称</th>
+											<th width="80">项目国别</th>
+											<th width="120">所属行业</th>
 											<th width="100">首谈地</th>
 											<th width="100">首谈联系人</th>
 											<th width="100">跟踪负责人</th>
@@ -39,18 +41,15 @@
 											<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td >{{$v->id}}</td>
 											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
+											<td>{{$v->country}}</td>
+											<td>{{$v->industry}}</td>
 											<td > 
-											@if(empty($v->emp_id) && $v->process == 21)
-													等待分派
-											@elseif(empty($v->emp_id) && $v->process == 22)
-													等待分派审核
-											@else(empty($v->emp_id) && $v->process == 23)
-												@foreach($depts as $n)
-													@if($n->id == $v->status)
-													{{$n->dept_name}}
+												@foreach($emps as $n)
+													@if($n->id == $v->emp_id)
+													{{$n->dept->dept_name}}
 													@endif
 												@endforeach
-											@endif
+
 											</td>
 		
 											<td>
@@ -93,15 +92,8 @@
 											@endif
 											</td>
 											<td>
-											@if($v->process > 0 && $v->process < 21 )
-												@foreach($v->info_nego as $k)
-													@if($k->actiontype == 1 )
-														{{$k->created_at}}
-													@endif
-												@endforeach
-											@else
-													暂无流转
-											@endif
+												{{$v->updated_at->format('Y-m-d')}}
+
 											</td>
 											<td>
 												@if($v->process ==0 || $v->process > 20 )

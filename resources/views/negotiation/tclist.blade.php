@@ -28,7 +28,7 @@
 											<th width="100">首谈地联系人</th>
 											<th width="100">项目落户地</th>
 											<th width="100">落户地联系人</th>
-											<th width="150">操作</th>
+											<th width="230">操作</th>
 										</tr>
 									</thead>
 									<tbody>

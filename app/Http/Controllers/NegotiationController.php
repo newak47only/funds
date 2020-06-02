@@ -827,6 +827,8 @@ class NegotiationController extends Controller
              $test=DB::update('update information set process = ? where id = ?',[7,$info_id]);
              $test=DB::update('update information set company = ? where id = ?',[$data['company'],$info_id]);
              $test=DB::update('update information set reg_cap = ? where id = ?',[$data['reg_cap'],$info_id]);
+             $test=DB::update('update information set scope = ? where id = ?',[$data['scope'],$info_id]);
+             $test=DB::update('update information set scope = ? where id = ?',[$data['investment'],$info_id]);
              //dd($test);
              $result=$Negotiation->save();
             

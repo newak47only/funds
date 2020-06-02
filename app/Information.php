@@ -8,7 +8,7 @@ class Information extends Model
 {
     //
      protected $table="information";
-     protected $fillable=['name','cont_name','cont_phone','staff_name','staff_phone','emp_id','currency','investment','industry','content','status','process','appeal','cont_main','cont_unit','check_id','circule_to','issuer_id','company','reg_cap'];
+     protected $fillable=['name','cont_name','cont_phone','staff_name','staff_phone','emp_id','currency','investment','industry','content','status','process','appeal','cont_main','cont_unit','check_id','circule_to','issuer_id','company','reg_cap','country','scope'];
      
      //public function info_nego(){
      //	return  $this->hasOne('App\Emp','id','emp_id');

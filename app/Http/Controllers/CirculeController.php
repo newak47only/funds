@@ -98,7 +98,7 @@ class CirculeController extends Controller
             //获取用户所在组成员id数组
         $depts = Dept::get();  
 
-        $information = Information::where('circule_to',$dept_id)->orwhere('status',$dept_id)->whereIn('process',[5,6])->get();
+        $information = Information::where('circule_to',$dept_id)->whereIn('process',[5,6])->get();
         //本区流转转入项目       
         return view('circule.inlist_all')->with(compact('information','emps','depts')); 
 
@@ -130,14 +130,7 @@ class CirculeController extends Controller
         $emps=Emp::get();
             //获取用户所在组成员id数组
         $depts = Dept::get();   
-        $information1=Information::whereIn('emp_id', $emp_arry)->where([
-
-            ['process','<','7'],
-
-            ['process','!=','0'],
-
-
-        ])->get();
+        $information1=Information::whereIn('emp_id', $emp_arry)->whereNotIn('process',[0,7,8,9,10,11,12,13,14,15,16,17,18,19,20])->get();
 
         return view('circule.outlist_all')->with(compact('information1','emps','depts')); 
     }
@@ -149,7 +142,7 @@ class CirculeController extends Controller
         $emps=Emp::get();
         $depts = Dept::get();      
             //我发布的流转项目
-        $information1=Information::where('emp_id', '=', $admin_id)->where('process','<','7')->get();
+        $information1=Information::where('emp_id', '=', $admin_id)->whereIn('process',[2,3,4,5,6,21,22,23])->get();
         foreach ($information1 as $key => $value) 
         {
             $value->num = Recode::where('info_id',$value->id)->count();
@@ -176,8 +169,16 @@ class CirculeController extends Controller
                 ['actiontype','=','6'],
                 ['status','=',$admin_id]
             ])->first(); 
+            if(empty($negotiation)){
 
-            $datetime2 = carbon::parse($negotiation->created_at);
+                $datetime2 = carbon::parse($val->updated_at);
+
+            }else {
+
+                $datetime2 = carbon::parse($negotiation->created_at);
+                
+            }
+            
             $days = (new Carbon)->diffIndays($datetime2, true);
             $day = 7-$days;
             $val->check_day = $day; 
@@ -232,12 +233,12 @@ class CirculeController extends Controller
         $depts = Dept::get();      
             //本人流转项目
 
-        $information2=Information::where([
+        $information=Information::where([
             ['check_id', '=', $admin_id],
             ['emp_id','!=',$admin_id],
             ['issuer_id','!=',$admin_id],
-        ])->whereIn('process',[4,6])->get();
-        return view('circule.tctracklist')->with(compact('information2','emps','depts'));        
+        ])->whereIn('process',[4,5,6])->get();
+        return view('circule.tctracklist')->with(compact('information','emps','depts'));        
     }
 
     public function tclist_all(){
@@ -377,8 +378,21 @@ class CirculeController extends Controller
 
             ]);
              $info_id=$data['info_id'];
-             //DB::update('update student set name = ? where id = ?',[$name,$id]);
-             $test=DB::update('update information set process = ? where id = ?',[1,$info_id]);
+             //DB::update('update student set name =4 ? where id = ?',[$name,$id]);
+             $information = Information::findOrFail($info_id);
+             if($information->issuer_id == Auth::id() ){
+
+                DB::update('update information set process = ? where id = ?',[1,$info_id]);
+                
+             }else{
+
+                DB::update('update information set process = ? where id = ?',[21,$info_id]);
+               
+
+             }
+              DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$info_id]);
+
+             
              //dd($test);
              $result=$Negotiation->save();
              DB::commit();
@@ -448,7 +462,8 @@ class CirculeController extends Controller
        // }else {
             //DB::update('update information set check_id = ? where id = ?',[$check_id,$id]);
             DB::update('update information set circule_to = ? where id = ?',[$data['status'],$id]); 
-            DB::update('update information set process = ? where id = ?',[2,$id]);   
+            DB::update('update information set process = ? where id = ?',[2,$id]);
+            DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);  
         //}  
         
         $result=$Negotiation->save($data);
@@ -499,7 +514,7 @@ class CirculeController extends Controller
 
                 }elseif ($information->check_id == 0) {
 
-                DB::update('update information set process = ? where id = ?',[4,$id]);
+                DB::update('update information set process = ? where id = ?',[3,$id]);
 
                 }
 
@@ -509,6 +524,7 @@ class CirculeController extends Controller
 
                 DB::update('update information set process = ? where id = ?',[1,$id]);
             }
+            DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);
 
             return $result ? '1' : '0';
 
@@ -562,8 +578,20 @@ class CirculeController extends Controller
 
         $result=$Negotiation->save($data);
 
-        DB::update('update information set process = ? where id = ?',[$data['result'],$id]);
-        DB::update('update information set check_id = ? where id = ?',[$data['status'],$id]); 
+        $information = Information::findOrFail($id);
+        if($information->circule_to == 0 ){
+
+            DB::update('update information set process = ? where id = ?',[$data['result'],$id]);
+            
+            DB::update('update information set check_id = ? where id = ?',[$data['status'],$id]); 
+
+        }else {
+
+            DB::update('update information set process = ? where id = ?',['5',$id]);
+            DB::update('update information set check_id = ? where id = ?',[$data['status'],$id]); 
+
+        }
+            DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);
 
         return $result ? '1' : '0';
 
@@ -574,9 +602,10 @@ class CirculeController extends Controller
     public function claim($id){
         $admin_id = Auth::user()->id;
         $emp = Emp::where('id',$admin_id)->first();
-        DB::update('update information set  status= ? where id = ?',[$emp->dept_id,$id]);
+        DB::update('update information set  circule_to= ? where id = ?',[$emp->dept_id,$id]);
 
         DB::update('update information set  process= ? where id = ?',['5',$id]);
+        DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);
         $Negotiation=Negotiation::create([
                 'info_id' =>$id,
                 'emp_id'  =>$admin_id,
@@ -617,6 +646,7 @@ class CirculeController extends Controller
 
         DB::update('update information set circule_id = ? where id = ?',[$data['status'],$data['info_id']]);
         DB::update('update information set process = ? where id = ?',['6',$data['info_id']]);
+        DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);
 
         return $result ? "1" : "0";
     }
@@ -652,15 +682,20 @@ class CirculeController extends Controller
              DB::update('update information set process = ? where id = ?',[7,$id]); 
              DB::update('update information set company = ? where id = ?',[$data['company'],$id]);
              DB::update('update information set reg_cap = ? where id = ?',[$data['reg_cap'],$id]);
+            DB::update('update information set investment = ? where id = ?',[$data['investment'],$id]);
+             DB::update('update information set reg_cap = ? where id = ?',[$data['scope'],$id]);
          }elseif ($data['result']=='1') {
-            DB::update('update information set process = ? where id = ?',[5,$id]);
-            DB::update('update information set circule_id = ? where id = ?',[0,$id]); 
+            DB::update('update information set process = ? where id = ?',[21,$id]);
+            DB::update('update information set circule_id = ? where id = ?',[0,$id]);
+             DB::update('update information set status = ? where id = ?',[0,$id]); 
+             DB::update('update information set circule_to = ? where id = ?',[0,$id]); 
          }
+         DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);
         DB::commit();
 
         $result = $data['result'];
 
-         return $result ? 1 : 0;
+         return $result;
 
     }
 
@@ -773,7 +808,7 @@ class CirculeController extends Controller
     public function resetupdate(Request $request,$id){
 
         $data=$request->all();
-         //dd($data);
+         
         $Negotiation=Negotiation::create([
                 'info_id' =>$data['info_id'],
                 'emp_id'  =>Auth::id(),
@@ -792,7 +827,16 @@ class CirculeController extends Controller
 
         DB::update('update information set circule_to = ? where id = ?',[$data['status'],$id]);
 
-        DB::update('update information set process = ?  where id = ?',['4',$id]);
+        if($data['status']==0){
+
+            DB::update('update information set process = ?  where id = ?',['4',$id]);
+
+        }else {
+
+            DB::update('update information set process = ?  where id = ?',['5',$id]);
+        }
+
+        
 
         DB::update('update information set status= ? where id = ?',['0',$id]);
 
@@ -833,8 +877,16 @@ class CirculeController extends Controller
             ]);
 
              //DB::update('update student set name = ? where id = ?',[$name,$id]);
+             $information = Information::findOrFail($id);
+             if(empty($information->emp_id)){
+                $test=DB::update('update information set status = ? where id = ?',[$data['status'],$id]);
+
+             }else{
+                    $test=DB::update('update information set circule_to = ? where id = ?',[$data['status'],$id]);
+
+             }
              $test=DB::update('update information set process = ? where id = ?',['22',$id]);
-             $test=DB::update('update information set status = ? where id = ?',[$data['status'],$id]);
+             
              //dd($test);
              $result=$Negotiation->save();
              DB::commit();
@@ -885,6 +937,7 @@ class CirculeController extends Controller
 
                 DB::update('update information set process = ? where id = ?',[21,$id]);
                  DB::update('update information set status = ? where id = ?',[0,$id]);
+                 DB::update('update information set circule_to = ? where id = ?',[0,$id]);
             }
             
 

@@ -22,6 +22,7 @@
 											<th width="40">ID</th>
 											<th width="220">项目名称</th>
 											<th width="140">注册企业名称</th>
+											<th width="80">项目国别</th>
 											<th width="120">行业类别</th>
 											<th width="120">注册资金</th>
 											<th width="120">项目进度</th>
@@ -37,6 +38,7 @@
 										<tr class="text-c">
 											<td>{{$v['id']}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+											<td>{{$v->country}}</td>
 											<td>{{$v['company']}}</td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['reg_cap']}}@if($v['currency'] =='0')万人民币

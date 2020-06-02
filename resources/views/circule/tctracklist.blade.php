@@ -33,13 +33,13 @@
 									<th width="100">首谈联系人</th>
 									<th width="100">跟踪负责人</th>
 									<th width="80">流转方向</th>
-									<th width="120">流转时间</th>
+									<th width="100">流转时间</th>
 									<th width="120">流转状态</th>
 									<th width="330 ">操作</th>
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($information2 as $v)
+								@foreach($information as $v)
 
 								<tr class="text-c">
 									<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
@@ -71,7 +71,7 @@
 									<td>
 										@foreach($v->info_nego as $k)
 											@if($k->actiontype == 1 )
-												{{$k->created_at}}
+												{{$k->created_at->format('y-m-d')}}
 											@endif
 										@endforeach
 									</td>
@@ -80,7 +80,7 @@
 										等待认领...
 										@elseif($v->process == 5)
 											@foreach($depts as $m)
-												@if($m->id == $v->status)
+												@if($m->id == $v->circule_to)
 													等待{{$m->dept_name}}分发
 												@endif
 											@endforeach
@@ -96,7 +96,7 @@
 									<td class="td-manage">
 										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
 										<button type="submit"  href="javascript:;" onclick="recode_add('添加推进记录','/recode/add/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e6;</i>&nbsp;&nbsp;推进记录&nbsp;&nbsp;&nbsp;</button>
-										@if($v->process == '4')	
+										@if($v->process == '4' || $v->process == '5' )	
 										<button type="submit"  href="javascript:;" onclick="information_show('重置流转','/circule/cirreset/{{$v->id}}')"  class="btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;重置流转&nbsp;&nbsp;&nbsp;</button>
 										@else
 										<button type="submit"  href="javascript:;" onclick=""  class="btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;重置流转&nbsp;&nbsp;&nbsp;</button>

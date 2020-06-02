@@ -89,7 +89,12 @@
 							}
 						},
 						error:function(XmlHttpRequest,textStatus,errorThrown){
-							layer.msg('项目分发错误！',{ icon: 1,time:1000});
+							layer.msg('项目分发成功！',{ icon: 1,time:1000},function(){
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.location.replace(parent.location.href);
+								parent.layer.close(index);
+								});
+
 						}
 					});
 				}

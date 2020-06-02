@@ -6,7 +6,7 @@
 			<div class="panel-body">
 
 				
-				<form action="/circule/resetpdate/{{$information->id}}" method="POST"  class="form form-horizontal" id="form-admin-add" >
+				<form action="/circule/resetupdate/{{$information->id}}" method="POST"  class="form form-horizontal" id="form-admin-add" >
 						<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>流转方向：</label>
 						<div class="form-controls col-xs-8 col-sm-9 skin-minimal">

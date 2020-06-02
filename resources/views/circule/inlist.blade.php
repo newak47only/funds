@@ -65,13 +65,19 @@
 											@endforeach
 											</td>
 											<td >
-												@foreach($k->info_nego as $v)
+												<!--@if($k->emp_id == $k->issuer_id)
+														{{$k->updated_at}}
+												@else
+													@foreach($k->info_nego as $v)
 													@if($v->actiontype == 6 && $v->status == $k->circule_id)
 														{{$v->created_at}} 
 														@break
 													@endif
-
 												@endforeach
+
+												@endif -->
+
+												{{$k->updated_at->format('Y-m-d')}}
 											</td>
 											<td>
 												<u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','{{route('recode.show',$k->id)}}','{{$k->id}}')" title="查看工作记录">{{$k->num}}条</u>
@@ -86,7 +92,7 @@
 
 											<td class="td-manage">
 												<button type="submit"  href="javascript:;" onclick="information_show('进度记录','/recode/add/{{$k->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进度记录&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick="information_show('流转结果','/circule/redit/{{$k->id}}')"  class="btn btn-danger radius size-S ml-10"><i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;流转结果&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="recode_show('流转结果','/circule/redit/{{$k->id}}')"  class="btn btn-danger radius size-S ml-10"><i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;流转结果&nbsp;&nbsp;</button>
 												
 											</td>
 										</tr>
@@ -149,6 +155,7 @@
   		});
   			layer.full(index);
 		};
+
 
 
 	function information_show(title,url,id){

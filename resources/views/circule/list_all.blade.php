@@ -23,7 +23,8 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="">项目名称</th>
-											<th width="120">行业类别</th>
+											<th width="100">项目国别</th>
+											<th width="100">所属行业</th>
 											<th width="130">投资金额</th>
 											<th width="120">首谈联系人</th>
 											<th width="120">项目跟踪人</th>
@@ -38,6 +39,7 @@
 											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v->id}}</td>
 											<td class="text-l">{{$v->name}}</td>
+											<td>{{$v->country}}</td>
 											<td>{{$v->industry}}</td>
 											<td>{{$v->investment}}@if($v->currency =="1")万人民币@elseif($v->currency =="2")万美元@elseif($v->currency =="3")万欧元@endif</td>
 											<td>
@@ -64,17 +66,17 @@
 											<td>
 												@foreach($v->info_nego as $k)
 													@if($k->actiontype == 3 )
-														{{$k->created_at}}
+														{{$k->created_at->format('Y-m-d')}}
 													@endif
 												@endforeach
 											</td>
 
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>
 												@if($v->is_claim == '0' )
-												<button type="submit"  href="javascript:;" onclick="circule_claim(this,'{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size:16px">&#xe640;</i>&nbsp;&nbsp;项目认领&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="circule_claim(this,'{{$v->id}}')"  class="f-l ml-10  mt-5 mb-5 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size:16px">&#xe640;</i>&nbsp;&nbsp;项目认领&nbsp;&nbsp;&nbsp;</button>
 												@elseif($v->is_claim == '1' )
-												<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10 btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size:16px">&#xe640;</i>&nbsp;&nbsp;项目认领&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10  mt-5 mb-5 btn btn-disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size:16px">&#xe640;</i>&nbsp;&nbsp;项目认领&nbsp;&nbsp;&nbsp;</button>
 												@endif
 											</td>
 										</tr>

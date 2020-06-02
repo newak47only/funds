@@ -23,13 +23,15 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="220">项目名称</th>
+											<th width="100">项目国别</th>
+											<th width="120">所属行业</th>
 											<th width="100">首谈地</th>
 											<th width="100">首谈联系人</th>
 											<th width="100">跟踪负责人</th>
 											<th width="100">流转方向</th>
 											<th width="140">流转时间</th>
 											<th width="100">流转状态</th>
-											<th width="350">操作</th>
+											<th width="430">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -38,6 +40,8 @@
 											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v->id}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
+											<td>{{$v->country}}</td>
+											<td>{{$v->industry}}</td>
 											<td>
 												@foreach($depts as $n)
 													@if($n->id == $v->info_emp->dept_id)
@@ -70,7 +74,7 @@
 											<td>
 												@foreach($v->info_nego as $k)
 													@if($k->actiontype == 1 )
-														{{$k->created_at}}
+														{{$k->created_at->format('y-m-d')}}
 													@endif
 												@endforeach
 											</td>
@@ -87,14 +91,14 @@
 											</td>	
 
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S ml-10 f-l">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
-												@if($v->process == 5)
-												<button type="submit"  href="javascript:;" onclick="circule_owncheck('项目分发','/circule/owncheck/{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;项目分发&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','{{route('recode.show',$v->id)}}')"  class="btn btn-primary radius size-S f-l ml-10  mt-5 mb-5">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看流转记录&nbsp;&nbsp;&nbsp;</button>	
+												@if($v->process == 5 )
+												<button type="submit"  href="javascript:;" onclick="circule_owncheck('项目分发','/circule/owncheck/{{$v->id}}')"  class="f-l ml-10  mt-5 mb-5 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;项目分发&nbsp;&nbsp;&nbsp;</button>
 
-												<button type="submit"  href="javascript:;" onclick="circule_stop(this,'{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e4;</i>&nbsp;&nbsp;终止流转&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="circule_stop(this,'{{$v->id}}')"  class="f-l ml-10  mt-5 mb-5 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e4;</i>&nbsp;&nbsp;终止流转&nbsp;&nbsp;&nbsp;</button>
 												@elseif($v->process == 6)
-												<button type="submit"  href="javascript:;" onclick=""  class="f-l btn disabled radius size-S ml-10">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;项目分发&nbsp;&nbsp;&nbsp;</button>
-												<button type="submit"  href="javascript:;" onclick=""  class="f-l btn disabled radius size-S ml-10">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e4;</i>&nbsp;&nbsp;终止流转&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10  mt-5 mb-5 btn disabled radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6bd;</i>&nbsp;&nbsp;项目分发&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10  mt-5 mb-5 btn disabled radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe6e4;</i>&nbsp;&nbsp;终止流转&nbsp;&nbsp;&nbsp;</button>
 
 												@endif				
 											</td>

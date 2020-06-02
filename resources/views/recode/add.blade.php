@@ -6,14 +6,14 @@
 			<div class="panel-body">
 				<form action="{{route('recode.store')}}" method="post" class="form form-horizontal" id="form-admin-add">
 					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>洽谈对象：</label>
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>洽谈对象：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
 							<input type="text" class="input-text" value="{{$information->cont_name}}" placeholder="" id="elephant" name="elephant" required>
 						</div>
 					</div>
 					
 					<div class="row clearfix skin-minimal">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>洽谈方式：</label>
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>洽谈方式：</label>
 						<div class="radio-box">
 							<input type="radio"  placeholder="" id="radio-1" name="mode" value="手机" checked>
 							<label for="radio-1">手机</label>
@@ -32,7 +32,7 @@
 						</div>
 					</div>
 					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>洽谈内容：</label>
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>洽谈内容：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
 							<textarea type="text" class="textarea" value="" placeholder="" id="content" name="content" datatype="*4-16" ></textarea>
 						</div>
@@ -43,7 +43,7 @@
 					{{method_field('POST')}}
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-							<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+							<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保  存&nbsp;&nbsp;">
 						</div>
 					</div>
 				</form>

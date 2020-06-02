@@ -28,10 +28,10 @@
 									<th width="25"><input type="checkbox" name="" value=""></th>
 									<th width="40">ID</th>
 									<th width="200">项目名称</th>
-									<th width="100">资方联系人</th>
-									<th width="100">资方联系方式</th>
+									<th width="100">项目国别</th>
+									<th width="100">所属行业</th>
 									<th width="120">项目发布人</th>
-									<th width="100">首谈联系人</th>
+									<th width="100">首谈地</th>
 									<th width="100">跟踪负责人</th>
 									<th width="80">流转方向</th>
 									<th width="120">流转时间</th>
@@ -46,8 +46,8 @@
 									<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 									<td >{{$v->id}}</td>
 									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
-									<td > {{$v->cont_name}}</td>
-									<td > {{$v->cont_phone}}</td>
+									<td>{{$v->country}}</td>
+									<td>{{$v->industry}}</td>
 									<td >
 									@foreach($emps as $n)
 									@if($n->id == $v->issuer_id)
@@ -58,7 +58,7 @@
 									<td >
 									@foreach($emps as $n)
 									@if($n->id == $v->emp_id)
-									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$n->username}}</u>
+									{{$n->dept->dept_name}}
 									@endif
 									@endforeach
 									</td>
@@ -79,7 +79,7 @@
 								    <td >
 									@foreach($v->info_nego as $k)
 									@if($k->actiontype == 2 && $k->info_id == $v->id )
-									{{$k->created_at}}
+									{{$k->created_at->format('Y-m-d')}}
 									@endif
 									@endforeach
 									</td>
@@ -89,23 +89,27 @@
 									@elseif($v->process == 3)
 									等待分派跟踪人
 									@elseif($v->process == 4)
-									等待认领
+									等待认领...
 									@elseif($v->process == 5)
-									等待区内分发
-									@else
-									@foreach($emps as $m)
-										@if($m->id == $v->circule_id)
-											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
-										@endif
-									@endforeach
+										@foreach($depts as $m)
+											@if($m->id == $v->status)
+												等待{{$m->dept_name}}分发
+											@endif
+										@endforeach
+									@elseif($v->process == 6)
+										@foreach($emps as $m)
+											@if($m->id == $v->circule_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
+											@endif
+										@endforeach
 									@endif
 									</td>
 									<td class="td-manage">
-										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
+										<button type="submit"  href="javascript:;" onclick="cricule_view('查看流转详情','/recode/{{$v->id}}')"  class="btn btn-primary radius size-S f-l ml-10  mt-5 mb-5">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
 										@if($v->process == 2)
-										<button type="submit"  href="javascript:;" onclick="recode_add('流转申请审核','/circule/examine/{{$v->id}}')"  class="f-l ml-10 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6a7;</i>&nbsp;&nbsp;流转审核&nbsp;&nbsp;&nbsp;</button>	
+										<button type="submit"  href="javascript:;" onclick="recode_add('流转申请审核','/circule/examine/{{$v->id}}')"  class="f-l ml-10  mt-5 mb-5 btn btn-danger radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6a7;</i>&nbsp;&nbsp;流转审核&nbsp;&nbsp;&nbsp;</button>	
 										@else
-										<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10 btn disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6a7;</i>&nbsp;&nbsp;流转审核&nbsp;&nbsp;&nbsp;</button>	
+										<button type="submit"  href="javascript:;" onclick=""  class="f-l ml-10  mt-5 mb-5 btn disabled radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6a7;</i>&nbsp;&nbsp;流转审核&nbsp;&nbsp;&nbsp;</button>	
 										@endif
 									</td>
 								</tr>

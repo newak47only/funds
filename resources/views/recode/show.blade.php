@@ -14,6 +14,7 @@
 										<thead>
 											<tr class="text-c">
 												<th width="120">记录时间</th>
+												<th width="100">所在部门</th>
 												<th width="80">记录人</th>
 												<th width="80">方式</th>
 												<th width="80">洽谈对象</th>
@@ -25,6 +26,11 @@
 											@foreach($recode as $k)
 											<tr class="text-c">	
 												<td>{{$k->created_at->format('Y-m-d h:m')}}</td>
+												@foreach($depts as $m)
+												@if($m->id == $k->emp->dept_id)
+												<td>{{$m->dept_name}}</td>
+												@endif
+												@endforeach
 												<td>{{$k->emp->username}}</td>
 												<td>{{$k->mode}}</td>
 												<td>{{$k->elephant}}</td>

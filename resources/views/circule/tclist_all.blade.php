@@ -27,8 +27,9 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="200">项目名称</th>
-											<th width="120">资方联系人</th>
-											<th width="130">资方联系方式</th>
+											<th width="80">项目国别</th>
+											<th width="110">所属行业</th>
+											<th width="100">首谈地</th>
 											<th width="120">首谈联系人</th>
 											<th width="100">跟踪负责人</th>
 											<th width="100">流转方向</th>
@@ -43,9 +44,22 @@
 											<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td >{{$v->id}}</td>
 											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
-											<td > {{$v->cont_name}}</td>
-											<td > {{$v->cont_phone}}</td>
-											<td >
+											<td>{{$v->country}}</td>
+											<td>{{$v->industry}}</td>
+											<td > 
+											@if(empty($v->emp_id) && $v->process == 21)
+													等待分派
+											@elseif(empty($v->emp_id) && $v->process == 22)
+													等待分派审核
+											@else(empty($v->emp_id) && $v->process == 23)
+												@foreach($emps as $n)
+													@if($n->id == $v->emp_id)
+													{{$n->dept->dept_name}}
+													@endif
+												@endforeach
+											@endif
+											</td>
+											<td>
 											@if(empty($v->emp_id) && $v->process == 21)
 											等待分派
 											@elseif(empty($v->emp_id) && $v->process == 22)
@@ -88,7 +102,7 @@
 											@if($v->process > 0 && $v->process < 21 )
 												@foreach($v->info_nego as $k)
 													@if($k->actiontype == 1 )
-														{{$k->created_at}}
+														{{$k->created_at->format('y-m-d')}}
 													@endif
 												@endforeach
 											@else
@@ -96,7 +110,7 @@
 											@endif
 											</td>
 											<td>
-												@if($v->process ==0 || $v->process > 20 )
+												@if($v->process ==0 )
 												暂无流转
 												@elseif($v->process == 1)
 												等待区流转审核
@@ -106,18 +120,22 @@
 												等待分派项目跟踪人
 												@elseif($v->process == 4)
 												等待项目认领
-												@elseif($v->process == 5)
+												@elseif($v->process >20 && $v->process <22)
+												暂无流转
+												@elseif($v->process==23)
 													@foreach($depts as $m)
-														@if($m->id == $v->status)
+														@if($m->id == $v->circule_to)
 															等待{{$m->dept_name}}分发
 														@endif
 													@endforeach
-												@elseif($v->process == 6)
+												@elseif($v->process == 5)
 													@foreach($emps as $m)
 														@if($m->id == $v->circule_id)
 															<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','{{route('emp.show',$m->id)}}','$m->id}}')" title="查看联系人信息">{{$m->username}}</u>流转中
 														@endif
 													@endforeach
+
+
 												@endif	
 											</td>
 												

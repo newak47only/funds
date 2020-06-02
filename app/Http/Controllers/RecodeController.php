@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Emp,App\Information,App\Negotiation,App\Recode;
+use App\Emp,App\Information,App\Negotiation,App\Recode,App\dept;
 use Carbon\Carbon;
 use Auth,DB;
 
@@ -13,21 +13,15 @@ class RecodeController extends Controller
     public function show($id){
 
 
-            $recode= Recode::where('info_id',$id)->get();
-            //foreach ($recode as $key => $value) {
-               // echo $value->emp->username;
-            //}
-           // dd($recode);
-            
+            $recode= Recode::where('info_id',$id)->get();            
 
             $nego = Negotiation::where('info_id','=',$id)
             ->get();
-            //foreach ($nego as $key => $value) {
-            //   echo $value->emp->username;
-            //}
-            //dd($nego);
 
-            return view('recode.show')->with(compact('recode','nego'));     
+            $depts = Dept::get();
+
+
+            return view('recode.show')->with(compact('recode','nego','depts'));     
 
     }
 

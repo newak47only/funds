@@ -122,6 +122,32 @@
 							</tbody>
 						</table>
 					</div>
+					<div class=" clearfix text-c">
+						<h4>
+						总投入
+						</h4>
+						<table class="table table-border table-bordered table-bg table-hover table-sort">
+							<thead>
+								<tr class="text-c">
+									@foreach($tax as $v)
+									<th width="">{{$v['year']}}年度</th>
+									@endforeach
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="text-c">
+									@foreach($putinto as $v)
+									<th width=""><a href="/statistics/edit/{{$v['id']}}" > {{$v['data']}}</a>
+										@if($v['currency'] =='0')万人民币
+										@elseif($v['currency'] =='1')万美元
+										@elseif($v['currency'] =='2')万欧元
+										@endif
+									</th>
+									@endforeach
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</article>

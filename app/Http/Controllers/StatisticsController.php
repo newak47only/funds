@@ -181,14 +181,21 @@ class StatisticsController extends Controller
                         'data' => $value->data,
                         'currency' => $value->currency,
                     ]; 
-                }
+                }elseif ($value->data_type == '3') {
+
+                    $putinto[]=[
+                        'id' =>$value->id,
+                        'year'=> $value->year,
+                        'data' => $value->data,
+                        'currency' => $value->currency,
+                    ]; 
 
            }    
 
 
 
 
-        return view('statistics.show')->with(compact('information','gdp','fund','land','tax','depts'));
+        return view('statistics.show')->with(compact('information','gdp','fund','land','tax','putinto','depts'));
     }
     
 

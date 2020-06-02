@@ -13,7 +13,7 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市洽谈项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="circule/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表&nbsp;</a></li>
+            <li><a data-href="circule/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表&nbsp;<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
             <li><a data-href="information/report_list" data-title="上报项目列表" href="javascript:void(0)">上报项目列表&nbsp;</a></li>
           </ul>
         </dd>
@@ -58,9 +58,9 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;洽谈项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="information/list_all" data-title="本区首谈项目列表" href="javascript:void(0)">本区首谈项目列表&nbsp;</a></li>
-            <li><a data-href="circule/inlist_all" data-title="本区转入项目列表" href="javascript:void(0)">本区转入项目列表&nbsp;</a></li>
-            <li><a data-href="circule/outlist_all" data-title="本区转出项目列表" href="javascript:void(0)">本区转出项目列表&nbsp;</a></li>
+            <li><a data-href="information/list_all" data-title="本区首谈项目列表" href="javascript:void(0)">本区首谈项目列表<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
+            <li><a data-href="circule/inlist_all" data-title="本区转入项目列表" href="javascript:void(0)">本区转入项目列表<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
+            <li><a data-href="circule/outlist_all" data-title="本区转出项目列表" href="javascript:void(0)">本区转出项目列表&nbsp;<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
             <li><a data-href="information/tctolist" data-title="投促中心分派项目" href="javascript:void(0)">投促中心分派项目&nbsp;</a></li>
           </ul>
         </dd>
@@ -99,7 +99,7 @@
         <dd class="Hui-menu-item">
           <ul>
             <li><a data-href="information/ownlist" data-title="本人首谈项目列表" href="javascript:void(0)">本人首谈项目列表&nbsp;</a></li>
-            <li><a data-href="circule/inlist" data-title="本人转入项目列表" href="javascript:void(0)">本人转入项目列表&nbsp;</a></li>
+            <li><a data-href="circule/inlist" data-title="本人转入项目列表" href="javascript:void(0)">本人转入项目列表<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
             <li><a data-href="circule/outlist" data-title="本人转出项目列表" href="javascript:void(0)">本人转出项目列表&nbsp;</a></li>
           </ul>
         </dd>
@@ -129,8 +129,8 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市流转项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="circule/tclist_all" data-title="本部门流转项目列表" href="javascript:void(0)">本部发布转项目列表&nbsp;</a></li>
-            <li><a data-href="circule/tctracklist_all" data-title="本部门跟踪项目列表" href="javascript:void(0)">本部门跟踪项目列表&nbsp;</a></li>
+            <li><a data-href="circule/tclist_all" data-title="本部门流转项目列表" href="javascript:void(0)">本部发布转项目列表<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:52px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
+            <li><a data-href="circule/tctracklist_all" data-title="本部门跟踪项目列表" href="javascript:void(0)">本部门跟踪项目列表&nbsp;<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:52px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
           </ul>
         </dd>
       </dl>
@@ -168,7 +168,7 @@
         <dd class="Hui-menu-item">
           <ul>
             <li><a data-href="circule/tclist" data-title="本人发布项目列表" href="javascript:void(0)">本人发布项目列表&nbsp;</a></li>
-            <li><a data-href="circule/tctracklist" data-title="本人跟踪项目列表" href="javascript:void(0)">本人跟踪项目列表&nbsp;</a></li>
+            <li><a data-href="circule/tctracklist" data-title="本人跟踪项目列表" href="javascript:void(0)">本人跟踪项目列表&nbsp;<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:66px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
           </ul>
         </dd>
       </dl>

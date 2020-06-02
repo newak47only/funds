@@ -5,22 +5,28 @@
 		<div class="panel">
 			<div class="panel-body">
 				<form action="{{route('information.update',$information->id)}}" method="post" class="form form-horizontal" id="form-informatian-update">
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目名称：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
 							<input type="text" class="input-text"  placeholder="" id="name" value="{{$information->name}}" name="name">
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>行业类别：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目国别：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
+							<input type="text" class="input-text" value="{{ $information->country }}" placeholder="" id="country" name="country" >
+						</div>
+					</div>
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>行业类别：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
 							<input type="text" class="input-text"  placeholder="" id="industry" value="{{$information->industry}}" name="industry">
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>货币类型：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
-							<span class="select-box" style="width:150px;">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>货币类型：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
+							<span class="select-box" >
 							<select class="select"  name="currency" size="1">
               					<option value="{{$information->currency}}" selected="selected">@if($information->currency =="1")人民币@elseif($information->currency =="2")美元@endif</option>
               					<option value="1">人民币</option>
@@ -30,49 +36,49 @@
 							</span>
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>投资金额：：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>投资金额：：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
 							<input type="text" class="input-text" placeholder="投资金额" name="investment" id="investment" value="{{$information->investment}}">
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方负责人：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>资方负责人：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
 							<input type="text" class="input-text" value="{{$information->cont_main}}" placeholder="" id="cont_main" name="cont_main">
 							@error('cont_main')
     						<div class="alert alert-danger">{{ $message }}</div>
 							@enderror
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>主要投资方：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>主要投资方：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
 							<input type="text" class="input-text" value="{{$information->cont_unit}}" placeholder="" id="cont_unit" name="cont_unit">
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方联系人：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>资方联系人：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
 							<input type="text" class="input-text"  placeholder="" id="cont_name" name="cont_name" value="{{$information->cont_name}}">
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>资方联系方式：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系方式：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
 							<input type="text" class="input-text" placeholder="" value="{{$information->cont_phone}}" id="cont_phone" name="cont_phone">
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3">项目简介：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-12" >
+						<label class="form-label col-xs-4 col-sm-1">项目简介：</label>
+						<div class="form-controls col-xs-8 col-sm-11">
 							<textarea name="content"  cols="" rows=""  class="textarea textarea-article"   dragonfly="true" onKeyUp="textarealength(this,800)">{{$information->content}}"</textarea>
 							<p class="textarea-numberbar">
 						</div>
 					</div>
-					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3">项目诉求：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+					<div class="row clearfix col-xs-12 col-sm-12" >
+						<label class="form-label col-xs-4 col-sm-1">项目诉求：</label>
+						<div class="form-controls col-xs-8 col-sm-11">
 							<textarea name="appeal"  cols="" rows=""  class="textarea textarea-article"  placeholder="项目诉求300个字符以内" dragonfly="true" onKeyUp="textarealength(this,800)">{{$information->appeal}}</textarea>
 							<p class="textarea-numberbar">
 						</div>
@@ -82,7 +88,7 @@
 					{{method_field('PUT')}}
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-							<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+							<input class="btn btn-primary radius mt-20" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 						</div>
 					</div>
 				</form>

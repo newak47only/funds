@@ -34,7 +34,8 @@
 								<option value="0">实到资金</option>
               					<option value="1">GDP</option>
               					<option value="2">留存税收</option>
-              					<option value="3">土地指标</option>             			
+              					<option value="3">土地指标</option>  
+              					<option value="4">总投入</option>            			
 						</select>
 					</div>
 				</div>

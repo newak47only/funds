@@ -20,7 +20,14 @@
 				<div class="row clearfix">
 					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册资金：</label>
 					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="{{$informations->investment}} " placeholder="{{$informations->investment}}" id="negotiation_investment" name="reg_cap" datatype="*4-16" >
+						<input type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="reg_cap" datatype="*4-16" >
+						@if($informations->currency == '1')该项目注册资金单位为：万人民币@elseif($informations->currency == '2')该项目注册资金单位为：万美元@elseif($informations->currency == '3')该项目注册资金单位为：万欧元@endif
+					</div>					
+				</div>
+				<div class="row clearfix">
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>投资金额：</label>
+					<div class="form-controls col-xs-8 col-sm-9">
+						<input type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="investment" datatype="*4-16" >
 						@if($informations->currency == '1')该项目注册资金单位为：万人民币@elseif($informations->currency == '2')该项目注册资金单位为：万美元@elseif($informations->currency == '3')该项目注册资金单位为：万欧元@endif
 					</div>					
 				</div>
@@ -28,6 +35,12 @@
 					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册时间：</label>
 					<div class="form-controls col-xs-8 col-sm-9">
 						<input type="text" class="input-text datetimepicker-input" value="" placeholder="" id="negotiation-datetime-start" name="neg_at" datatype="*4-16" >
+					</div>
+				</div>
+				<div class="row clearfix">
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>经营范围：</label>
+					<div class="form-controls col-xs-8 col-sm-9">
+						<textarea type="text" class="textarea" value="" placeholder="" id="scope" name="scope" datatype="*4-16" ></textarea>
 					</div>
 				</div>
 
