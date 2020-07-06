@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -230,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

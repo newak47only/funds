@@ -100,7 +100,7 @@
 					$(form).ajaxSubmit({
 						success:function(data){
 							if( data == '1'){
-								layer.msg('项目上报等待审核！',{ icon: 1,time:2000},function(){
+								layer.msg('项目上报成功！',{ icon: 1,time:2000},function(){
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.location.replace(parent.location.href);
 								parent.layer.close(index);

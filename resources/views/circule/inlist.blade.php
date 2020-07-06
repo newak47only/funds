@@ -23,6 +23,7 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="250">项目名称</th>
+											<th width="100">项目国别</th>
 											<th width="100">首谈联系人</th>
 											<th width="100">跟踪负责人</th>
 											<th width="80">流转方向</th>
@@ -44,6 +45,7 @@
 											<td><input type="checkbox" value="{{$k->id}}" name="ID"></td>
 											<td>{{$k->id}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$k->id)}}','{{$k->id}}')" title="查看">{{$k->name}}</u></td>
+											<td>{{$k->info_area->YAT_CNNAME}}</td>
 											<td>
 												@foreach($emps as $n)
 												@if($n->id == $k->emp_id)
@@ -59,7 +61,7 @@
 											@endforeach
 											<td>
 											@foreach($depts as $n)
-											@if($n->id == $k->status)
+											@if($n->id == $k->circule_to)
 											{{$n->dept_name}}
 											@endif
 											@endforeach

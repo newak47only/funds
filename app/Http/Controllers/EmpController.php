@@ -16,7 +16,24 @@ class EmpController extends Controller
      */
     public function index()
     {
-        $emps=Emp::orderBy('id','DESC')->get();
+        $admin_id=Auth::user()->id;
+        //dd($admin_id);
+        $emp = Emp::findOrFail($admin_id);
+        $admin_director_id = $emp->dept->director_id;
+        $dept_id=$emp->dept_id;
+        //dd($dept_id);
+        $emp_arry = array ();
+       
+            //获取用户所在组成员
+            $emps=Emp::where('dept_id',$dept_id)->get();
+            //获取用户所在组成员id数组
+            foreach ($emps as $key => $value) {
+                $emp_arry[]= array(
+                     $key=>$value->id,
+                  );        
+            }
+            //dd($emps);
+        $emps=Emp::whereIn('id',$emp_arry)->orderBy('id','DESC')->get();
         return view('emp.index')->with(compact('emps'));
     }
 
@@ -146,6 +163,32 @@ class EmpController extends Controller
         //利用循环将需要删除的id 一个一个进行执行sql；
         foreach($str as $v){
             Emp::where('id','=',$v)->delete();
+        }
+
+    }
+
+        public function addemp()
+    {
+
+       
+
+        for($x=1; $x<=50; $x++){
+
+            $data = [] ;
+
+            $name = '';
+
+            $name = 'bszs'.$x;
+
+            $data ['name'] = $name;
+
+            $data ['dept_id'] = '22'; 
+
+            $data['password']=Hash::make('123456');
+
+            //dd($data);
+
+            $result=Emp::create($data);
         }
 
     }

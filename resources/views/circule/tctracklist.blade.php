@@ -28,6 +28,7 @@
 									<th width="25"><input type="checkbox" name="" value=""></th>
 									<th width="40">ID</th>
 									<th width="200">项目名称</th>
+									<th width="80">项目国别</th>
 									<th width="100">资方联系人</th>
 									<th width="100">资方联系方式</th>
 									<th width="100">首谈联系人</th>
@@ -45,6 +46,7 @@
 									<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 									<td >{{$v->id}}</td>
 									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
+									<td>{{$v->info_area->YAT_CNNAME}}</td>
 									<td > {{$v->cont_name}}</td>
 									<td > {{$v->cont_phone}}</td>
 									<td >

@@ -34,22 +34,72 @@ class HomeController extends Controller
         $dept_name = $dept->dept_name;
         //dd($dept->director_id);
         if($admin->dept_id == '6'){
+           //招商工作领导小组登录
             $status = 0;
 
+            return view('index1')->with(compact('status','dept_name'));
 
-        }elseif ($admin->id == $dept->director_id && $dept->id != '6' && $dept->id != '13') {
+        }elseif ($dept->id == '1') {
+
+            //市外资处管理员登录
+            $count = Information::where('country_id','!=','7')->where('process','2')->count();
+            return view('index2')->with(compact('dept_name','count'));
+    
+        }elseif ($dept->id == '2') {
+            //市内资处管理员登录
+            return view('index3')->with(compact('dept_name'));
+            
+        }elseif ($admin->id == $dept->director_id && $dept->id != '6' && $dept->id != '13' && $dept->id != '1' && $dept->id != '2') {
+            //区管理员
             $status = 1;
- 
-        }elseif($admin->id != $dept->director_id && $dept->id != '6' && $dept->id != '13'){
+            //本区新转出项目列表数量
+            $empd=Emp::where('dept_id',$dept->id)->get();
+            //获取用户所在组成员id数组
+            foreach ($empd as $key => $value) {
+                if($value->is_leader == 0){
+                    $emp_arry[]= array(
+                    $key=>$value->id,
+                    );
+                }
+            } 
+            $outcount = Information::whereIn('emp_id', $emp_arry)->where('process','1')->count();
+            $inlistcount = Information::where([
+                ['circule_to','=',$dept->id],
+                ['process','=','5'],
+            ])->count();
+            return view('index1')->with(compact('status','dept_name','outcount','inlistcount'));
+        }elseif($admin->id != $dept->director_id && $dept->id != '6' && $dept->id != '13' && $dept->id != '1' && $dept->id != '2'){
+            //区招商人员
             $status =2;
 
+            $inlistcount = Information::where('circule_id',$admin->id)->where('process','6')->count(); 
+
+            return view('index1')->with(compact('status','dept_name','inlistcount'));
         }elseif ($admin->id == $dept->director_id && $dept->id == '13') {
+            //市招商局管理员登录
             $status =3;
+            $admin_id = Auth::user()->id;
+            //获取用户信息
+            $emp = Emp::findOrFail($admin_id);
+            $emp_arry = array ();
+            $empd=Emp::where('dept_id',$emp->dept->id)->get();
+            foreach ($empd as $key => $value) {
+                if($value->is_leader == 0){
+                    $emp_arry[]= array(
+                    $key=>$value->id,
+                    );
+                }
+            }        
+
+            $traccount=Information::whereNotIn('issuer_id', $emp_arry)->where('process','3')->count();
+            return view('index1')->with(compact('status','dept_name','traccount'));
         }elseif ($admin->id != $dept->director_id && $dept->id == '13') {
+            //市招商局招商人员登录
             $status =4;
-        }
-        //dd($status);
-        return view('index1')->with(compact('status','dept_name'));
+            
+            return view('index1')->with(compact('status','dept_name'));
+
+        }//dd($status);
 
     }
 

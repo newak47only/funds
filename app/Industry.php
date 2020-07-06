@@ -13,7 +13,7 @@ class Industry extends Model
      *
      * @var array
      */
-    protected $fillable = [
+    protected $fillable = ['id',
         'name'
     ];
 }

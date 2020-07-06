@@ -19,6 +19,7 @@
 						<span class="f-l">
 							<a href="javascript:;" onclick="termination()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
 							<a href="javascript:;" onclick="information_add('添加洽谈项目','/information/create')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加洽谈项目</a>
+							<a href="javascript:;" onclick="location.href='/excel/export' " class="btn btn-primary radius"><i class="Hui-iconfont">&#xe644;</i>导出EXCEL </a>
 						</span>
 						
 					</div>
@@ -46,7 +47,7 @@
 											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v->id}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_edit('编辑项目','{{route('information.edit',$v->id)}}','{{$v->id}}')" title="编辑项目">{{$v->name}}</u></td>
-											<td>{{$v->country}}</td>
+											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v->industry}}</td>
 											<td>{{$v->investment}}@if($v->currency =="1")万人民币@elseif($v->currency =="2")万美元@elseif($v->currency =="3")万欧元@endif</td>
 											<td>{{$v->cont_name}}</td>

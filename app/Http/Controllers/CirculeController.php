@@ -159,8 +159,8 @@ class CirculeController extends Controller
         $admin_id = Auth::user()->id;
         $emps=Emp::get();
         $depts = Dept::get(); 
-
         $information = Information::where('circule_id',$admin_id)->where('process','6')->get(); 
+        //dd($information);
 
         foreach ($information as $key => $val) {
 
@@ -408,9 +408,12 @@ class CirculeController extends Controller
         $remark = $nego['remark'];
         $depts= Dept::get();
         $actiontype = '2';
-        $eaction = '项目分发';     
+        $eaction = '项目分发'; 
+        
+        $admin_deptid = Auth::user()->dept_id; 
 
-        return view('circule.check')->with(compact('information','eaction','actiontype','remark','depts'));
+
+        return view('circule.check')->with(compact('information','eaction','actiontype','remark','depts','admin_deptid'));
 
     }
 
@@ -544,7 +547,7 @@ class CirculeController extends Controller
 
         $empd=Emp::where('dept_id',$emp->dept->id)->get();
         foreach ($empd as $key => $value) {
-            if($value->is_leader == 0){
+            if($value->is_leader == 0 && !empty($value->username)){
                 $emp_arry[]= array(
                 'id' => $value->id,
                 'username' => $value->username,
@@ -685,10 +688,10 @@ class CirculeController extends Controller
             DB::update('update information set investment = ? where id = ?',[$data['investment'],$id]);
              DB::update('update information set reg_cap = ? where id = ?',[$data['scope'],$id]);
          }elseif ($data['result']=='1') {
-            DB::update('update information set process = ? where id = ?',[21,$id]);
+            DB::update('update information set process = ? where id = ?',[5,$id]);
             DB::update('update information set circule_id = ? where id = ?',[0,$id]);
              DB::update('update information set status = ? where id = ?',[0,$id]); 
-             DB::update('update information set circule_to = ? where id = ?',[0,$id]); 
+             //DB::update('update information set circule_to = ? where id = ?',[0,$id]); 
          }
          DB::update('update information set updated_at = ? where id = ?',[Carbon::now(),$id]);
         DB::commit();

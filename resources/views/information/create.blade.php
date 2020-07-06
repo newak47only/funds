@@ -16,11 +16,22 @@
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目国别：</label>
-						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" value="{{ old('country') }}" placeholder="" id="country" name="country" >
-							@error('country')
-    						<div class="alert alert-danger">{{ $message }}</div>
-							@enderror
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box" >
+							<select class="select" name="continent_id" >
+								<option value="0">洲</option>
+								@foreach($continent as $v)
+              					<option value="{{$v->YAT_ID}}">{{$v->YAT_CNNAME}}</option>
+              					@endforeach            			
+							</select>
+							</span>
+						</div>
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box" >
+							<select class="select" name="country_id" >
+              					<option value="0">国家</option>          			
+							</select>
+							</span>
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
@@ -35,11 +46,12 @@
 							</span>
 						</div>
 					</div>
+
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>货币类型：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
 							<span class="select-box" >
-							<select class="select" name="currency" size="1">
+							<select class="select" name="currency" >
               					<option value="1">人民币</option>
               					<option value="2">美元</option>
               					<option value="3">欧元</option>             			
@@ -87,6 +99,19 @@
 							@enderror
 						</div>
 					</div>
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
+							<span class="select-box">
+							<select class="select" name="major_pro" size="1">
+								<option value="0">非重大项目</option> 
+								@foreach($majorproject as $s)
+              					<option value="{{$s->id}}">{{$s->p_name}}</option>  
+              					@endforeach          			
+							</select>
+							</span>
+						</div>
+					</div>
 					<div class="row clearfix col-xs-12 col-sm-12" >
 						<label class="form-label col-xs-4 col-sm-1"><span class="c-red">*</span>项目简介：</label>
 						<div class="form-controls col-xs-8 col-sm-11">
@@ -108,7 +133,7 @@
 					{{csrf_field()}}
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-							<input class="btn btn-primary radius mt-20" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+							<input class="btn btn-primary radius mt-20" type="submit" value="&nbsp;&nbsp;添  加&nbsp;&nbsp;">
 						</div>
 					</div>
 				</form>
@@ -133,6 +158,21 @@
   <script type="text/javascript" src="/static/business/js/main.js"></script>
 	<script type="text/javascript">
 		$(function(){
+
+			$('select[name = continent_id ]').change(function(){
+				var id = $(this).val();
+				$.get('/information/getAreaId',{id:id},function(country){
+					var str= '';
+					$.each(country,function(index,el){
+						str +="<option value='"+el.YAT_ID+"'>"+el.YAT_CNNAME+"</option>";
+
+					});
+					$('select[name = country_id ]').find('option:gt(0)').remove();
+					$('select[name = country_id ]').append(str);
+
+
+				},'json');
+			});
 			/* 通过iCheck插件，美化checkbox */
 			$('.skin-minimal input').iCheck({
 				checkboxClass: 'icheckbox-blue',

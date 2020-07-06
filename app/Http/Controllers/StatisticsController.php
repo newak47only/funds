@@ -189,11 +189,9 @@ class StatisticsController extends Controller
                         'data' => $value->data,
                         'currency' => $value->currency,
                     ]; 
+                }
 
-           }    
-
-
-
+        }    
 
         return view('statistics.show')->with(compact('information','gdp','fund','land','tax','putinto','depts'));
     }

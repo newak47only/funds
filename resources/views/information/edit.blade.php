@@ -13,14 +13,35 @@
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目国别：</label>
-						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" value="{{ $information->country }}" placeholder="" id="country" name="country" >
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box" >
+							<select class="select" name="continent_id" >
+								<option value="{{$information->continent_id}}" selected="selected">{{$information->info_continent->YAT_CNNAME}}</option>
+								@foreach($continent as $v)
+              					<option value="{{$v->YAT_ID}}">{{$v->YAT_CNNAME}}</option>
+              					@endforeach            			
+							</select>
+							</span>
+						</div>
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box" >
+							<select class="select" name="country_id" >
+              					<option value="{{$information->country_id}}" selected="selected">{{$information->info_area->YAT_CNNAME}}</option>          			
+							</select>
+							</span>
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>行业类别：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text"  placeholder="" id="industry" value="{{$information->industry}}" name="industry">
+							<span class="select-box" >
+							<select class="select" name="industry" >
+								<option value="{{$information->industry}}" selected="selected">{{$information->industry}}</option>
+								@foreach($industry as $v)
+              					<option value="{{$v->name}}">{{$v->name}}</option>
+              					@endforeach            			
+							</select>
+							</span>
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
@@ -69,6 +90,23 @@
 							<input type="text" class="input-text" placeholder="" value="{{$information->cont_phone}}" id="cont_phone" name="cont_phone">
 						</div>
 					</div>
+					<div class="row clearfix col-xs-12 col-sm-6" >
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
+						<div class="form-controls col-xs-8 col-sm-10">
+							<span class="select-box">
+								<select class="select" name="major_pro" size="1">
+								@if($information->majorpro == 0)
+								<option value="0" selected="selected">非重大项目</option> 
+								@else
+								<option value="{{$information->major_pro}}" selected="selected">{{$information->info_major->p_name}}</option> 
+								@endif
+								@foreach($majorproject as $s)
+              					<option value="{{$s->id}}">{{$s->p_name}}</option>  
+              					@endforeach          			
+							</select>
+							</span>
+						</div>
+					</div>
 					<div class="row clearfix col-xs-12 col-sm-12" >
 						<label class="form-label col-xs-4 col-sm-1">项目简介：</label>
 						<div class="form-controls col-xs-8 col-sm-11">
@@ -113,6 +151,23 @@
   <script type="text/javascript" src="/static/business/js/main.js"></script>
 	<script type="text/javascript">
 		$(function(){
+
+			$('select[name = continent_id ]').change(function(){
+				var id = $(this).val();
+				$.get('/information/getAreaId',{id:id},function(country){
+					var str= '';
+					$.each(country,function(index,el){
+						str +="<option value='"+el.YAT_ID+"'>"+el.YAT_CNNAME+"</option>";
+
+					});
+					$('select[name = country_id ]').find('option:gt(0)').remove();
+					$('select[name = country_id ]').append(str);
+
+
+				},'json');
+			});
+
+
 			/* 通过iCheck插件，美化checkbox */
 			$('.skin-minimal input').iCheck({
 				checkboxClass: 'icheckbox-blue',

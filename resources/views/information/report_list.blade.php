@@ -62,7 +62,7 @@
 											<td>{{$v['created_at']}}</td>
 											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','/recode/show/{{$v['id']}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class="btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
 											</td>
 										</tr>
 										@endforeach

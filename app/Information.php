@@ -8,7 +8,7 @@ class Information extends Model
 {
     //
      protected $table="information";
-     protected $fillable=['name','cont_name','cont_phone','staff_name','staff_phone','emp_id','currency','investment','industry','content','status','process','appeal','cont_main','cont_unit','check_id','circule_to','issuer_id','company','reg_cap','country','scope'];
+     protected $fillable=['name','cont_name','cont_phone','staff_name','staff_phone','emp_id','currency','investment','industry','content','status','process','appeal','cont_main','cont_unit','check_id','circule_to','issuer_id','company','reg_cap','scope','country_id','continent_id','major_pro'];
      
      //public function info_nego(){
      //	return  $this->hasOne('App\Emp','id','emp_id');
@@ -27,5 +27,19 @@ class Information extends Model
      }
      public function info_ciremp(){
           return  $this->hasOne('App\Emp','id','circule_id');
+     }
+
+     public function info_area(){
+          return  $this->hasOne('App\Area','YAT_ID','country_id');
+     }
+     public function info_continent(){
+          return  $this->hasOne('App\Area','YAT_ID','continent_id');
+     }
+
+     public function info_industry(){
+          return  $this->hasOne('App\Industry','id','industry');
+     }
+     public function info_major(){
+          return  $this->hasOne('App\Majorproject','id','major_pro');
      }
 }

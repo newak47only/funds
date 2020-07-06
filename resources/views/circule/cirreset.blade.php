@@ -17,7 +17,7 @@
 								<label for="radio-2">{{$val->dept_name}}</label>
 							</div>
 
-							@elseif($val->id != 6 && $val->id != 13  )
+							@elseif($val->id != 6 && $val->id != 13 && $val->id != 1 && $val->id != 2 && $val->id != $information->circule_to && $val->id != $information->info_emp->dept_id  )
 							<div class="radio-box">
 								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}">
 								<label for="radio-2">{{$val->dept_name}}</label>

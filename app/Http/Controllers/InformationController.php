@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Information,App\Emp,App\Dept,App\Negotiation,App\Recode,App\Industry;
+use App\Information,App\Emp,App\Dept,App\Negotiation,App\Recode,App\Industry,App\Area,App\Majorproject;
 use Auth,DB;
 
 class InformationController extends Controller
@@ -353,25 +353,24 @@ class InformationController extends Controller
     public function ownlist(){
 
         $admin_id=Auth::user()->id; 
-        $info=[];
-
         $information=Information::where([
             ['emp_id','=',$admin_id],
             ['process','=','0'],
         ])->get();
 
-        $info = [];
 
         foreach ($information as $key => $value) {
              $recodenum = Recode::where('info_id',$value->id)->count();   
            
                         $value->recodenum= $recodenum;
+                        //dd($value->info_area->YAT_LEVEL);
         }        
               //dd($info);
               return view('information.ownlist')->with(compact('information'));
     }
 
     public function list_all(){
+
 
         $admin_id=Auth::user()->id;
 
@@ -493,75 +492,23 @@ class InformationController extends Controller
         //dd($admin_id);
         $information=Information::where('id',$id)->firstOrFail();
         //dd($information->emp_id); 
-            $c_emp=Emp::where('id',$information->emp_id)->firstOrFail();
-            //dd($c_emp);
-            
-            if ($information->process <= '4' ) {
-                $info[]=[
-                    'id'=> $information->id,
-                    'name' => $information->name,
-                    'cont_name' => $information->cont_name,
-                    'cont_phone' => $information->cont_phone,
-                    'cont_main' => $information->cont_main,
-                    'cont_unit' => $information->cont_unit,
-                    'emp_id' => $information->emp_id,
-                    'staff_name' => $information->staff_name,
-                    'staff_phone' => $information->staff_phone,
-                    'currency' => $information->currency,
-                    'investment' => $information->investment,
-                    'industry' => $information->industry,
-                    'investment' => $information->investment,
-                    'status' => $information->status,
-                    'content' => $information->content,
-                    'appeal' => $information->appeal,
-                    'process' => $information->process,
-                    'is_show' => $information->is_show, 
-                    'circule_f_dept' => $c_emp->dept->dept_name,
-                    'circule_f_name' => $c_emp->name,
-                    'circule_f_phone' => $c_emp->phone,
-                    'circule_n_dept' => '0',
-                    'circule_n_name' => '0',
-                    'circule_n_phone' => '0',
-                ];      
-            }else{
-
-                $n_emp=Emp::where('id',$information->circule_id)->firstOrFail();
-                 $info[]=[
-                    'id'=> $information->id,
-                    'name' => $information->name,
-                    'cont_main' => $information->cont_main,
-                    'cont_unit' => $information->cont_unit,
-                    'cont_name' => $information->cont_name,
-                    'cont_phone' => $information->cont_phone,
-                    'emp_id' => $information->emp_id,
-                    'staff_name' => $information->staff_name,
-                    'staff_phone' => $information->staff_phone,
-                    'currency' => $information->currency,
-                    'investment' => $information->investment,
-                    'industry' => $information->industry,
-                    'content' => $information->content,
-                    'appeal' => $information->appeal,
-                    'status' => $information->status,
-                    'process' => $information->process,
-                    'is_show' => $information->is_show, 
-                    'circule_f_dept' => $c_emp->dept->dept_name,
-                    'circule_f_name' => $c_emp->name,
-                    'circule_f_phone' => $c_emp->phone,
-                    'circule_n_dept' => $n_emp->dept->dept_name,
-                    'circule_n_name' => $n_emp->name,
-                    'circule_n_phone' => $n_emp->phone,
-                ];
-            }
-                //dd($info);
-        return view('information.show')->with(compact('info'));
+        $emps = Emp::all();
+        $depts = Dept::all();
+            //dd($information->name);
+           
+            $major = Majorproject::all();
+        return view('information.show')->with(compact('information','major','emps','depts'));
     }
 
     public function create(){
         $emp_id=Auth::user()->id;
-        $emp=Emp::where('id',$emp_id)->firstOrFail();
+        $emp = Emp::where('id',$emp_id)->firstOrFail();
         $industry = Industry::get();
+        $majorproject = Majorproject::get();
+        $continent = Area::where('YAT_LEVEL','1')->get();
+
         //dd($emp);
-        return view('information.create')->with(compact('emp_id','emp','industry'));
+        return view('information.create')->with(compact('emp_id','emp','industry','continent','majorproject'));
     }
 
     public function store(Request $request){
@@ -578,6 +525,17 @@ class InformationController extends Controller
 
         $result=Information::create($data);
         return  $result ? '1' : '0';
+    }
+
+    public function getAreaId(Request $request){
+
+        $data = $request->all();
+
+        $country = Area::where('YAT_PARENT_ID', $data['id'])->get(['YAT_ID','YAT_CNNAME']);
+
+        return response()->json($country);
+
+
     }
 
 
@@ -608,7 +566,10 @@ class InformationController extends Controller
     public function edit($id){
         $emp_id=$id;
         $information=Information::findOrFail($id);
-        return view('information.edit')->with(compact('information','emp_id'));
+        $continent = Area::where('YAT_LEVEL','1')->get();
+        $industry = Industry::get();
+        $majorproject = Majorproject::get();
+        return view('information.edit')->with(compact('information','emp_id','continent','industry','majorproject'));
     }
 
     public function update(Request $request, $id){
@@ -682,7 +643,7 @@ class InformationController extends Controller
         //利用循环将需要删除的id 一个一个进行执行sql；
         foreach($str as $v){
 
-            $result = DB::update('update information set is_show = ? where id = ?',['9',$v]);
+            $result = DB::update('update information set is_show = ? where id = ?',['99',$v]);
 
             return $result ? '1':'0';
         }

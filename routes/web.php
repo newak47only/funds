@@ -22,6 +22,7 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/welcome', 'HomeController@welcome');
 //用户管理模块
 	//Route::get('/emp/show/{id}','EmpController@show')->name('emp.show');
+	Route::get('/emp/addemp',"EmpController@addemp");
 	Route::get('/emp/aajax/{str}',"EmpController@aajax");
 	Route::get('/emp/destroy/{id}','EmpController@destroy');
 	Route::resource('emp','EmpController');
@@ -46,6 +47,7 @@ Route::get('/welcome', 'HomeController@welcome');
 	//Route::any('/dept/edit', 'DeptController@edit');
 
 	//洽谈项目管理模块
+	Route::get('/information/getAreaId','InformationController@getAreaId');
 	Route::get('/information/apportion/{id}','InformationController@apportion');
 	Route::post('/information/appstore/{id}','InformationController@appstore');
 	Route::get('/information/tctolist','InformationController@tctolist');
@@ -154,3 +156,18 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::get('/recode/add/{id}','RecodeController@add');
 	Route::get('/recode/show/{id}','RecodeController@show')->name('recode.show');
 	Route::resource('recode','RecodeController');
+
+	//外资模块
+	Route::get('/foreign/list_city','ForeignController@list_city');
+	Route::get('/foreign/report_list','ForeignController@report_list');
+	Route::get('/foreign/outlist_city','ForeignController@outlist_city');
+	Route::get('/foreign/ownlist_city','ForeignController@ownlist_city');
+	//内资模块
+	Route::get('/domestic/list_city','DomesticController@list_city');
+	Route::get('/domestic/report_list','DomesticController@report_list');
+	Route::get('/domestic/outlist_city','DomesticController@outlist_city');
+	Route::get('/domestic/ownlist_city','DomesticController@ownlist_city');
+
+	Route::get('/excel/export','ExcelController@export');
+	Route::get('comparison/comresult/{str}','ComparisonController@comresult');
+	Route::get('comparison/hundredper/{str}','ComparisonController@hundredper');
