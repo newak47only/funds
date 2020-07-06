@@ -213,7 +213,7 @@
         <div class="container-fluid clearfix">
           <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar">
             <ul class="clearfix">
-              <li><?php echo e($dept_name); ?></li>
+              <li><?php echo e($dept_name); ?><?php if($status == 1 || $status == 3  ): ?>管理员<?php else: ?> 招商人员<?php endif; ?></li>
               <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A"><?php echo e(Auth::user()->username); ?><i class="Hui-iconfont">&#xe6d5;</i></a>
                 <ul class="dropDown-menu menu radius box-shadow">
                   <li><a href="javascript:;" onclick="admin_edit('管理员编辑','emp/<?php echo e(Auth::user()->id); ?>/edit')" class="ml-5" style="text-decoration:none">个人信息</a></li>

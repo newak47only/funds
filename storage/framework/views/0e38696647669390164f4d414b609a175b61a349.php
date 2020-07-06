@@ -6,8 +6,6 @@
 			首页
 			<span class="c-gray en">/</span>
 			项目资料库
-			<span class="c-gray en">/</span>
-			<?php echo e($gray); ?>}
 			<a class="btn btn-success radius f-r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 		</nav>
 		<article class="Hui-admin-content clearfix">
