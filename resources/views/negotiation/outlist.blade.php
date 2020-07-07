@@ -19,26 +19,27 @@
 								<table class="table table-border table-bordered table-bg table-hover table-sort">
 									<thead>
 										<tr class="text-c">
+											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="220">项目名称</th>
-											<th width="140">注册企业名称</th>
 											<th width="80">项目国别</th>
+											<th width="140">注册企业名称</th>
 											<th width="120">行业类别</th>
 											<th width="120">注册资金</th>
 											<th width="120">项目进度</th>
 											<th width="120">首谈地</th>
 											<th width="120">落户地</th>
 											<th width="120">落户地联系人</th>
-											<th width="100">工作记录</th>
 											<th width="230">操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										@foreach($information as $v)
 										<tr class="text-c">
+											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v['id']}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
-											<td>{{$v->country}}</td>
+											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v['company']}}</td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['reg_cap']}}@if($v['currency'] =='0')万人民币
@@ -59,11 +60,9 @@
 											<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈人信息','{{route('emp.show',$v['circule_id'])}}','{{$v['circule_id']}}')" title="查看首谈人信息">{{$v['circule_n_name']}}</u>
 											</td>
 
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_add('查看工作记录','{{route('recode.show',$v['id'])}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
-
 											<td class="td-manage">	
-												<button type="submit"  href="javascript:;" onclick="information_add('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>											
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 14px">&#xe61c;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>										
+												<button type="submit"  href="javascript:;" onclick="information_add('查看记录','/recode/{{$v['id']}}')"  class="btn btn-primary radius size-S f-l ml-10  mt-5 mb-5">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>											
+												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="btn btn-primary radius size-S f-l ml-10  mt-5 mb-5"><i class="Hui-iconfont" style="font-size: 14px">&#xe61c;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>										
 											</td>
 										</tr>
 										@endforeach

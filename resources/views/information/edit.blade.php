@@ -50,9 +50,9 @@
 							<span class="select-box" >
 							<select class="select"  name="currency" size="1">
               					<option value="{{$information->currency}}" selected="selected">@if($information->currency =="1")人民币@elseif($information->currency =="2")美元@endif</option>
-              					<option value="1">人民币</option>
-              					<option value="2">美元</option>
-              					<option value="3">欧元</option>             			
+              					<option value="1">万人民币</option>
+              					<option value="2">万美元</option>
+              					<option value="3">万欧元</option>             			
 							</select>
 							</span>
 						</div>

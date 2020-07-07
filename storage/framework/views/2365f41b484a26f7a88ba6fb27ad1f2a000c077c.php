@@ -50,9 +50,9 @@
 							<span class="select-box" >
 							<select class="select"  name="currency" size="1">
               					<option value="<?php echo e($information->currency); ?>" selected="selected"><?php if($information->currency =="1"): ?>人民币<?php elseif($information->currency =="2"): ?>美元<?php endif; ?></option>
-              					<option value="1">人民币</option>
-              					<option value="2">美元</option>
-              					<option value="3">欧元</option>             			
+              					<option value="1">万人民币</option>
+              					<option value="2">万美元</option>
+              					<option value="3">万欧元</option>             			
 							</select>
 							</span>
 						</div>
@@ -107,8 +107,6 @@ unset($__errorArgs, $__bag); ?>
 								<?php else: ?>
 								<option value="<?php echo e($information->major_pro); ?>" selected="selected"><?php echo e($information->info_major->p_name); ?></option> 
 								<?php endif; ?>
-							
-								
 								<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               					<option value="<?php echo e($s->id); ?>"><?php echo e($s->p_name); ?></option>  
               					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			

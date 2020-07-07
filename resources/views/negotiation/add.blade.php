@@ -1,52 +1,70 @@
 @extends('layouts.app')
 @section('content')
-<body style="background-color:#fff">
+        <body style="background-color:#fff">
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
 				<form action="{{route('negotiation.store')}}" method="post" class="form form-horizontal" id="form-admin-add">
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="{{$informations->name}}" placeholder="{{$informations->name}}" id="negotiation_name" name="  " datatype="*4-16" >
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目名称：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
+						<input style="height: 40px" type="text" class="input-text" value="{{$informations->name}}" placeholder="{{$informations->name}}" id="negotiation_name" name="name" datatype="*4-16" >
 					</div>
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册企业名称：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value=" " placeholder=" " id="negotiation_name" name="company" datatype="*4-16" >
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>注册企业名称：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
+						<input style="height: 40px" type="text" class="input-text" value=" " placeholder=" " id="negotiation_name" name="company" datatype="*4-16" >
 					</div>
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册资金：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="reg_cap" datatype="*4-16" >
-						@if($informations->currency == '1')该项目注册资金单位为：万人民币@elseif($informations->currency == '2')该项目注册资金单位为：万美元@elseif($informations->currency == '3')该项目注册资金单位为：万欧元@endif
-					</div>					
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>注册资金：</label>
+					<div class="form-controls col-xs-8 col-sm-6">
+						<input style="height: 40px" type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="reg_cap" datatype="*4-16" >
+					</div>	
+					<div class="form-controls col-xs-8 col-sm-2">
+						<span class="select-box" >
+							<select class="select"  name="reg_currency" size="1">
+              					<option value="" selected="selected">选择货币单位</option>
+              					<option value="1">万人民币</option>
+              					<option value="2">万美元</option>
+              					<option value="3">万欧元</option>             			
+							</select>
+						</span>
+					</div>				
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>投资金额：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="investment" datatype="*4-16" >
-						@if($informations->currency == '1')该项目注册资金单位为：万人民币@elseif($informations->currency == '2')该项目注册资金单位为：万美元@elseif($informations->currency == '3')该项目注册资金单位为：万欧元@endif
-					</div>					
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>投资金额：</label>
+					<div class="form-controls col-xs-8 col-sm-6">
+						<input style="height: 40px" type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="investment"   datatype="*4-16" >
+					</div>
+					<div class="form-controls col-xs-8 col-sm-2">
+						<span class="select-box"  >
+							<select class="select"  name="currency" size="1">
+              					<option value="{{$informations->currency}}" selected="selected">@if($informations->currency =="1")万人民币@elseif($informations->currency =="2")万美元@endif</option>
+              					<option value="1">万人民币</option>
+              					<option value="2">万美元</option>
+              					<option value="3">万欧元</option>             			
+							</select>
+						</span>
+					</div>						
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册时间：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text datetimepicker-input" value="" placeholder="" id="negotiation-datetime-start" name="neg_at" datatype="*4-16" >
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>注册时间：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
+						<input style="height: 40px" type="text" class="input-text datetimepicker-input" value="" placeholder="" id="negotiation-datetime-start" name="neg_at" datatype="*4-16" >
 					</div>
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>经营范围：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经营范围：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
 						<textarea type="text" class="textarea" value="" placeholder="" id="scope" name="scope" datatype="*4-16" ></textarea>
 					</div>
 				</div>
 
 				<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上传文件：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上传文件：</label>
+						<div class="form-controls col-xs-8 col-sm-8">
 							<div id="uploader" class="wu-example" >
 							    <!--用来存放文件信息-->
 							   
@@ -62,8 +80,8 @@
 						</div>
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>落地说明：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>落地说明：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
 						<textarea type="text" class="textarea" value="" placeholder="" id="remark" name="remark" datatype="*4-16" ></textarea>
 					</div>
 				</div>
@@ -119,9 +137,39 @@
 			/* 表单验证，提交 */
 			$("#form-admin-add").validate({
 				rules:{
-					
-					
-					
+
+					name:{
+						required:true,
+						maxlength:50
+					},
+					company:{
+						required:true,
+						maxlength:50
+					},
+					reg_cap:{
+						required:true,
+						maxlength:16
+					},
+					investment:{
+						required:true,
+						maxlength:12
+					},
+					currency:{
+						required:true,
+					},
+					reg_currency:{
+						required:true,
+					},
+					neg_at:{
+						required:true,
+					},
+					scope:{
+						required:true,
+					},
+					remark:{
+						required:true,
+						maxlength:800
+					},	
 				},
 				onkeyup:false,
 				focusCleanup:true,
@@ -257,6 +305,4 @@
 });	
 
 	</script>
-	<!--/请在上方写此页面业务相关的脚本-->
-</body>
 @endsection

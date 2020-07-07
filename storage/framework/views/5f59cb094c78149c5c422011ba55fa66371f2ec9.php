@@ -3,6 +3,7 @@
 <body>
 
   <div class="pd-20">
+    <center><h4>项目基本信息</h4></center>
     <table class="table table-border table-bordered table-hover">
       <tbody>
 
@@ -168,6 +169,37 @@
       
       </tbody>
     </table>
+
+    <?php if($information['process']==7): ?>
+        <center><h4>项目落地信息</h4></center>
+     <table class="table table-border table-bordered table-hover">
+      <tbody>
+        <tr>
+          <th class="text-r" width="100">注册企业名称：</th>
+          <td colspan='2'><?php echo e($information['company']); ?> </td>
+          <th class="text-r" width="100">注册资金：</th>
+          <td colspan='2'><?php echo e($information['reg_cap']); ?><?php if($information['reg_currency'] =='0'): ?>万人民币
+                    <?php elseif($information['reg_currency'] =='1'): ?>万美元
+                    <?php elseif($information['reg_currency'] =='2'): ?>万欧元
+                    <?php endif; ?>  </td>
+        </tr>
+        <tr>
+          <th class="text-r" width="100">投资金额：</th>
+          <td colspan='2'><?php echo e($information['investment']); ?><?php if($information['currency'] =='0'): ?>万人民币
+                    <?php elseif($information['currency'] =='1'): ?>万美元
+                    <?php elseif($information['currency'] =='2'): ?>万欧元
+                    <?php endif; ?>  </td>
+          <th class="text-r" width="100">注册时间：</th>
+          <td colspan='2'><?php echo e($information->neg_at->format('Y-m-d')); ?> </td>
+        </tr>
+        <tr>
+          <th class="text-r" >经营范围：</th>
+          <td colspan='5'><?php echo e($information['scope']); ?> </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <?php endif; ?>
   </div>
   <!--_footer 作为公共模版分离出去-->
   <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
