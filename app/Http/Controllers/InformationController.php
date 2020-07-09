@@ -643,9 +643,8 @@ class InformationController extends Controller
         //利用循环将需要删除的id 一个一个进行执行sql；
         foreach($str as $v){
 
-            $result = DB::update('update information set is_show = ? where id = ?',['99',$v]);
-
-            return $result ? '1':'0';
+        $result = DB::update('update information set process = ? where id = ?',['99',$v]);
+        
         }
     }
 

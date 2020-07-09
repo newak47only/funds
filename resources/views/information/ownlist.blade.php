@@ -27,7 +27,7 @@
 								<table class="table table-border table-bordered table-bg table-hover table-sort">
 									<thead>
 										<tr class="text-c">
-											<th width="25"><input type="checkbox" name="" value=""></th>
+											<th width="25"><input type="checkbox" name="box" value=""></th>
 											<th width="40">ID</th>
 											<th width="240">项目名称</th>
 											<th width="80">项目国别</th>
@@ -44,7 +44,7 @@
 									<tbody>
 										@foreach($information as $v)
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
+											<td><input type="checkbox" value="{{$v->id}}" name="box"></td>
 											<td>{{$v->id}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_edit('编辑项目','{{route('information.edit',$v->id)}}','{{$v->id}}')" title="编辑项目">{{$v->name}}</u></td>
 											<td>{{$v->info_area->YAT_CNNAME}}</td>
@@ -218,25 +218,26 @@
            	}
            		//将拼接的字符串第一个，号删除
            	str= str.substr(1);
+           	//alert(str);
   			layer.confirm('确认要终止项目吗？',{title:'终止项目'},function(index){
                 $.ajax({
 					type: 'GET',
 					url: '/information/termination/'+str,
 					dataType: 'json',
 					success:function(data){
-							if( data == '1'){
-								layer.msg('项目终止成功！',{ icon: 1,time:2000},function(){
-								var index = parent.layer.getFrameIndex(window.name);
-								parent.location.replace(parent.location.href);
-								parent.layer.close(index);
-								});
 
-							}else{
-								layer.msg('项目终止失败！',{ icon: 2,time:2000});
-							}
+						layer.msg('项目终止成功！',{ icon: 1,time:2000},function(){
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.location.replace(parent.location.href);
+						parent.layer.close(index);
+							});
 						},
 					error:function(XmlHttpRequest,textStatus,errorThrown){
-						layer.msg('项目终止错误！',{ icon: 1,time:1000});
+						layer.msg('项目终止成功！',{ icon: 1,time:1000},function(){
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.location.replace(parent.location.href);
+						parent.layer.close(index);
+								});
 					},
 				});
   			});

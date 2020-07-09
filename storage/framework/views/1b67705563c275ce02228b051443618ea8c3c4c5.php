@@ -16,63 +16,29 @@
 									<th width="200">项目名称</th>
 									<th width="100">项目国别</th>
 									<th width="100">所属行业</th>
-									<th width="120">项目发布人</th>
-									<th width="100">首谈地</th>
-									<th width="100">跟踪负责人</th>
+									<th width="100">投资金额</th>
+									<th width="120">资方负责人</th>
+									<th width="100">主要投资方</th>
+									<th width="100">资方联系人</th>
 									<th width="120">项目状态</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php $__currentLoopData = $hundredper; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
 								<tr class="text-c">
 									<td ><input type="checkbox" value="<?php echo e($v->id); ?>" name="box"></td>
 									<td ><?php echo e($v->id); ?></td>
 									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','<?php echo e(route('information.show',$v->id)); ?>','$v->id}}')" title="查看"><?php echo e($v->name); ?></u></td>
-									<td><?php echo e($v->country); ?></td>
+									<td><?php echo e($v->info_area->YAT_CNNAME); ?></td>
 									<td><?php echo e($v->industry); ?></td>
-									<td >
-									<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<?php if($n->id == $v->issuer_id): ?>
-									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目发布人信息','<?php echo e(route('emp.show',$n->id)); ?>','$n->id}}')" title="查看项目发布人信息"><?php echo e($n->username); ?></u>
-									<?php endif; ?>
-									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-									</td>
-									<td >
-									<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<?php if($n->id == $v->emp_id): ?>
-									<?php echo e($n->dept->dept_name); ?>
-
-									<?php endif; ?>
-									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-									</td>
-									<td >
-									<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<?php if($n->id == $v->check_id): ?>
-									<u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目跟踪负责人信息','<?php echo e(route('emp.show',$v->check_id)); ?>','$v->check_id}}')" title="查看项目跟踪负责人信息"><?php echo e($n->username); ?></u>
-									<?php endif; ?>
-									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-								    </td>
-
+									<td><?php echo e($v->cont_main); ?></td>
+									<td><?php echo e($v->cont_unit); ?></td>
+									<td><?php echo e($v->cont_name); ?></td>
 									<td>
-									<?php if($v->process == 2): ?>
-									等待市商务局审核
-									<?php elseif($v->process == 3): ?>
-									等待分派跟踪人
-									<?php elseif($v->process == 4): ?>
-									等待认领...
-									<?php elseif($v->process == 5): ?>
-										<?php $__currentLoopData = $depts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-											<?php if($m->id == $v->status): ?>
-												等待<?php echo e($m->dept_name); ?>分发
-											<?php endif; ?>
-										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-									<?php elseif($v->process == 6): ?>
-										<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-											<?php if($m->id == $v->circule_id): ?>
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看联系人信息','<?php echo e(route('emp.show',$m->id)); ?>','$m->id}}')" title="查看联系人信息"><?php echo e($m->username); ?></u>流转中
-											<?php endif; ?>
-										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+									<?php if($v->process > 1 && $v->process <7): ?>
+									流转中
+									<?php elseif($v->process > 7 && $v->process < 10): ?>
+									已落地
 									<?php endif; ?>
 									</td>
 								</tr>

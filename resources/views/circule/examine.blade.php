@@ -25,7 +25,11 @@
         				</tr>
         				<tr>
           					<th class="text-r">相关文件：</th>
-          					<td><a href="{{$information->contract_file}}"> {{$information->contract_file}}</td>
+          					<td>
+          						@foreach($information->info_loader as $k)
+          						<a href="{{$k->httpurl}}"> {{$k->name}}</a><br />
+          						@endforeach
+          					</td>
         				</tr>
         				<tr>
           					<th class="text-r">流转方向：</th>

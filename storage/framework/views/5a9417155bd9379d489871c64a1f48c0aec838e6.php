@@ -12,23 +12,24 @@
       					</tr>
       					<tr>
       						<td class="text-c">100%</td>
-      						<td class="text-c"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看相似项目','/comparison/hundredper/<?php echo e($info_id); ?>')" title="查看相似项目"><?php echo e($hundredper); ?></u></td>
+      						<td class="text-c"><?php if($hundredper != 0): ?><u style="cursor:pointer" class="text-primary" onClick="information_show('查看相似项目','/comparison/hundredper/<?php echo e($info_id); ?>')" title="查看相似项目"><?php echo e($hundredper); ?></u><?php else: ?> <?php echo e($hundredper); ?> <?php endif; ?>
+                  </td>
       					</tr>
       					<tr>
       						<td class="text-c">80%</td>
-      						<td class="text-c"><?php echo e($eightpre); ?></td>
+      						<td class="text-c"><?php if($eightper != 0): ?><u style="cursor:pointer" class="text-primary" onClick="information_show('查看相似项目','/comparison/eightper/<?php echo e($info_id); ?>')" title="查看相似项目"><?php echo e($eightper); ?></u><?php else: ?> <?php echo e($eightper); ?> <?php endif; ?></td>
       					</tr>
       					<tr>
       						<td class="text-c">60%</td>
-      						<td class="text-c"></td>
+      						<td class="text-c"><?php if($sixtyper != 0): ?><u style="cursor:pointer" class="text-primary" onClick="information_show('查看相似项目','/comparison/sixtyper/<?php echo e($info_id); ?>')" title="查看相似项目"><?php echo e($sixtyper); ?></u><?php else: ?> <?php echo e($sixtyper); ?> <?php endif; ?></td>
       					</tr>
       					<tr>
       						<td class="text-c">40%</td>
-      						<td class="text-c"></td>
+      						<td class="text-c"><?php if($fourtyper != 0): ?><u style="cursor:pointer" class="text-primary" onClick="information_show('查看相似项目','/comparison/fourtyper/<?php echo e($info_id); ?>')" title="查看相似项目"><?php echo e($fourtyper); ?></u><?php else: ?> <?php echo e($fourtyper); ?> <?php endif; ?></td>
       					</tr>
       					<tr>
       						<td class="text-c">20%</td>
-      						<td class="text-c"></td>
+      						<td class="text-c"><?php if($twoper != 0): ?><u style="cursor:pointer" class="text-primary" onClick="information_show('查看相似项目','/comparison/twoper/<?php echo e($info_id); ?>')" title="查看相似项目"><?php echo e($twoper); ?></u><?php else: ?> <?php echo e($twoper); ?> <?php endif; ?></td>
       					</tr>
       					
       				</tbody>
@@ -56,9 +57,11 @@
     		type: 2,
     		title: title,
     		content: url,
-    		area: ['800px', '600px']
+    		area: ['800px', '600px'],
+        maxmin: true,
+
 			});
-		};
+		}
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>

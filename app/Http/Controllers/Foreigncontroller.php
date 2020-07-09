@@ -7,7 +7,7 @@ use Auth,DB;
 
 use Illuminate\Http\Request;
 
-class Foreigncontroller extends Controller
+class ForeignController extends Controller
 {
     
     public function list_city(){

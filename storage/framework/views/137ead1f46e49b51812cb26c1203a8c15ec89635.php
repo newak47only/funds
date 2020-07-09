@@ -18,7 +18,6 @@
 					<div class="mt-20 clearfix">
 						<span class="f-l">
 							<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
-							<a href="javascript:;" onclick="comparison()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目比对</a>
 						</span>
 						
 					</div>		
@@ -44,7 +43,7 @@
 								<?php $__currentLoopData = $information; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 								<tr class="text-c">
-									<td ><input type="checkbox" value="<?php echo e($v->id); ?>" name="box"></td>
+									<td ><input type="checkbox" value="<?php echo e($v->id); ?>" name="ID"></td>
 									<td ><?php echo e($v->id); ?></td>
 									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','<?php echo e(route('information.show',$v->id)); ?>','$v->id}}')" title="查看"><?php echo e($v->name); ?></u></td>
 									<td><?php echo e($v->info_area->YAT_CNNAME); ?></td>
@@ -88,7 +87,7 @@
 									</td>
 									<td>
 									<?php if($v->process == 2): ?>
-									等待市流转审核
+									等待市商务局审核
 									<?php elseif($v->process == 3): ?>
 									等待分派跟踪人
 									<?php elseif($v->process == 4): ?>
@@ -202,35 +201,10 @@
     	area: ['800px', '600px'],
   		});
 	}
-
-		function  comparison(){
-
-		//获取到所有的input
-        var  box = $("input[name='box']");
-           	//去所有的input长度
-           	length =box.length;
-           		//alert(length);
-           	var str ="";
-           	for(var i=0;i<length;i++){
-               	//如果数组中的checked 为true  就将他的id进行拼接
-               	if(box[i].checked==true){
-                   	str =str+","+box[i].value;
-               	}
-           	}
-           		//将拼接的字符串第一个，号删除
-           	str= str.substr(1);
-           	var index = layer.open({
-			type: 2,
-			title: '项目比对',
-
-			content: '/comparison/comresult/'+str,
-  		});
-  			layer.full(index);		
-		}	
   		
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/Code/funds/resources/views/foreign/list_city.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/Code/funds/resources/views/domestic/list_city.blade.php ENDPATH**/ ?>

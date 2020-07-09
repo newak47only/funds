@@ -44,4 +44,5 @@ class Information extends Model
      public function info_major(){
           return  $this->hasOne('App\Majorproject','id','major_pro');
      }
+
 }

@@ -24,7 +24,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($hundredper as $v)
+								@foreach($twoper as $v)
+
 								@if($v->id == $info_id)
 								<tr class="text-c" style="background-color:#ccc">
 									<td ><input type="checkbox" value="{{$v->id}}" name="box"></td>
@@ -153,30 +154,7 @@
   		});
 	}
 
-	function  comparison(){
 
-		//获取到所有的input
-        var  box = $("input[name='box']");
-           	//去所有的input长度
-           	length =box.length;
-           		//alert(length);
-           	var str ="";
-           	for(var i=0;i<length;i++){
-               	//如果数组中的checked 为true  就将他的id进行拼接
-               	if(box[i].checked==true){
-                   	str =str+","+box[i].value;
-               	}
-           	}
-           		//将拼接的字符串第一个，号删除
-           	str= str.substr(1);
-           	var index = layer.open({
-			type: 2,
-			title: '项目比对',
-			content: '/comparison/comresult/'+str,
-    		area: ['800px', '600px'],
-    		});
-  			
-		}	
 
 
 

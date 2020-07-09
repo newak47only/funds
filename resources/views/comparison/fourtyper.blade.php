@@ -24,7 +24,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($hundredper as $v)
+								@foreach($fourtyper as $v)
+
 								@if($v->id == $info_id)
 								<tr class="text-c" style="background-color:#ccc">
 									<td ><input type="checkbox" value="{{$v->id}}" name="box"></td>

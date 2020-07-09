@@ -47,14 +47,14 @@ Route::get('/welcome', 'HomeController@welcome');
 	//Route::any('/dept/edit', 'DeptController@edit');
 
 	//洽谈项目管理模块
-	Route::get('/information/getAreaId','InformationController@getAreaId');
+	Route::get('/information/termination/{str}','InformationController@termination');
 	Route::get('/information/apportion/{id}','InformationController@apportion');
 	Route::post('/information/appstore/{id}','InformationController@appstore');
 	Route::get('/information/tctolist','InformationController@tctolist');
+	Route::get('/information/getAreaId','InformationController@getAreaId');
 	Route::get('information/report_list','InformationController@report_list');
 	Route::get('information/tccreate','InformationController@tccreate');
 	Route::post('information/tcstore','InformationController@tcstore');
-	Route::get('information/termination/{str}','InformationController@termination');
 	Route::get('information/list_all','InformationController@list_all');
 	Route::get('information/ownlist','InformationController@ownlist');
 	Route::resource('information','InformationController');
@@ -171,3 +171,7 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::get('/excel/export','ExcelController@export');
 	Route::get('comparison/comresult/{str}','ComparisonController@comresult');
 	Route::get('comparison/hundredper/{str}','ComparisonController@hundredper');
+	Route::get('comparison/eightper/{str}','ComparisonController@eightper');
+	Route::get('comparison/sixtyper/{str}','ComparisonController@sixtyper');
+	Route::get('comparison/fourtyper/{str}','ComparisonController@fourtyper');
+	Route::get('comparison/twoper/{str}','ComparisonController@twoper');

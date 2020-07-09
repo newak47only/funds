@@ -25,7 +25,11 @@
         				</tr>
         				<tr>
           					<th class="text-r">相关文件：</th>
-          					<td><a href="<?php echo e($information->contract_file); ?>"> <?php echo e($information->contract_file); ?></td>
+          					<td>
+          						<?php $__currentLoopData = $information->info_loader; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          						<a href="<?php echo e($k->httpurl); ?>"> <?php echo e($k->name); ?></a><br />
+          						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          					</td>
         				</tr>
         				<tr>
           					<th class="text-r">流转方向：</th>

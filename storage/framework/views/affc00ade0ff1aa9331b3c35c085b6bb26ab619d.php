@@ -1,5 +1,5 @@
-﻿@extends('layouts.app')
-@section('content')
+﻿
+<?php $__env->startSection('content'); ?>
 <body>
 	<div class="wap-container">
 
@@ -24,49 +24,26 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($hundredper as $v)
-								@if($v->id == $info_id)
-								<tr class="text-c" style="background-color:#ccc">
-									<td ><input type="checkbox" value="{{$v->id}}" name="box"></td>
-									<td >{{$v->id}}</td>
-									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
-									<td>{{$v->info_area->YAT_CNNAME}}</td>
-									<td>{{$v->industry}}</td>
-									<td>{{$v->investment}}</td>
-									<td>{{$v->cont_main}}</td>
-									<td>{{$v->cont_unit}}</td>
-									<td>{{$v->cont_name}}</td>
-									<td>
-									@if($v->process > 1 && $v->process <7)
-									流转中
-									@elseif($v->process >= 7 && $v->process < 10)
-									已落地
-									@endif
-									</td>
-								</tr>
+								<?php $__currentLoopData = $sixtyper; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-
-								@else
 								<tr class="text-c">
-									<td ><input type="checkbox" value="{{$v->id}}" name="box"></td>
-									<td >{{$v->id}}</td>
-									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','$v->id}}')" title="查看">{{$v->name}}</u></td>
-									<td>{{$v->info_area->YAT_CNNAME}}</td>
-									<td>{{$v->industry}}</td>
-									<td>{{$v->investment}}</td>
-									<td>{{$v->cont_main}}</td>
-									<td>{{$v->cont_unit}}</td>
-									<td>{{$v->cont_name}}</td>
+									<td ><input type="checkbox" value="<?php echo e($v->id); ?>" name="box"></td>
+									<td ><?php echo e($v->id); ?></td>
+									<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','<?php echo e(route('information.show',$v->id)); ?>','$v->id}}')" title="查看"><?php echo e($v->name); ?></u></td>
+									<td><?php echo e($v->info_area->YAT_CNNAME); ?></td>
+									<td><?php echo e($v->industry); ?></td>
+									<td><?php echo e($v->cont_main); ?></td>
+									<td><?php echo e($v->cont_unit); ?></td>
+									<td><?php echo e($v->cont_name); ?></td>
 									<td>
-									@if($v->process > 1 && $v->process <7)
+									<?php if($v->process > 1 && $v->process <7): ?>
 									流转中
-									@elseif($v->process >= 7 && $v->process < 10)
+									<?php elseif($v->process > 7 && $v->process < 10): ?>
 									已落地
-									@endif
+									<?php endif; ?>
 									</td>
 								</tr>
-								@endif
-								@endforeach
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</tbody>
 						</table>		
 					</div>					
@@ -184,4 +161,6 @@
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/Code/funds/resources/views/comparison/sixtyper.blade.php ENDPATH**/ ?>

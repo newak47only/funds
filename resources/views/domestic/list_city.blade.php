@@ -18,6 +18,7 @@
 					<div class="mt-20 clearfix">
 						<span class="f-l">
 							<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目终止</a>
+							<a href="javascript:;" onclick="comparison()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6e2;</i> 项目比对</a>
 						</span>
 						
 					</div>		
@@ -199,6 +200,31 @@
     	area: ['800px', '600px'],
   		});
 	}
+
+			function  comparison(){
+
+		//获取到所有的input
+        var  box = $("input[name='box']");
+           	//去所有的input长度
+           	length =box.length;
+           		//alert(length);
+           	var str ="";
+           	for(var i=0;i<length;i++){
+               	//如果数组中的checked 为true  就将他的id进行拼接
+               	if(box[i].checked==true){
+                   	str =str+","+box[i].value;
+               	}
+           	}
+           		//将拼接的字符串第一个，号删除
+           	str= str.substr(1);
+           	var index = layer.open({
+			type: 2,
+			title: '项目比对',
+
+			content: '/comparison/comresult/'+str,
+  		});
+  			layer.full(index);		
+		}	
   		
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
