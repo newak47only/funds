@@ -8,8 +8,8 @@
 				
 				<form action="{{route('circule.update',$information->id)}}" method="post"  class="form form-horizontal" id="form-admin-add" >
 					<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>流转结果：</label>
-						<div class="form-controls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>流转结果：</label>
+						<div class="form-controls col-xs-8 col-sm-8"> <span class="select-box" style="width:150px;">
 							<select class="select" name="result" size="1">
 								
 								<option value="1">流转失败</option>
@@ -19,66 +19,66 @@
 						</div>
 					</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目名称：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
 						<input type="text" class="input-text" value="{{$information->name}}" placeholder="{{$information->name}}" id="name" name="  " datatype="*4-16" >
 					</div>
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册企业名称：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>注册企业名称：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
 						<input type="text" class="input-text" value=" " placeholder=" " id="company" name="company" datatype="*4-16" >
 					</div>
 				</div>
 				<div class="row clearfix">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>注册资金：</label>
 					<div class="form-controls col-xs-8 col-sm-6">
-						<input style="height: 40px" type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="reg_cap" datatype="*4-16" >
+						<input type="text" class="input-text" value=" "  id="reg_cap" name="reg_cap" datatype="*4-16" >
 					</div>	
 					<div class="form-controls col-xs-8 col-sm-2">
 						<span class="select-box" >
-							<select class="select"  name="reg_currency" size="1">
+							<select class="select"  name="reg_currency" size="1" id='reg_currency'>
               					<option value="" selected="selected">选择货币单位</option>
               					<option value="1">万人民币</option>
               					<option value="2">万美元</option>
               					<option value="3">万欧元</option>             			
 							</select>
 						</span>
-					</div>				
+					</div>								
 				</div>
 				<div class="row clearfix">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>投资金额：</label>
 					<div class="form-controls col-xs-8 col-sm-6">
-						<input style="height: 40px" type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="investment"   datatype="*4-16" >
-					</div>
+						<input type="text" class="input-text" value=" " placeholder="" id="investment" name="investment" datatype="*4-16" >
+					</div>	
 					<div class="form-controls col-xs-8 col-sm-2">
 						<span class="select-box"  >
-							<select class="select"  name="currency" size="1">
+							<select class="select"  name="currency" size="1" id='currency'>
               					<option value="{{$informations->currency}}" selected="selected">@if($informations->currency =="1")万人民币@elseif($informations->currency =="2")万美元@endif</option>
               					<option value="1">万人民币</option>
               					<option value="2">万美元</option>
               					<option value="3">万欧元</option>             			
 							</select>
 						</span>
-					</div>						
+					</div>					
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册时间：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>注册时间：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
 						<input type="text" class="input-text datetimepicker-input" value="" placeholder="" id="negotiation-datetime-start" name="neg_at" datatype="*4-16" >
 					</div>
 				</div>
 
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>经营范围：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经营范围：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
 						<textarea type="text" class="textarea" value="" placeholder="" id="scope" name="scope" datatype="*4-16" ></textarea>
 					</div>
 				</div>
 
 				<div class="row clearfix">
-						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上传文件：</label>
-						<div class="form-controls col-xs-8 col-sm-9">
+						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上传文件：</label>
+						<div class="form-controls col-xs-8 col-sm-8">
 							<div id="uploader" class="wu-example" >
 							    <!--用来存放文件信息-->
 							   
@@ -94,14 +94,14 @@
 						</div>
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>结果说明：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>结果说明：</label>
+					<div class="form-controls col-xs-8 col-sm-8">
 						<textarea type="text" class="textarea" value="" placeholder="" id="remark" name="remark" datatype="*4-16" ></textarea>
 					</div>
 				</div>
         				</tr>
-        				<input type="hidden" name="investment" value="{{$information->investment}}">
-        				<input type="hidden" name="currency" value="{{$information->currency}}">
+
+
 						<input type="hidden" name="name" value="{{$information->name}}">
 						<input type="hidden" name="info_id" value="{{$information->id}}">
 						<input type="hidden" class="input-text" value="{{$actiontype}}"   name="actiontype" >
@@ -146,10 +146,10 @@
 				//判断值
 				if(_val > 0){
 					//显示
-					$('#name,#company,#reg_cap,#negotiation-datetime-start,#uploader,#investment,#scope').parents('.row').hide(500);
+					$('#name,#company,#reg_cap,#negotiation-datetime-start,#uploader,#reg_currency,#investment,#scope').parents('.row').hide(500);
 				}else{
 
-					$('#name,#company,#reg_cap,#negotiation-datetime-start,#uploader,#investment,#scope').parents('.row').show(500);
+					$('#name,#company,#reg_cap,#reg_currency,#negotiation-datetime-start,#uploader,#investment,#scope').parents('.row').show(500);
 				}
 			});
 			/* 通过iCheck插件，美化checkbox */

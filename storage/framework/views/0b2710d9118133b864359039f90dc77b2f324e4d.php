@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <body style="background-color:#fff">
 	<div class="wap-container">
 		<div class="panel">
@@ -8,10 +8,17 @@
 <div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目名称：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" value="{{ old('name') }}" placeholder="" id="name" name="name" >
-							@error('name')
-    						<div class="alert alert-danger">{{ $message }}</div>
-							@enderror
+							<input type="text" class="input-text" value="<?php echo e(old('name')); ?>" placeholder="" id="name" name="name" >
+							<?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+    						<div class="alert alert-danger"><?php echo e($message); ?></div>
+							<?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
@@ -20,9 +27,9 @@
 							<span class="select-box" >
 							<select class="select" name="continent_id" >
 								<option value="0">洲</option>
-								@foreach($continent as $v)
-              					<option value="{{$v->YAT_ID}}">{{$v->YAT_CNNAME}}</option>
-              					@endforeach            			
+								<?php $__currentLoopData = $continent; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              					<option value="<?php echo e($v->YAT_ID); ?>"><?php echo e($v->YAT_CNNAME); ?></option>
+              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>            			
 							</select>
 							</span>
 						</div>
@@ -39,9 +46,9 @@
 						<div class="form-controls col-xs-8 col-sm-10">
 							<span class="select-box">
 							<select class="select" name="industry" size="1">
-								@foreach($industry as $i)
-              					<option value="{{$i->name}}">{{$i->name}}</option>  
-              					@endforeach          			
+								<?php $__currentLoopData = $industry; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              					<option value="<?php echo e($i->name); ?>"><?php echo e($i->name); ?></option>  
+              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
 							</select>
 							</span>
 						</div>
@@ -63,40 +70,61 @@
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>投资金额：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" value="{{ old('investment') }}" placeholder="注意：投资金额货币单位为（万元）" id="investment" name="investment">
+							<input type="text" class="input-text" value="<?php echo e(old('investment')); ?>" placeholder="注意：投资金额货币单位为（万元）" id="investment" name="investment">
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>资方负责人：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" value="{{ old('cont_main') }}" placeholder="" id="cont_main" name="cont_main">
-							@error('cont_main')
-    						<div class="alert alert-danger">{{ $message }}</div>
-							@enderror
+							<input type="text" class="input-text" value="<?php echo e(old('cont_main')); ?>" placeholder="" id="cont_main" name="cont_main">
+							<?php $__errorArgs = ['cont_main'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+    						<div class="alert alert-danger"><?php echo e($message); ?></div>
+							<?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>主要投资方：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" value="{{ old('cont_unit') }}" placeholder="" id="cont_unit" name="cont_unit">
+							<input type="text" class="input-text" value="<?php echo e(old('cont_unit')); ?>" placeholder="" id="cont_unit" name="cont_unit">
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>资方联系人：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" value="{{ old('cont_name') }}" placeholder="" id="cont_name" name="cont_name">
-							@error('cont_name')
-    						<div class="alert alert-danger">{{ $message }}</div>
-							@enderror
+							<input type="text" class="input-text" value="<?php echo e(old('cont_name')); ?>" placeholder="" id="cont_name" name="cont_name">
+							<?php $__errorArgs = ['cont_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+    						<div class="alert alert-danger"><?php echo e($message); ?></div>
+							<?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系方式：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
-							<input type="text" class="input-text" placeholder="" value="{{ old('cont_phone') }}" name="cont_phone" id="cont_phone">
-							@error('cont_phone')
-    						<div class="alert alert-danger">{{ $message }}</div>
-							@enderror
+							<input type="text" class="input-text" placeholder="" value="<?php echo e(old('cont_phone')); ?>" name="cont_phone" id="cont_phone">
+							<?php $__errorArgs = ['cont_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+    						<div class="alert alert-danger"><?php echo e($message); ?></div>
+							<?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
@@ -105,9 +133,9 @@
 							<span class="select-box">
 							<select class="select" name="major_pro" size="1">
 								<option value="0">非重大项目</option> 
-								@foreach($majorproject as $s)
-              					<option value="{{$s->id}}">{{$s->p_name}}</option>  
-              					@endforeach          			
+								<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              					<option value="<?php echo e($s->id); ?>"><?php echo e($s->p_name); ?></option>  
+              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
 							</select>
 							</span>
 						</div>
@@ -115,22 +143,24 @@
 					<div class="row clearfix col-xs-12 col-sm-12" >
 						<label class="form-label col-xs-4 col-sm-1"><span class="c-red">*</span>项目简介：</label>
 						<div class="form-controls col-xs-8 col-sm-11">
-							<textarea name="content" cols="" rows=""  class="textarea textarea-article" value="{{ old('content') }}"  placeholder="项目简介" dragonfly="true" onKeyUp="textarealength(this,800)"></textarea>
+							<textarea name="content" cols="" rows=""  class="textarea textarea-article" value="<?php echo e(old('content')); ?>"  placeholder="项目简介" dragonfly="true" onKeyUp="textarealength(this,800)"></textarea>
 							<p class="textarea-numberbar">
 						</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-12" >
 						<label class="form-label col-xs-4 col-sm-1"><span class="c-red">*</span>项目诉求：</label>
 						<div class="form-controls col-xs-8 col-sm-11">
-							<textarea name="appeal" cols="" rows=""  class="textarea textarea-article" value="{{ old('appeal') }}"  placeholder="项目诉求" dragonfly="true" onKeyUp="textarealength(this,800)"></textarea>
+							<textarea name="appeal" cols="" rows=""  class="textarea textarea-article" value="<?php echo e(old('appeal')); ?>"  placeholder="项目诉求" dragonfly="true" onKeyUp="textarealength(this,800)"></textarea>
 							<p class="textarea-numberbar">
 						</div>
 					</div>
 					<input type="hidden" name="process" value="21">
-					<input type="hidden" name="issuer_id" value="{{$emp_id}}">
-					<input type="hidden" name="check_id" value="{{$emp_id}}">
-					{{csrf_field()}}
-					{{method_field('POST')}}
+					<input type="hidden" name="issuer_id" value="<?php echo e($emp_id); ?>">
+					<input type="hidden" name="check_id" value="<?php echo e($emp_id); ?>">
+					<?php echo e(csrf_field()); ?>
+
+					<?php echo e(method_field('POST')); ?>
+
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 							<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -243,4 +273,6 @@
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/Code/funds/resources/views/information/tccreate.blade.php ENDPATH**/ ?>

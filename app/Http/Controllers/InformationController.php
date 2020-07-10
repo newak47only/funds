@@ -541,11 +541,12 @@ class InformationController extends Controller
 
     public function tccreate(){
         $emp_id=Auth::user()->id;
-        $emp=Emp::where('id',$emp_id)->firstOrFail();
-        //dd($emp);
+         $emp = Emp::where('id',$emp_id)->firstOrFail();
         $industry = Industry::get();
+        $majorproject = Majorproject::get();
+        $continent = Area::where('YAT_LEVEL','1')->get();
         //dd($industry);
-        return view('information.tccreate')->with(compact('emp_id','industry'));
+        return view('information.tccreate')->with(compact('emp_id','emp','industry','continent','majorproject'));
     }
 
     public function tcstore(Request $request){

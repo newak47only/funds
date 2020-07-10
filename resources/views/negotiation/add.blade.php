@@ -85,11 +85,11 @@
 						<textarea type="text" class="textarea" value="" placeholder="" id="remark" name="remark" datatype="*4-16" ></textarea>
 					</div>
 				</div>
-				<input type="hidden"  value="{{$informations->currency}}" placeholder="" id="negotiation_currency" name="currency" >
+
 				<input type="hidden" class="input-text" value="{{$actiontype}}"   name="actiontype" >
 				<input type="hidden"  value="{{$informations->id}}" placeholder="" id="report_info_id" name="info_id" >
 				<input type="hidden"  value="{{$eaction}}" placeholder="" id="report_eaction" name="eaction" >
-				<input type="hidden"  value="{{$informations->investment}}"  name="investment" >
+
 					{{csrf_field()}}
 					{{method_field('POST')}}
 					<div class="row clearfix">
