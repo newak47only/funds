@@ -661,8 +661,9 @@ class CirculeController extends Controller
         $information= Information::findOrFail($id);
         $negotiation=Negotiation::where('info_id','=',$information->id)->where('actiontype','=','1')->first();
         $users = Auth::user();
+        $eaction = '项目落地';
         $actiontype = '7';
-        return view('circule.redit')->with(compact('negotiation','information','users','actiontype'));
+        return view('circule.redit')->with(compact('negotiation','information','users','actiontype','eaction'));
     }
 
     public function update(Request $request, $id){

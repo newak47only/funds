@@ -19,7 +19,7 @@ class AdduserController extends Controller
     		$data [] = [
 
     			'password' => '123456',
-    			'name'	   => 'blzs',
+    			'name'	   => '',
     			'dept_id'  => '7',
 
     		];

@@ -31,18 +31,36 @@
 					</div>
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册资金：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value=" "  id="reg_cap" name="reg_cap" datatype="*4-16" >
-						@if($information->currency == '1')该项目注册资金单位为：万人民币@elseif($information->currency == '2')该项目注册资金单位为：万美元@elseif($information->currency == '3')该项目注册资金单位为：万欧元@endif
-					</div>					
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>注册资金：</label>
+					<div class="form-controls col-xs-8 col-sm-6">
+						<input style="height: 40px" type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="reg_cap" datatype="*4-16" >
+					</div>	
+					<div class="form-controls col-xs-8 col-sm-2">
+						<span class="select-box" >
+							<select class="select"  name="reg_currency" size="1">
+              					<option value="" selected="selected">选择货币单位</option>
+              					<option value="1">万人民币</option>
+              					<option value="2">万美元</option>
+              					<option value="3">万欧元</option>             			
+							</select>
+						</span>
+					</div>				
 				</div>
 				<div class="row clearfix">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>投资金额：</label>
-					<div class="form-controls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value=" " placeholder="" id="investment" name="investment" datatype="*4-16" >
-						@if($information->currency == '1')该项目注册资金单位为：万人民币@elseif($information->currency == '2')该项目注册资金单位为：万美元@elseif($information->currency == '3')该项目注册资金单位为：万欧元@endif
-					</div>					
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>投资金额：</label>
+					<div class="form-controls col-xs-8 col-sm-6">
+						<input style="height: 40px" type="text" class="input-text" value=" " placeholder="{{$informations->investment}}" id="negotiation_investment" name="investment"   datatype="*4-16" >
+					</div>
+					<div class="form-controls col-xs-8 col-sm-2">
+						<span class="select-box"  >
+							<select class="select"  name="currency" size="1">
+              					<option value="{{$informations->currency}}" selected="selected">@if($informations->currency =="1")万人民币@elseif($informations->currency =="2")万美元@endif</option>
+              					<option value="1">万人民币</option>
+              					<option value="2">万美元</option>
+              					<option value="3">万欧元</option>             			
+							</select>
+						</span>
+					</div>						
 				</div>
 				<div class="row clearfix">
 					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>注册时间：</label>
