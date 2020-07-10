@@ -129,7 +129,7 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市流转项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="circule/tclist_all" data-title="本部门流转项目列表" href="javascript:void(0)">本部发布转项目列表<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:52px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
+            <li><a data-href="circule/tclist_all" data-title="本部门发布转项目列表" href="javascript:void(0)">本部门发布转项目列表<?php if($owncount != 0 ): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:52px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($owncount); ?></a></span><?php endif; ?></li>
             <li><a data-href="circule/tctracklist_all" data-title="本部门跟踪项目列表" href="javascript:void(0)">本部门跟踪项目列表&nbsp;<?php if($traccount != 0 ): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:52px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($traccount); ?></a></span><?php endif; ?></li>
           </ul>
         </dd>

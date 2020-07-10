@@ -270,6 +270,9 @@ class CirculeController extends Controller
             ['process', '<', '7'],
         ])->orwhere('process','>','20')->get();
 
+
+    
+
         return view('circule.tclist_all')->with(compact('information1','emps','depts'));        
     }
 

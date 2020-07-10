@@ -44,7 +44,7 @@
 											<td ><input type="checkbox" value="<?php echo e($v->id); ?>" name="ID"></td>
 											<td ><?php echo e($v->id); ?></td>
 											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','<?php echo e(route('information.show',$v->id)); ?>','$v->id}}')" title="查看"><?php echo e($v->name); ?></u></td>
-											<td><?php echo e($v->country); ?></td>
+											<td><?php echo e($v->info_area->YAT_CNNAME); ?></td>
 											<td><?php echo e($v->industry); ?></td>
 											<td > 
 											<?php if(empty($v->emp_id) && $v->process == 21): ?>

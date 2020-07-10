@@ -92,7 +92,12 @@ class HomeController extends Controller
             }        
 
             $traccount=Information::whereNotIn('issuer_id', $emp_arry)->where('process','3')->count();
-            return view('index1')->with(compact('status','dept_name','traccount'));
+
+            $owncount = Information::whereIn('issuer_id',$emp_arry )->where([
+            
+            ['process', '=', '22'],
+        ])->count();
+            return view('index1')->with(compact('status','dept_name','traccount','owncount'));
         }elseif ($admin->id != $dept->director_id && $dept->id == '13') {
             //市招商局招商人员登录
             $status =4;

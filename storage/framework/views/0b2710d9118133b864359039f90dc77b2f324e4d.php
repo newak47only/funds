@@ -188,6 +188,21 @@ unset($__errorArgs, $__bag); ?>
   <script type="text/javascript" src="/static/business/js/main.js"></script>
 	<script type="text/javascript">
 		$(function(){
+
+						$('select[name = continent_id ]').change(function(){
+				var id = $(this).val();
+				$.get('/information/getAreaId',{id:id},function(country){
+					var str= '';
+					$.each(country,function(index,el){
+						str +="<option value='"+el.YAT_ID+"'>"+el.YAT_CNNAME+"</option>";
+
+					});
+					$('select[name = country_id ]').find('option:gt(0)').remove();
+					$('select[name = country_id ]').append(str);
+
+
+				},'json');
+			});
 			/* 通过iCheck插件，美化checkbox */
 			$('.skin-minimal input').iCheck({
 				checkboxClass: 'icheckbox-blue',
