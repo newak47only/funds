@@ -92,13 +92,40 @@
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
-						<div class="form-controls col-xs-8 col-sm-10">
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box">
+								<select class="select" name="level" size="1">
+								@if($information->level == 0)
+								<option value="0" selected="selected">重大项目类型</option> 
+								@else
+								<option value="{{$information->level}}" selected="selected">
+								@foreach($projectlevel as $s)
+								@if($s->id == $information->level)
+              					{{$s->name}}
+              					@endif
+              					@endforeach       
+              					</option> 
+								@endif
+								@foreach($projectlevel as $s)
+              					<option value="{{$s->id}}">{{$s->name}}</option>  
+              					@endforeach          			
+							</select>
+							</span>
+						</div>
+						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box">
 								<select class="select" name="major_pro" size="1">
-								@if($information->majorpro == 0)
-								<option value="0" selected="selected">非重大项目</option> 
+								@if($information->major_pro == 0)
+								<option value="0" selected="selected">主要投资方规模</option> 
 								@else
-								<option value="{{$information->major_pro}}" selected="selected">{{$information->info_major->p_name}}</option> 
+								<option value="{{$information->major_pro}}" selected="selected">
+								@foreach($majorproject as $k)
+								@if($k->id == $information->major_pro)
+              					{{$k->p_name}}
+              					@endif
+              					@endforeach 
+
+								</option> 
 								@endif
 								@foreach($majorproject as $s)
               					<option value="{{$s->id}}">{{$s->p_name}}</option>  

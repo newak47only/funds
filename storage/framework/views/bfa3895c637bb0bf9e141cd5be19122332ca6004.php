@@ -13,8 +13,13 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市洽谈项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="circule/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表&nbsp;<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
+            <li><?php if($checkcount != 0): ?><a data-href="circule/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:94px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($checkcount); ?></a></span>
+              <?php else: ?>
+              <a data-href="circule/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表</a>
+              <?php endif; ?>
+            </li>
             <li><a data-href="information/report_list" data-title="上报项目列表" href="javascript:void(0)">上报项目列表&nbsp;</a></li>
+            <li><a data-href="information/important_list" data-title="重大项目列表" href="javascript:void(0)">重大项目列表&nbsp;</a></li>
           </ul>
         </dd>
       </dl>
@@ -24,6 +29,7 @@
           <ul>
             <li><a data-href="negotiation/outlist_city" data-title="流转项目落地列表" href="javascript:void(0)">流转项目落地列表</a></li>
             <li><a data-href="negotiation/ownlist_city" data-title="首谈项目落地列表" href="javascript:void(0)">首谈项目落地列表</a></li>
+            <li><a data-href="negotiation/important_list" data-title="重大项目落地列表" href="javascript:void(0)">重大项目落地列表</a></li>
           </ul>
         </dd>
       </dl>
@@ -50,17 +56,17 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市流转项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="circule/list_all" data-title="全市流转库列表" href="javascript:void(0)">全市流转项目库列表&nbsp;</a></li>
+            <li><a data-href="circule/list_all" data-title="全市流转库列表" href="javascript:void(0)">全市流转项目库列表</a></li>
           </ul>
         </dd>
       </dl>
-        <dl id="menu-negotiation" class="Hui-menu">
+      <dl id="menu-circule" class="Hui-menu">
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;洽谈项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="information/list_all" data-title="本区首谈项目列表" href="javascript:void(0)">本区首谈项目列表</li>
+            <li><a data-href="information/list_all" data-title="本区首谈项目列表" href="javascript:void(0)">本区首谈项目列表</a></li>
             <li><a data-href="circule/inlist_all" data-title="本区转入项目列表" href="javascript:void(0)">本区转入项目列表<?php if($inlistcount != 0): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($inlistcount); ?></a></span><?php endif; ?></li>
-            <li><a data-href="circule/outlist_all" data-title="本区转出项目列表" href="javascript:void(0)">本区转出项目列表&nbsp;<?php if($outcount !=0): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($outcount); ?></a></span><?php endif; ?></li>
+            <li><a data-href="circule/outlist_all" data-title="本区转出项目列表" href="javascript:void(0)">本区转出项目列表<?php if($outcount !=0): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($outcount); ?></a></span><?php endif; ?></li>
             <li><a data-href="information/tctolist" data-title="投促中心分派项目" href="javascript:void(0)">投促中心分派项目&nbsp;</a></li>
           </ul>
         </dd>
@@ -98,7 +104,7 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;洽谈项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="information/ownlist" data-title="本人首谈项目列表" href="javascript:void(0)">本人首谈项目列表&nbsp;</a></li>
+            <li><a data-href="information/ownlist" data-title="本人首谈项目列表" href="javascript:void(0)">本人首谈项目列表&nbsp;<?php if($tccount != 0 ): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:66px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($tccount); ?></a></span><?php endif; ?></li>
             <li><a data-href="circule/inlist" data-title="本人转入项目列表" href="javascript:void(0)">本人转入项目列表<?php if($inlistcount != 0): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:65px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($inlistcount); ?></a></span><?php endif; ?></li>
             <li><a data-href="circule/outlist" data-title="本人转出项目列表" href="javascript:void(0)">本人转出项目列表&nbsp;</a></li>
           </ul>
@@ -129,7 +135,7 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市流转项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="circule/tclist_all" data-title="本部门发布转项目列表" href="javascript:void(0)">本部门发布转项目列表<?php if($owncount != 0 ): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:52px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($owncount); ?></a></span><?php endif; ?></li>
+            <li><a data-href="circule/tclist_all" data-title="本部门发布转项目列表" href="javascript:void(0)">本部门发布转项目列表<?php if($owncount != 0 ): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:40px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($owncount); ?></a></span><?php endif; ?></li>
             <li><a data-href="circule/tctracklist_all" data-title="本部门跟踪项目列表" href="javascript:void(0)">本部门跟踪项目列表&nbsp;<?php if($traccount != 0 ): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:52px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($traccount); ?></a></span><?php endif; ?></li>
           </ul>
         </dd>
@@ -213,7 +219,7 @@
         <div class="container-fluid clearfix">
           <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar">
             <ul class="clearfix">
-              <li><?php echo e($dept_name); ?><?php if($status == 1 || $status == 3  ): ?>管理员<?php else: ?> 招商人员<?php endif; ?></li>
+              <li><?php echo e($dept_name); ?><?php if($status == 1 || $status == 3 || $status == 0   ): ?>管理员<?php else: ?> 招商人员<?php endif; ?></li>
               <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A"><?php echo e(Auth::user()->username); ?><i class="Hui-iconfont">&#xe6d5;</i></a>
                 <ul class="dropDown-menu menu radius box-shadow">
                   <li><a href="javascript:;" onclick="admin_edit('管理员编辑','emp/<?php echo e(Auth::user()->id); ?>/edit')" class="ml-5" style="text-decoration:none">个人信息</a></li>

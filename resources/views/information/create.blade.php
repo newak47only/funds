@@ -19,7 +19,7 @@
 						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box" >
 							<select class="select" name="continent_id" >
-								<option value="0">洲</option>
+								<option value="">洲</option>
 								@foreach($continent as $v)
               					<option value="{{$v->YAT_ID}}">{{$v->YAT_CNNAME}}</option>
               					@endforeach            			
@@ -29,7 +29,7 @@
 						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box" >
 							<select class="select" name="country_id" >
-              					<option value="0">国家</option>          			
+              					<option value="">国家</option>          			
 							</select>
 							</span>
 						</div>
@@ -101,10 +101,20 @@
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
-						<div class="form-controls col-xs-8 col-sm-10">
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box">
+							<select class="select" name="level" size="1">
+								<option value="0">重大项目类型</option> 
+								@foreach($projectlevel as $s)
+              					<option value="{{$s->id}}">{{$s->name}}</option>  
+              					@endforeach          			
+							</select>
+							</span>
+						</div>
+						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box">
 							<select class="select" name="major_pro" size="1">
-								<option value="0">非重大项目</option> 
+								<option value="0">主要投资方规模</option> 
 								@foreach($majorproject as $s)
               					<option value="{{$s->id}}">{{$s->p_name}}</option>  
               					@endforeach          			
@@ -196,10 +206,13 @@
 					cont_name:{
 						required:true,
 					},
-					country:{
+					country_id:{
 						required:true,
-						maxlength:50
 					},
+					continent_id:{
+						required:true,
+					},
+
 					cont_phone:{
 						required:true,
 						isPhone:true,

@@ -56,6 +56,7 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::get('information/tccreate','InformationController@tccreate');
 	Route::post('information/tcstore','InformationController@tcstore');
 	Route::get('information/list_all','InformationController@list_all');
+	Route::get('/information/important_list','InformationController@important_list');
 	Route::get('information/ownlist','InformationController@ownlist');
 	Route::resource('information','InformationController');
 	
@@ -78,6 +79,7 @@ Route::get('/welcome', 'HomeController@welcome');
 	Route::get('/negotiation/list/{id}','NegotiationController@list');
 	Route::get('/negotiation/index1','NegotiationController@index1');
 	Route::get('/negotiation/tclist','NegotiationController@tclist');
+	Route::get('/negotiation/important_list','NegotiationController@important_list');
 	Route::get('/negotiation/tclist_all','NegotiationController@tclist_all');
 	Route::get('/negotiation/tctracklist','NegotiationController@tctracklist');
 	Route::get('/negotiation/add/{id}','NegotiationController@add');

@@ -150,6 +150,7 @@ class StatisticsController extends Controller
         $fund =[];
         $land = [];
         $tax =[]; 
+        $putinto =[];
         foreach ($information->info_sta as $key => $value) {
                 //echo $value->data;
                 if ($value->data_type == '1') {
@@ -181,7 +182,7 @@ class StatisticsController extends Controller
                         'data' => $value->data,
                         'currency' => $value->currency,
                     ]; 
-                }elseif ($value->data_type == '3') {
+                }elseif ($value->data_type == '4') {
 
                     $putinto[]=[
                         'id' =>$value->id,
@@ -193,7 +194,7 @@ class StatisticsController extends Controller
 
         }    
 
-        return view('statistics.show')->with(compact('information','gdp','fund','land','tax','putinto','depts'));
+        return view('statistics.show')->with(compact('information','gdp','fund','land','tax','depts','putinto'));
     }
     
 

@@ -37,7 +37,9 @@ class HomeController extends Controller
            //招商工作领导小组登录
             $status = 0;
 
-            return view('index1')->with(compact('status','dept_name'));
+            $checkcount = Information::where('process','2')->count();
+
+            return view('index1')->with(compact('status','dept_name','checkcount'));
 
         }elseif ($dept->id == '1') {
 
@@ -47,9 +49,10 @@ class HomeController extends Controller
     
         }elseif ($dept->id == '2') {
             //市内资处管理员登录
-            return view('index3')->with(compact('dept_name'));
+            $count = Information::where('country_id','=','7')->where('process','2')->count();
+            return view('index3')->with(compact('dept_name','count'));
             
-        }elseif ($admin->id == $dept->director_id && $dept->id != '6' && $dept->id != '13' && $dept->id != '1' && $dept->id != '2') {
+        }elseif ($admin->is_leader == 1 && $dept->id != '6' && $dept->id != '13' && $dept->id != '1' && $dept->id != '2') {
             //区管理员
             $status = 1;
             //本区新转出项目列表数量
@@ -67,14 +70,23 @@ class HomeController extends Controller
                 ['circule_to','=',$dept->id],
                 ['process','=','5'],
             ])->count();
-            return view('index1')->with(compact('status','dept_name','outcount','inlistcount'));
-        }elseif($admin->id != $dept->director_id && $dept->id != '6' && $dept->id != '13' && $dept->id != '1' && $dept->id != '2'){
+            $allcirculecount = Information::where([
+                ['circule_to','=','0'],
+                ['process','=','4'],
+            ])->count();
+            return view('index1')->with(compact('status','dept_name','outcount','inlistcount','allcirculecount'));
+        }elseif($admin->is_leader == 0 && $dept->id != '6' && $dept->id != '13' && $dept->id != '1' && $dept->id != '2'){
             //区招商人员
             $status =2;
 
             $inlistcount = Information::where('circule_id',$admin->id)->where('process','6')->count(); 
+            $tccount =  Information::where([
+            ['emp_id','=',$admin->id],
+            ['issuer_id','=',$admin->id],
+            ['process','=','0'],
+        ])->count();
 
-            return view('index1')->with(compact('status','dept_name','inlistcount'));
+            return view('index1')->with(compact('status','dept_name','inlistcount','tccount'));
         }elseif ($admin->id == $dept->director_id && $dept->id == '13') {
             //市招商局管理员登录
             $status =3;

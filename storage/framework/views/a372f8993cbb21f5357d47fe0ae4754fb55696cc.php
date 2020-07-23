@@ -1,5 +1,5 @@
-﻿@extends('layouts.app')
-@section('content')
+﻿
+<?php $__env->startSection('content'); ?>
 <body>
 	<div class="wap-container">
 		<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
@@ -26,43 +26,45 @@
 											<th width="80">项目国别</th>
 											<th width="100">行业类别</th>
 											<th width="120">投资金额</th>
-											<th width="120">资方姓名</th>
-											<th width="120">资方联系方式</th>
+											<th width="120">主要投资方</th>
+											<th width="120">重大项目类型</th>
+											<th width="120">资方规模</th>
 											<th width="120">首谈联系人</th>
-											<th width="120">入库时间</th>
+											<th width="100">入库时间</th>
 											<th width="100">工作记录</th>
-											<th width="240 ">操作</th>
+											<th width="140 ">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($information1 as $v)
+										<?php $__currentLoopData = $information; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
-											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','{{route('information.show',$v->id)}}','{{$v['id']}}')" title="查看项目">{{$v['name']}}</u></td>
-											<td>{{$v->info_area->YAT_CNNAME}}</td>
-											<td>{{$v['industry']}}</td>
-											<td>{{$v['investment']}}@if($v['currency'] =="1")万人民币@elseif($v['currency'] =="2")万美元@elseif($v['currency'] =="3")万欧元@endif</td>
-											<td>{{$v['cont_name']}}</td>
-											<td>{{$v['cont_phone']}}</td>
-											<td>@foreach($emps as $n)
-												@if($n->id == $v->emp_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$n->username}}</u>
-												@endif
-												@endforeach
+											<td><input type="checkbox" value="<?php echo e($v['id']); ?>" name="ID"></td>
+											<td><?php echo e($v['id']); ?></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','<?php echo e(route('information.show',$v->id)); ?>','<?php echo e($v['id']); ?>')" title="查看项目"><?php echo e($v['name']); ?></u></td>
+											<td><?php echo e($v->info_area->YAT_CNNAME); ?></td>
+											<td><?php echo e($v['industry']); ?></td>
+											<td><?php echo e($v['investment']); ?><?php if($v['currency'] =="1"): ?>万人民币<?php elseif($v['currency'] =="2"): ?>万美元<?php elseif($v['currency'] =="3"): ?>万欧元<?php endif; ?></td>
+											<td><?php echo e($v['cont_unit']); ?></td>
+											<td><?php echo e($v->info_level->name); ?></td>
+											<td>
+												<?php echo e($v->info_major->p_name); ?>
+
 											</td>
-											<td>{{$v->created_at->format('Y-m-d')}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','/recode/show/{{$v['id']}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
+											<td>
+											<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+												<?php if($m->id == $v->emp_id): ?>
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','<?php echo e(route('emp.show',$v->emp_id)); ?>','$v->emp_id}}')" title="查看首谈联系人信息"><?php echo e($m->username); ?></u>
+												<?php endif; ?>
+											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+											</td>
+											<td><?php echo e($v->created_at->format('Y-m-d')); ?></td>
+											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','/recode/show/<?php echo e($v['id']); ?>','<?php echo e($v['id']); ?>')" title="查看工作记录"><?php echo e($v['recodenum']); ?>条</u></td>
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
-												@if($v['is_show']==0)
-												<button type="submit"  href="javascript:;" onclick="report_add('项目上报','/report/add/{{$v['id']}}')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6aa;</i>&nbsp;&nbsp;信息上报&nbsp;&nbsp;&nbsp;</button>
-												@elseif($v['is_show']==1)
-												<button type="submit"  href="javascript:;" onclick=""  class=" f-l ml-10  mt-5 mb-5 btn btn-success radius size-S ">&nbsp;<i class="Hui-iconfont">&#xe6aa;</i>&nbsp;已上报市级&nbsp;</button>
-												@endif
+												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/<?php echo e($v['id']); ?>')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
 											</td>
 										</tr>
-										@endforeach
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									</tbody>
 								</table>
 							</div>
@@ -209,4 +211,5 @@
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/Code/funds/resources/views/information/important_list.blade.php ENDPATH**/ ?>

@@ -26,7 +26,7 @@
 										<tr class="text-c">
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
-											<th width="200">项目名称</th>
+											<th width="220">项目名称</th>
 											<th width="80">项目国别</th>
 											<th width="110">所属行业</th>
 											<th width="100">首谈地</th>
@@ -35,7 +35,7 @@
 											<th width="100">流转方向</th>
 											<th width="140">流转时间</th>
 											<th width="140">流转状态</th>
-											<th width="330">操作</th>
+											<th width="300">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -123,7 +123,7 @@
 												等待分派项目跟踪人
 												<?php elseif($v->process == 4): ?>
 												等待项目认领
-												<?php elseif($v->process >20 && $v->process <22): ?>
+												<?php elseif($v->process >20 && $v->process <=22): ?>
 												暂无流转
 												<?php elseif($v->process==23): ?>
 													<?php $__currentLoopData = $depts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

@@ -39,7 +39,7 @@
 											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v->id}}</td>
 											<td class="text-l">{{$v->name}}</td>
-											<td>{{$v->country}}</td>
+											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v->industry}}</td>
 											<td>{{$v->investment}}@if($v->currency =="1")万人民币@elseif($v->currency =="2")万美元@elseif($v->currency =="3")万欧元@endif</td>
 											<td>

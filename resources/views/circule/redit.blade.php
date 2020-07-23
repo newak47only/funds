@@ -10,7 +10,7 @@
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>流转结果：</label>
 						<div class="form-controls col-xs-8 col-sm-8"> <span class="select-box" style="width:150px;">
-							<select class="select" name="result" size="1">
+							<select class="select" name="result" size="1" id="selectresult">
 								
 								<option value="1">流转失败</option>
 								<option value="0">流转成功</option>
@@ -54,7 +54,7 @@
 					<div class="form-controls col-xs-8 col-sm-2">
 						<span class="select-box"  >
 							<select class="select"  name="currency" size="1" id='currency'>
-              					<option value="{{$informations->currency}}" selected="selected">@if($informations->currency =="1")万人民币@elseif($informations->currency =="2")万美元@endif</option>
+              					<option value="{{$information->currency}}" selected="selected">@if($information->currency =="1")万人民币@elseif($information->currency =="2")万美元@endif</option>
               					<option value="1">万人民币</option>
               					<option value="2">万美元</option>
               					<option value="3">万欧元</option>             			
@@ -139,7 +139,7 @@
 
 			$('#name,#company,#reg_cap,#negotiation-datetime-start,#uploader,#investment,#scope').parents('.row').hide();
 			//给下拉的列表帮定切换事件
-			$('select').change(function(){
+			$('#selectresult').change(function(){
 				//获取当前选中的值
 				var _val = $(this).val();
 
@@ -225,8 +225,7 @@
    	 		area: ['800px', '600px']
 		});
 		}
-
-		jQuery(function() {
+jQuery(function() {
     var $ = jQuery,
         $list = $('#thelist'),
         $btn = $('#ctlBtn'),
@@ -331,7 +330,7 @@
             uploader.upload();
         }
     });
-});	
+});
 
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->

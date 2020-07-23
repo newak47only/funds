@@ -178,11 +178,11 @@ class EmpController extends Controller
 
             $name = '';
 
-            $name = 'bszs'.$x;
+            $name = 'cxzs'.$x;
 
             $data ['name'] = $name;
 
-            $data ['dept_id'] = '22'; 
+            $data ['dept_id'] = '11'; 
 
             $data['password']=Hash::make('123456');
 

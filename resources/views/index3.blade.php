@@ -13,7 +13,7 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市洽谈项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="domestic/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表&nbsp;<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:70px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
+            <li><a data-href="domestic/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表&nbsp;@if($count != 0)<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:92px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">{{$count}}</a></span>@endif</li>
             <li><a data-href="domestic/report_list" data-title="上报项目列表" href="javascript:void(0)">上报项目列表&nbsp;</a></li>
           </ul>
         </dd>
@@ -65,7 +65,7 @@
         <div class="container-fluid clearfix">
           <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar">
             <ul class="clearfix">
-              <li>{{ $dept_name}}</li>
+              <li>{{ $dept_name}}管理员</li>
               <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">{{ Auth::user()->username }}<i class="Hui-iconfont">&#xe6d5;</i></a>
                 <ul class="dropDown-menu menu radius box-shadow">
                   <li><a href="javascript:;" onclick="admin_edit('管理员编辑','emp/{{Auth::user()->id}}/edit')" class="ml-5" style="text-decoration:none">个人信息</a></li>

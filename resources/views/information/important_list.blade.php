@@ -26,16 +26,17 @@
 											<th width="80">项目国别</th>
 											<th width="100">行业类别</th>
 											<th width="120">投资金额</th>
-											<th width="120">资方姓名</th>
-											<th width="120">资方联系方式</th>
+											<th width="120">主要投资方</th>
+											<th width="120">重大项目类型</th>
+											<th width="120">资方规模</th>
 											<th width="120">首谈联系人</th>
-											<th width="120">入库时间</th>
+											<th width="100">入库时间</th>
 											<th width="100">工作记录</th>
-											<th width="240 ">操作</th>
+											<th width="140 ">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($information1 as $v)
+										@foreach($information as $v)
 										<tr class="text-c">
 											<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
 											<td>{{$v['id']}}</td>
@@ -43,23 +44,23 @@
 											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['investment']}}@if($v['currency'] =="1")万人民币@elseif($v['currency'] =="2")万美元@elseif($v['currency'] =="3")万欧元@endif</td>
-											<td>{{$v['cont_name']}}</td>
-											<td>{{$v['cont_phone']}}</td>
-											<td>@foreach($emps as $n)
-												@if($n->id == $v->emp_id)
-												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$n->username}}</u>
+											<td>{{$v['cont_unit']}}</td>
+											<td>{{$v->info_level->name}}</td>
+											<td>
+												{{$v->info_major->p_name}}
+											</td>
+											<td>
+											@foreach($emps as $m)
+												@if($m->id == $v->emp_id)
+												<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$m->username}}</u>
 												@endif
-												@endforeach
+											@endforeach
+
 											</td>
 											<td>{{$v->created_at->format('Y-m-d')}}</td>
 											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','/recode/show/{{$v['id']}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
 												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>
-												@if($v['is_show']==0)
-												<button type="submit"  href="javascript:;" onclick="report_add('项目上报','/report/add/{{$v['id']}}')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6aa;</i>&nbsp;&nbsp;信息上报&nbsp;&nbsp;&nbsp;</button>
-												@elseif($v['is_show']==1)
-												<button type="submit"  href="javascript:;" onclick=""  class=" f-l ml-10  mt-5 mb-5 btn btn-success radius size-S ">&nbsp;<i class="Hui-iconfont">&#xe6aa;</i>&nbsp;已上报市级&nbsp;</button>
-												@endif
 											</td>
 										</tr>
 										@endforeach

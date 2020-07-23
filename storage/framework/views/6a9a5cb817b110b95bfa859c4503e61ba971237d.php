@@ -26,7 +26,7 @@ unset($__errorArgs, $__bag); ?>
 						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box" >
 							<select class="select" name="continent_id" >
-								<option value="0">洲</option>
+								<option value="">洲</option>
 								<?php $__currentLoopData = $continent; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               					<option value="<?php echo e($v->YAT_ID); ?>"><?php echo e($v->YAT_CNNAME); ?></option>
               					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>            			
@@ -36,7 +36,7 @@ unset($__errorArgs, $__bag); ?>
 						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box" >
 							<select class="select" name="country_id" >
-              					<option value="0">国家</option>          			
+              					<option value="">国家</option>          			
 							</select>
 							</span>
 						</div>
@@ -129,10 +129,20 @@ unset($__errorArgs, $__bag); ?>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
-						<div class="form-controls col-xs-8 col-sm-10">
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box">
+							<select class="select" name="level" size="1">
+								<option value="0">重大项目类型</option> 
+								<?php $__currentLoopData = $projectlevel; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              					<option value="<?php echo e($s->id); ?>"><?php echo e($s->name); ?></option>  
+              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
+							</select>
+							</span>
+						</div>
+						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box">
 							<select class="select" name="major_pro" size="1">
-								<option value="0">非重大项目</option> 
+								<option value="0">主要投资方规模</option> 
 								<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               					<option value="<?php echo e($s->id); ?>"><?php echo e($s->p_name); ?></option>  
               					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
@@ -225,10 +235,13 @@ unset($__errorArgs, $__bag); ?>
 					cont_name:{
 						required:true,
 					},
-					country:{
+					country_id:{
 						required:true,
-						maxlength:50
 					},
+					continent_id:{
+						required:true,
+					},
+
 					cont_phone:{
 						required:true,
 						isPhone:true,

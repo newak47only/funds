@@ -129,7 +129,7 @@
 						<table class="table table-border table-bordered table-bg table-hover table-sort">
 							<thead>
 								<tr class="text-c">
-									<?php $__currentLoopData = $tax; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php $__currentLoopData = $putinto; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<th width=""><?php echo e($v['year']); ?>年度</th>
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 								</tr>

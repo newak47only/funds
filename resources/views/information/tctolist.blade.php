@@ -40,7 +40,7 @@
 											<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
 											<td>{{$v['id']}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','{{route('information.show',$v->id)}}','{{$v['id']}}')" title="查看项目">{{$v['name']}}</u></td>
-											<td>{{$v->country}}</td>
+											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v->industry}}</td>
 											<td>
 												@foreach($emps as $n)

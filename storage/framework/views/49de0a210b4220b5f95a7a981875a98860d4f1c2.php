@@ -31,7 +31,7 @@
 											<th width="120">首谈联系人</th>
 											<th width="120">入库时间</th>
 											<th width="100">工作记录</th>
-											<th width="230 ">操作</th>
+											<th width="240 ">操作</th>
 										</tr>
 									</thead>
 									<tbody>

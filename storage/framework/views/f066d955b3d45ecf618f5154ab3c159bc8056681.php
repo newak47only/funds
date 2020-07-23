@@ -39,7 +39,7 @@
 											<td><input type="checkbox" value="<?php echo e($v->id); ?>" name="ID"></td>
 											<td><?php echo e($v->id); ?></td>
 											<td class="text-l"><?php echo e($v->name); ?></td>
-											<td><?php echo e($v->country); ?></td>
+											<td><?php echo e($v->info_area->YAT_CNNAME); ?></td>
 											<td><?php echo e($v->industry); ?></td>
 											<td><?php echo e($v->investment); ?><?php if($v->currency =="1"): ?>万人民币<?php elseif($v->currency =="2"): ?>万美元<?php elseif($v->currency =="3"): ?>万欧元<?php endif; ?></td>
 											<td>

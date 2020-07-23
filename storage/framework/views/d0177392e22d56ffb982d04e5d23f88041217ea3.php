@@ -1,14 +1,14 @@
-@extends('layouts.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <body style="background-color:#fff">
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="/circule/tcstore/{{$informations->id}}" method="post" class="form form-horizontal" id="form-admin-add">
+				<form action="/circule/tcstore/<?php echo e($informations->id); ?>" method="post" class="form form-horizontal" id="form-admin-add">
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目名称：</label>
 						<div class="form-controls col-xs-8 col-sm-9">
-							<input type="text" class="input-text" value="{{$informations->name}}" placeholder="{{$informations->name}}" id="Landing_name" name="  " datatype="*4-16" >
+							<input type="text" class="input-text" value="<?php echo e($informations->name); ?>" placeholder="<?php echo e($informations->name); ?>" id="Landing_name" name="  " datatype="*4-16" >
 						</div>
 					</div>
 					<div class="row clearfix">
@@ -38,27 +38,29 @@
 					<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分派对象：</label>
 						<div class="form-controls col-xs-8 col-sm-9 skin-minimal">
-							@foreach($depts as $val)
+							<?php $__currentLoopData = $depts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-							@if($val->id != 6 && $val->id != 13   && $val->id != 1  && $val->id != 2  )
+							<?php if($val->id != 6 && $val->id != 13   && $val->id != 1  && $val->id != 2  ): ?>
 							<div class="radio-box">
-								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}">
-								<label for="radio-2">{{$val->dept_name}}</label>
+								<input type="radio"  placeholder="" id="radio-2" name="status" value="<?php echo e($val->id); ?>">
+								<label for="radio-2"><?php echo e($val->dept_name); ?></label>
 							</div>
-							@endif
+							<?php endif; ?>
 							
-							@endforeach
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							
 						</div>
 					</div>
 					
-					<input type="hidden"  value="{{$informations->investment}}" placeholder="" id="Landing_investment" name="investment" >
-					<input type="hidden"  value="{{$informations->currency}}" placeholder="" id="Landing_currency" name="currency" >
-					<input type="hidden"  value="{{$informations->id}}" placeholder="" id="report_info_id" name="info_id" >
-					<input type="hidden"  value="{{$eaction}}" placeholder="" id="report_eaction" name="eaction" >
-					<input type="hidden" class="input-text" value="{{$actiontype}}"   name="actiontype" >
-					{{csrf_field()}}
-					{{method_field('POST')}}
+					<input type="hidden"  value="<?php echo e($informations->investment); ?>" placeholder="" id="Landing_investment" name="investment" >
+					<input type="hidden"  value="<?php echo e($informations->currency); ?>" placeholder="" id="Landing_currency" name="currency" >
+					<input type="hidden"  value="<?php echo e($informations->id); ?>" placeholder="" id="report_info_id" name="info_id" >
+					<input type="hidden"  value="<?php echo e($eaction); ?>" placeholder="" id="report_eaction" name="eaction" >
+					<input type="hidden" class="input-text" value="<?php echo e($actiontype); ?>"   name="actiontype" >
+					<?php echo e(csrf_field()); ?>
+
+					<?php echo e(method_field('POST')); ?>
+
 					<div class="row clearfix">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 							<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -134,10 +136,10 @@ jQuery(function() {
     uploader = WebUploader.create({
 
     	formData:{
-    		_token:"{{csrf_token()}}",
-    		emp_id:"{{$informations->emp_id}}",
-    		actiontype:"{{$actiontype}}",
-    		info_id:"{{$informations->id}}",
+    		_token:"<?php echo e(csrf_token()); ?>",
+    		emp_id:"<?php echo e($informations->emp_id); ?>",
+    		actiontype:"<?php echo e($actiontype); ?>",
+    		info_id:"<?php echo e($informations->id); ?>",
     	},
 
         // 不压缩image
@@ -233,4 +235,6 @@ jQuery(function() {
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/Code/funds/resources/views/circule/tcadd.blade.php ENDPATH**/ ?>

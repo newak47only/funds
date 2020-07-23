@@ -129,7 +129,7 @@
 						<table class="table table-border table-bordered table-bg table-hover table-sort">
 							<thead>
 								<tr class="text-c">
-									@foreach($tax as $v)
+									@foreach($putinto as $v)
 									<th width="">{{$v['year']}}年度</th>
 									@endforeach
 								</tr>

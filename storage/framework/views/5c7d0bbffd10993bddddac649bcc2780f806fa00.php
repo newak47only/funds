@@ -44,11 +44,18 @@
 											<td ><input type="checkbox" value="<?php echo e($v->id); ?>" name="ID"></td>
 											<td ><?php echo e($v->id); ?></td>
 											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','<?php echo e(route('information.show',$v->id)); ?>','<?php echo e($v->id); ?>')" title="查看"><?php echo e($v->name); ?></u></td>
-											<td><?php echo e($v->country); ?></td>
+											<td><?php echo e($v->info_area->YAT_CNNAME); ?></td>
 											<td><?php echo e($v->industry); ?></td>
 											<td > 
 											<?php if(empty($v->emp_id) && $v->process == 21): ?>
 													等待分派
+											 <?php elseif(!empty($v->emp_id) && $v->process == 21): ?>
+												<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+													<?php if($n->id == $v->emp_id): ?>
+													<?php echo e($n->dept->dept_name); ?>
+
+													<?php endif; ?>
+												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 											<?php elseif(empty($v->emp_id) && $v->process == 22): ?>
 													等待分派审核
 											<?php else: ?>
@@ -62,8 +69,16 @@
 											</td>
 		
 											<td>
+												<?php echo e($v->emp_id); ?>
+
 											<?php if(empty($v->emp_id) && $v->process == 21): ?>
 											等待分派
+											<?php elseif(!empty($v->emp_id) && $v->process == 21): ?>
+												<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+													<?php if($n->id == $v->emp_id): ?>
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','<?php echo e(route('emp.show',$v->emp_id)); ?>','$v->emp_id}}')" title="查看首谈联系人信息"><?php echo e($n->username); ?></u>
+													<?php endif; ?>
+												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 											<?php elseif(empty($v->emp_id) && $v->process == 22): ?>
 											等待分派审核
 											<?php elseif(empty($v->emp_id) && $v->process == 23): ?>

@@ -62,7 +62,7 @@
         <div class="container-fluid clearfix">
           <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar">
             <ul class="clearfix">
-              <li>{{ $dept_name}}</li>
+              <li>{{ $dept_name}}管理员</li>
               <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">{{ Auth::user()->username }}<i class="Hui-iconfont">&#xe6d5;</i></a>
                 <ul class="dropDown-menu menu radius box-shadow">
                   <li><a href="javascript:;" onclick="admin_edit('管理员编辑','emp/{{Auth::user()->id}}/edit')" class="ml-5" style="text-decoration:none">个人信息</a></li>

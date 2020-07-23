@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Information,App\Emp,App\Dept,App\Negotiation,App\Recode,App\Industry,App\Area,App\Majorproject;
+use App\Information,App\Emp,App\Dept,App\Negotiation,App\Recode,App\Industry,App\Area,App\Majorproject,App\Projectlevel;
 use Auth,DB;
 
 class InformationController extends Controller
@@ -358,12 +358,13 @@ class InformationController extends Controller
             ['process','=','0'],
         ])->get();
 
-
         foreach ($information as $key => $value) {
-             $recodenum = Recode::where('info_id',$value->id)->count();   
+            
+            $recodenum = Recode::where('info_id',$value->id)->count();   
            
-                        $value->recodenum= $recodenum;
+            $value->recodenum= $recodenum;
                         //dd($value->info_area->YAT_LEVEL);
+                        
         }        
               //dd($info);
               return view('information.ownlist')->with(compact('information'));
@@ -438,6 +439,28 @@ class InformationController extends Controller
 
     }
 
+        public function important_list(){
+
+        $emps = Emp::get();
+
+        $information = Information::where([
+
+            ['level','!=','0'],
+
+            ['process','<','7']
+
+        ])->get();
+
+        foreach ($information as $key => $value) {
+
+            $value->recodenum = Recode::where('info_id',$value->id)->count();
+
+        }
+
+        return view('information.important_list')->with(compact('information','emps'));
+
+    }
+
     public function tctolist(){
 
         $admin_id = Auth::user()->id;
@@ -505,10 +528,11 @@ class InformationController extends Controller
         $emp = Emp::where('id',$emp_id)->firstOrFail();
         $industry = Industry::get();
         $majorproject = Majorproject::get();
+        $projectlevel = projectlevel::get();
         $continent = Area::where('YAT_LEVEL','1')->get();
 
         //dd($emp);
-        return view('information.create')->with(compact('emp_id','emp','industry','continent','majorproject'));
+        return view('information.create')->with(compact('emp_id','emp','industry','continent','majorproject','projectlevel'));
     }
 
     public function store(Request $request){
@@ -569,8 +593,9 @@ class InformationController extends Controller
         $information=Information::findOrFail($id);
         $continent = Area::where('YAT_LEVEL','1')->get();
         $industry = Industry::get();
+        $projectlevel = Projectlevel::get();
         $majorproject = Majorproject::get();
-        return view('information.edit')->with(compact('information','emp_id','continent','industry','majorproject'));
+        return view('information.edit')->with(compact('information','emp_id','continent','industry','majorproject','projectlevel'));
     }
 
     public function update(Request $request, $id){

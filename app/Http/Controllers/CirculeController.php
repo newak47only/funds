@@ -690,7 +690,7 @@ class CirculeController extends Controller
              DB::update('update information set company = ? where id = ?',[$data['company'],$id]);
              DB::update('update information set reg_cap = ? where id = ?',[$data['reg_cap'],$id]);
             DB::update('update information set investment = ? where id = ?',[$data['investment'],$id]);
-             DB::update('update information set reg_cap = ? where id = ?',[$data['scope'],$id]);
+             DB::update('update information set scope = ? where id = ?',[$data['scope'],$id]);
          }elseif ($data['result']=='1') {
             DB::update('update information set process = ? where id = ?',[5,$id]);
             DB::update('update information set circule_id = ? where id = ?',[0,$id]);

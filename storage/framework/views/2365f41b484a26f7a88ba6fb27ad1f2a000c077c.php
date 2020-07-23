@@ -99,13 +99,42 @@ unset($__errorArgs, $__bag); ?>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
-						<div class="form-controls col-xs-8 col-sm-10">
+						<div class="form-controls col-xs-8 col-sm-5">
+							<span class="select-box">
+								<select class="select" name="level" size="1">
+								<?php if($information->level == 0): ?>
+								<option value="0" selected="selected">重大项目类型</option> 
+								<?php else: ?>
+								<option value="<?php echo e($information->level); ?>" selected="selected">
+								<?php $__currentLoopData = $projectlevel; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+								<?php if($s->id == $information->level): ?>
+              					<?php echo e($s->name); ?>
+
+              					<?php endif; ?>
+              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>       
+              					</option> 
+								<?php endif; ?>
+								<?php $__currentLoopData = $projectlevel; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              					<option value="<?php echo e($s->id); ?>"><?php echo e($s->name); ?></option>  
+              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
+							</select>
+							</span>
+						</div>
+						<div class="form-controls col-xs-8 col-sm-5">
 							<span class="select-box">
 								<select class="select" name="major_pro" size="1">
-								<?php if($information->majorpro == 0): ?>
-								<option value="0" selected="selected">非重大项目</option> 
+								<?php if($information->major_pro == 0): ?>
+								<option value="0" selected="selected">主要投资方规模</option> 
 								<?php else: ?>
-								<option value="<?php echo e($information->major_pro); ?>" selected="selected"><?php echo e($information->info_major->p_name); ?></option> 
+								<option value="<?php echo e($information->major_pro); ?>" selected="selected">
+								<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+								<?php if($k->id == $information->major_pro): ?>
+              					<?php echo e($k->p_name); ?>
+
+              					<?php endif; ?>
+              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+
+								</option> 
 								<?php endif; ?>
 								<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               					<option value="<?php echo e($s->id); ?>"><?php echo e($s->p_name); ?></option>  

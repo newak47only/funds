@@ -23,13 +23,14 @@
 											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="250">项目名称</th>
+											<th width="80">项目国别</th>
 											<th width="100">行业类别</th>
 											<th width="120">投资金额</th>
 											<th width="120">资方姓名</th>
 											<th width="120">资方联系方式</th>
 											<th width="120">项目发布人</th>
 											<th width="120">首谈联系人</th>
-											<th width="120">入库时间</th>
+											<th width="100">入库时间</th>
 											<th width="100">工作记录</th>
 											<th width="140 ">操作</th>
 										</tr>
@@ -40,6 +41,7 @@
 											<td><input type="checkbox" value="{{$v['id']}}" name="ID"></td>
 											<td>{{$v['id']}}</td>
 											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','{{route('information.show',$v->id)}}','{{$v['id']}}')" title="查看项目">{{$v['name']}}</u></td>
+											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v['industry']}}</td>
 											<td>{{$v['investment']}}@if($v['currency'] =="1")万人民币@elseif($v['currency'] =="2")万美元@elseif($v['currency'] =="3")万欧元@endif</td>
 											<td>{{$v['cont_name']}}</td>
@@ -59,7 +61,7 @@
 											@endforeach
 
 											</td>
-											<td>{{$v['created_at']}}</td>
+											<td>{{$v->created_at->format('Y-m-d')}}</td>
 											<td><u style="cursor:pointer" class="text-primary" onClick="recode_show('查看工作记录','/recode/show/{{$v['id']}}','{{$v['id']}}')" title="查看工作记录">{{$v['recodenum']}}条</u></td>
 											<td class="td-manage">
 												<button type="submit"  href="javascript:;" onclick="recode_show('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10  mt-5 mb-5 btn btn-primary radius size-S ">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>

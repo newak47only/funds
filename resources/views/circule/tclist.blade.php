@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 @section('content')
 <body>
 	<div class="wap-container">
@@ -44,11 +44,17 @@
 											<td ><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td >{{$v->id}}</td>
 											<td class="text-l" ><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v->id)}}','{{$v->id}}')" title="查看">{{$v->name}}</u></td>
-											<td>{{$v->country}}</td>
+											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v->industry}}</td>
 											<td > 
 											@if(empty($v->emp_id) && $v->process == 21)
 													等待分派
+											 @elseif(!empty($v->emp_id) && $v->process == 21)
+												@foreach($emps as $n)
+													@if($n->id == $v->emp_id)
+													{{$n->dept->dept_name}}
+													@endif
+												@endforeach
 											@elseif(empty($v->emp_id) && $v->process == 22)
 													等待分派审核
 											@else(empty($v->emp_id) && $v->process == 23)
@@ -63,6 +69,12 @@
 											<td>
 											@if(empty($v->emp_id) && $v->process == 21)
 											等待分派
+											@elseif(!empty($v->emp_id) && $v->process == 21)
+												@foreach($emps as $n)
+													@if($n->id == $v->emp_id)
+														<u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈联系人信息','{{route('emp.show',$v->emp_id)}}','$v->emp_id}}')" title="查看首谈联系人信息">{{$n->username}}</u>
+													@endif
+												@endforeach
 											@elseif(empty($v->emp_id) && $v->process == 22)
 											等待分派审核
 											@elseif(empty($v->emp_id) && $v->process == 23)

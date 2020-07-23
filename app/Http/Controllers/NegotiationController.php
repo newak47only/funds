@@ -713,6 +713,7 @@ class NegotiationController extends Controller
 
         $information=Information::where([
                     ['circule_id','=','0'],
+                    ['level','=','0'],
              ])->whereIn('process',[7,8,9])->get();
 
 
@@ -736,6 +737,36 @@ class NegotiationController extends Controller
 
     }
 
+    public function important_list(){
+
+
+        $emps = Emp::get();
+
+        $information=Information::where([
+                    ['level','!=','0'],
+             ])->whereIn('process',[7,8,9])->get();
+
+
+        foreach ($information as $key => $value) {
+
+            $recodenum = Recode::where('info_id',$value->id)->count();
+
+            $f_emp = Emp::where('id',$value->emp_id)->first();
+
+            $i_emp = Emp::where('id',$value->issuer_id)->first(); 
+   
+                $value->dept = $f_emp->dept->dept_name;
+
+                $value->issuer = $i_emp->username;
+
+                $value->recodenum = $recodenum;
+  
+        }
+
+        return view('negotiation.important_list')->with(compact('information','emps'));
+
+    }
+
     public function outlist_city(){
 
 
@@ -743,7 +774,7 @@ class NegotiationController extends Controller
 
         $information=Information::where([
                     ['circule_id','!=','0'],
-
+                    ['level','=','0'],
 
              ])->whereIn('process',[7,8,9])->get();
 

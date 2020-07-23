@@ -13,33 +13,35 @@
 
 		<article class="Hui-admin-content clearfix">
 			<div class="panel ">
-				<div class="panel-body">
-
-
-
+				<div class="panel-body">						
+				
 							<div class="mt-20 clearfix">
 								<table class="table table-border table-bordered table-bg table-hover table-sort">
 									<thead>
 										<tr class="text-c">
-											<th width="25"><input type="checkbox" name="" value=""></th>
 											<th width="40">ID</th>
 											<th width="220">项目名称</th>
 											<th width="80">项目国别</th>
-											<th width="130">注册企业名称</th>
+											<th width="150">注册企业名称</th>
 											<th width="100">行业类别</th>
 											<th width="100">注册资金</th>
+											<th width="120">主要投资方</th>
+
+											<th width="120">重大项目类型</th>
+											<th width="120">资方规模</th>
 											<th width="100">项目进度</th>
 											<th width="100">首谈地</th>
-											<th width="100">首谈人</th>
-											<th width="450">操作</th>
+
+											<th width="100">项目落户地</th>
+
+											<th width="230">操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										@foreach($information as $v)
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{$v->id}}" name="ID"></td>
 											<td>{{$v['id']}}</td>
-											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
+											<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="information_show('查看项目','{{route('information.show',$v['id'])}}','{{$v['id']}}')" title="查看">{{$v['name']}}</u></td>
 											<td>{{$v->info_area->YAT_CNNAME}}</td>
 											<td>{{$v['company']}}</td>
 											<td>{{$v['industry']}}</td>
@@ -47,27 +49,26 @@
 										@elseif($v['currency'] =='1')万美元
 										@elseif($v['currency'] =='2')万欧元
 										@endif</td>
+											<td>{{$v['cont_unit']}}</td>
+											<td>{{$v->info_level->name}}</td>
+											<td>
+												{{$v->info_major->p_name}}
+											</td>
 											<td>@if($v['process'] == '7')
-												已签约
+												<span class="badge badge-success radius" >已落地</span>
 												@elseif($v['process'] == '8')
-												已开工
+												<span class="badge badge-success radius">已开工</span>
 												@elseif($v['process'] == '9')
-												已投产
+												<span class="badge badge-success radius">已投产</span>
 												@endif
 											</td>
 											<td>{{$v['circule_f_dept']}}</td>
-											<td><u style="cursor:pointer" class="text-primary" onClick="information_show('查看首谈人信息','{{route('emp.show',$v['emp_id'])}}','{{$v['emp_id']}}')" title="查看首谈人信息">{{$v['circule_f_name']}}</u></td>
+										
+											<td>{{$v['circule_n_dept']}}</td>
+
 
 											<td class="td-manage">
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('进度记录','/recode/add/{{$v['id']}}')"  class="btn btn-primary radius size-S f-l ml-10  mt-5 mb-5">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;进程记录&nbsp;&nbsp;&nbsp;</button>
-												@if($v['process']==7)
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('项目开工','/landing/add/{{$v['id']}}')"  class="btn btn-primary radius size-S f-l ml-10  mt-5 mb-5"><i class="Hui-iconfont" style="font-size: 14px;">&#xe640;</i>&nbsp;&nbsp;项目开工&nbsp;&nbsp;</button>
-												@elseif($v['process']==8)
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('项目投产','/completion/add/{{$v['id']}}')"  class="btn btn-primary radius size-S f-l ml-10  mt-5 mb-5"><i class="Hui-iconfont" style="font-size: 14px;">&#xe640;</i>&nbsp;&nbsp;项目投产&nbsp;&nbsp;</button>
-												@elseif($v['process']==9)
-												<button type="submit"  href="javascript:;" onclick="')"  class="btn btn-success radius size-S f-l ml-10  mt-5 mb-5"><i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;&nbsp;&nbsp;已投产&nbsp;&nbsp;</button>
-												@endif
-												<button type="submit"  href="javascript:;" onclick="negotiation_create('添加数据','/statistics/add/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont" style="font-size: 16px">&#xe61e;</i>&nbsp;&nbsp;添加数据&nbsp;&nbsp;&nbsp;</button>
+												<button type="submit"  href="javascript:;" onclick="information_add('查看记录','/recode/{{$v['id']}}')"  class=" f-l ml-10 btn btn-primary radius size-S">&nbsp;&nbsp;<i class="Hui-iconfont">&#xe6df;</i>&nbsp;&nbsp;查看记录&nbsp;&nbsp;&nbsp;</button>	
 												
 												<button type="submit"  href="javascript:;" onclick="negotiation_create('查看数据','/statistics/{{$v['id']}}')"  class="f-l ml-10 btn btn-primary radius size-S"><i class="Hui-iconfont" style="font-size: 14px">&#xe61c;</i>&nbsp;&nbsp;查看数据&nbsp;&nbsp;</button>											
 											</td>
@@ -76,10 +77,6 @@
 									</tbody>
 								</table>
 							</div>
-
-
-
-					
 				</div>
 			</div>
 		</article>
@@ -118,8 +115,7 @@
 			"aoColumnDefs":[{"bSortable":false,"aTargets":[0]}],
 			//默认在初始化的时候按照指定列排序
 			"aaSorting":[[1,"asc"]],
-			//禁用搜索
-			"searching":false,
+
 		});
 			function information_add(title,url){
   			var index = layer.open({

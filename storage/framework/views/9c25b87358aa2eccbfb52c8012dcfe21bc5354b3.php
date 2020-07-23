@@ -1,35 +1,38 @@
-@extends('layouts.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <body style="background-color:#fff">
 	<div class="wap-container">
 		<div class="panel">
 			<div class="panel-body">
 
 				
-				<form action="/information/appstore/{{$information->id}}" method="POST"  class="form form-horizontal" id="form-admin-add" >
+				<form action="/information/appstore/<?php echo e($information->id); ?>" method="POST"  class="form form-horizontal" id="form-admin-add" >
 						<div class="row clearfix">
 						<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>部门分发：</label>
 						<div class="form-controls col-xs-8 col-sm-9 skin-minimal">
-							@foreach($emps as $val)
-							@if($val->isleader == 0)
+							<?php $__currentLoopData = $emps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<?php if($val->isleader == 0): ?>
 							<div class="radio-box">
-								<input type="radio"  placeholder="" id="radio-2" name="status" value="{{$val->id}}" checked>
+								<input type="radio"  placeholder="" id="radio-2" name="status" value="<?php echo e($val->id); ?>" checked>
 								<label for="radio-2">
-									{{$val->username}}
+									<?php echo e($val->username); ?>
+
 								</label>
 							</div>	
-							@endif				
-							@endforeach
+							<?php endif; ?>				
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							
 						</div>
 					</div>
-					<input type="hidden" name="info_id" value="{{$information->id}}">
-    				<input type="hidden" name="investment" value="{{$information->investment}}">
-					<input type="hidden" name="currency" value="{{$information->currency}}">
-    				<input type="hidden" name="eaction" value="{{$eaction}}">
-    				<input type="hidden" name="actiontype" value="{{$actiontype}}">
-					{{csrf_field()}}
-					{{method_field('POST')}}
+					<input type="hidden" name="info_id" value="<?php echo e($information->id); ?>">
+    				<input type="hidden" name="investment" value="<?php echo e($information->investment); ?>">
+					<input type="hidden" name="currency" value="<?php echo e($information->currency); ?>">
+    				<input type="hidden" name="eaction" value="<?php echo e($eaction); ?>">
+    				<input type="hidden" name="actiontype" value="<?php echo e($actiontype); ?>">
+					<?php echo e(csrf_field()); ?>
+
+					<?php echo e(method_field('POST')); ?>
+
 
 
 					<div class="row clearfix">
@@ -78,18 +81,18 @@
 					$(form).ajaxSubmit({
 						success:function(data){
 							if( data == '1'){
-								layer.msg('项目派发成功！',{ icon: 1,time:2000},function(){
+								layer.msg('项目分发成功！',{ icon: 1,time:2000},function(){
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.location.replace(parent.location.href);
 								parent.layer.close(index);
 								});
 
 							}else{
-								layer.msg('项目分派失败！',{ icon: 2,time:2000});
+								layer.msg('项目分发失败！',{ icon: 2,time:2000});
 							}
 						},
 						error:function(XmlHttpRequest,textStatus,errorThrown){
-							layer.msg('项目分派成功！',{ icon: 1,time:1000},function(){
+							layer.msg('项目分发成功！',{ icon: 1,time:1000},function(){
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.location.replace(parent.location.href);
 								parent.layer.close(index);
@@ -107,4 +110,6 @@
 	</script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/Code/funds/resources/views/information/apportion.blade.php ENDPATH**/ ?>

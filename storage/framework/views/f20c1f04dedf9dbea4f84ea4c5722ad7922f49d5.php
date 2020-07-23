@@ -13,7 +13,7 @@
         <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i>&nbsp;全市洽谈项目库<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
         <dd class="Hui-menu-item">
           <ul>
-            <li><a data-href="domestic/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表&nbsp;<span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:70px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;">4</a></span></li>
+            <li><a data-href="domestic/list_city" data-title="流转项目列表" href="javascript:void(0)">流转项目列表&nbsp;;<?php if($count != 0): ?><span  class=" badge badge-danger radius " style=" display: block; overflow: hidden; float:right; margin-right:92px; margin-top:8px;  padding-right:5px;padding-left:5px;  border-radius:12px ;  color:#fff;"><?php echo e($count); ?></a></span><?php endif; ?></li>
             <li><a data-href="domestic/report_list" data-title="上报项目列表" href="javascript:void(0)">上报项目列表&nbsp;</a></li>
           </ul>
         </dd>
