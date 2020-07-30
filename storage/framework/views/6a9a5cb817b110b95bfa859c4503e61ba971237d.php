@@ -45,7 +45,7 @@ unset($__errorArgs, $__bag); ?>
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>行业类别：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
 							<span class="select-box">
-							<select class="select" name="industry" size="1">
+							<select class="select" name="industry"  size="1">
 								<?php $__currentLoopData = $industry; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               					<option value="<?php echo e($i->name); ?>"><?php echo e($i->name); ?></option>  
               					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
@@ -129,26 +129,43 @@ unset($__errorArgs, $__bag); ?>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
-						<div class="form-controls col-xs-8 col-sm-5">
+						<div class="form-controls col-xs-8 col-sm-10">
 							<span class="select-box">
-							<select class="select" name="level" size="1">
-								<option value="0">重大项目类型</option> 
+							<select class="select" name="level" id="level"   size="1">
+								<option value="0">非重大项目</option> 
 								<?php $__currentLoopData = $projectlevel; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               					<option value="<?php echo e($s->id); ?>"><?php echo e($s->name); ?></option>  
               					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
 							</select>
 							</span>
 						</div>
-						<div class="form-controls col-xs-8 col-sm-5">
-							<span class="select-box">
-							<select class="select" name="major_pro" size="1">
-								<option value="0">主要投资方规模</option> 
-								<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-              					<option value="<?php echo e($s->id); ?>"><?php echo e($s->p_name); ?></option>  
-              					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>          			
-							</select>
-							</span>
-						</div>
+					</div>
+					<div class="row clearfix col-xs-12 col-sm-12" >
+					<label class="form-label col-xs-4 col-sm-1">重大项目类型：</label>
+					<div class="form-controls col-xs-8 col-sm-11 ">
+						<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						<?php if($k->type == 1): ?>
+						<dl class="Hui-admin-permission-list">
+							<dt>
+								<label>
+									<?php echo e($k->p_name); ?></label>
+							</dt>
+							<dd>
+								<?php $__currentLoopData = $majorproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+								<?php if($m->level_id == $k->id): ?>
+								<label class="">
+								<input type="radio" value="<?php echo e($m->id); ?>}" name="major_pro" id="major_pro">
+											<?php echo e($m->p_name); ?>
+
+								</label>
+								<br />
+								<?php endif; ?>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							</dd>
+						</dl>
+						<?php endif; ?>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-12" >
 						<label class="form-label col-xs-4 col-sm-1"><span class="c-red">*</span>项目简介：</label>
@@ -212,6 +229,28 @@ unset($__errorArgs, $__bag); ?>
 
 				},'json');
 			});
+
+			$('#major_pro').parents('.row').hide();
+			//给下拉的列表帮定切换事件
+
+			$('#level').change(function(){
+				//获取当前选中的值
+				var _val = $(this).val();
+
+				//判断值
+				if(_val > 0){
+					//显示
+					$('#major_pro').parents('.row').show(500);
+				}else{
+
+					$('#major_pro').parents('.row').hide(500);
+				}
+			});
+
+
+
+
+
 			/* 通过iCheck插件，美化checkbox */
 			$('.skin-minimal input').iCheck({
 				checkboxClass: 'icheckbox-blue',

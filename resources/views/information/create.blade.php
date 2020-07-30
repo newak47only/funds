@@ -38,7 +38,7 @@
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>行业类别：</label>
 						<div class="form-controls col-xs-8 col-sm-10">
 							<span class="select-box">
-							<select class="select" name="industry" size="1">
+							<select class="select" name="industry"  size="1">
 								@foreach($industry as $i)
               					<option value="{{$i->name}}">{{$i->name}}</option>  
               					@endforeach          			
@@ -101,26 +101,42 @@
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-6" >
 						<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>重大项目：</label>
-						<div class="form-controls col-xs-8 col-sm-5">
+						<div class="form-controls col-xs-8 col-sm-10">
 							<span class="select-box">
-							<select class="select" name="level" size="1">
-								<option value="0">重大项目类型</option> 
+							<select class="select" name="level" id="level"   size="1">
+								<option value="0">非重大项目</option> 
 								@foreach($projectlevel as $s)
               					<option value="{{$s->id}}">{{$s->name}}</option>  
               					@endforeach          			
 							</select>
 							</span>
 						</div>
-						<div class="form-controls col-xs-8 col-sm-5">
-							<span class="select-box">
-							<select class="select" name="major_pro" size="1">
-								<option value="0">主要投资方规模</option> 
-								@foreach($majorproject as $s)
-              					<option value="{{$s->id}}">{{$s->p_name}}</option>  
-              					@endforeach          			
-							</select>
-							</span>
-						</div>
+					</div>
+					<div class="row clearfix col-xs-12 col-sm-12" >
+					<label class="form-label col-xs-4 col-sm-1">重大项目类型：</label>
+					<div class="form-controls col-xs-8 col-sm-11 ">
+						@foreach($majorproject as $k)
+						@if($k->type == 1)
+						<dl class="Hui-admin-permission-list">
+							<dt>
+								<label>
+									{{$k->p_name}}</label>
+							</dt>
+							<dd>
+								@foreach($majorproject as $m)
+								@if($m->level_id == $k->id)
+								<label class="">
+								<input type="radio" value="{{$m->id}}}" name="major_pro" id="major_pro">
+											{{$m->p_name}}
+								</label>
+								<br />
+								@endif
+								@endforeach
+							</dd>
+						</dl>
+						@endif
+						@endforeach
+					</div>
 					</div>
 					<div class="row clearfix col-xs-12 col-sm-12" >
 						<label class="form-label col-xs-4 col-sm-1"><span class="c-red">*</span>项目简介：</label>
@@ -183,6 +199,28 @@
 
 				},'json');
 			});
+
+			$('#major_pro').parents('.row').hide();
+			//给下拉的列表帮定切换事件
+
+			$('#level').change(function(){
+				//获取当前选中的值
+				var _val = $(this).val();
+
+				//判断值
+				if(_val > 0){
+					//显示
+					$('#major_pro').parents('.row').show(500);
+				}else{
+
+					$('#major_pro').parents('.row').hide(500);
+				}
+			});
+
+
+
+
+
 			/* 通过iCheck插件，美化checkbox */
 			$('.skin-minimal input').iCheck({
 				checkboxClass: 'icheckbox-blue',
